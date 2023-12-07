@@ -10,9 +10,9 @@ def manually_get_parse() -> argparse.ArgumentParser:
     # 设置默认参数
     parser.set_defaults(
         data='/home/HW/Pein/cifar10_data/',  # 数据集路径
-        arch='resnet18',  # 使用的网络架构
-        workers=2,  # 数据加载时的工作进程数
-        epochs=200,  # 训练的总轮次
+        arch='resnet34',  # 使用的网络架构
+        workers=4,  # 数据加载时的工作进程数
+        epochs=100,  # 训练的总轮次
         start_epoch=1,  # 起始轮次
         batch_size=512,  # 每批处理的样本数量
         lr=0.015,  # 学习率

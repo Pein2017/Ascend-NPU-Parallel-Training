@@ -1,1 +1,4 @@
 *.pyc
+cache/
+__pycache__/
+/fusion_result.json
