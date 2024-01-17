@@ -8,11 +8,13 @@ from argparse import Namespace
 
 class CIFAR10Net(nn.Module):
 
-    def __init__(self,
-                 model_func: Callable,
-                 num_classes: int = 10,
-                 pretrained: bool = False,
-                 device: str = 'npu'):
+    def __init__(
+        self,
+        device: str,
+        model_func: Callable,
+        num_classes: int = 10,
+        pretrained: bool = False,
+    ):
         super(CIFAR10Net, self).__init__()
         self.model = model_func(pretrained=pretrained)
 
@@ -45,7 +47,7 @@ def load_or_create_model(args: Namespace) -> CIFAR10Net:
 
 if __name__ == '__main__':
     # 创建 CIFAR-10 的模型实例
-    device = 'npu' if torch.npu.is_available() else 'cpu'  # 示例中使用 GPU 如果可用
+    device = 'npu' if torch.npu.is_available() else 'cpu'  # 示例中使用 npu 如果可用
     model_name = 'resnet34'
     model = CIFAR10Net(model_func=models.__dict__[model_name],
                        num_classes=10,

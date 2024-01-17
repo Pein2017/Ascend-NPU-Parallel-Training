@@ -1,4 +1,5 @@
 *.pyc
 cache/
 __pycache__/
+cifar10_data/
 /fusion_result.json

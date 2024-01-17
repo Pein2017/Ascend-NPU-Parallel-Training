@@ -13,14 +13,13 @@ def train(train_loader: DataLoader, model: torch.nn.Module,
     """
     训练模型的函数。
 
-    参数:
-    train_loader (DataLoader): 训练数据加载器。
-    model (torch.nn.Module): 训练模型。
-    criterion (torch.nn.Module): 损失函数。
-    optimizer (torch.optim.Optimizer): 优化器。
-    epoch (int): 当前训练周期。
-    device (torch.device): 计算设备。
-    args (argparse.Namespace): 训练过程中的参数。
+    :param train_loader: 训练数据加载器。
+    :param model: 训练模型。
+    :param criterion: 损失函数。
+    :param optimizer: 优化器。
+    :param epoch: 当前训练周期。
+    :param device: 计算设备。
+    :param args: 训练参数。
     """
     batch_time = AverageMeter('Time', ':6.3f')
     data_time = AverageMeter('Data', ':6.3f')
@@ -64,14 +63,12 @@ def validate(val_loader: DataLoader, model: torch.nn.Module,
     """
     在验证数据集上验证模型的性能。
 
-    参数:
-    val_loader (DataLoader): 验证数据加载器。
-    model (torch.nn.Module): 验证模型。
-    criterion (torch.nn.Module): 损失函数。
-    args (argparse.Namespace): 验证过程中的参数。
+    :param val_loader: 验证数据加载器。
+    :param model: 验证模型。
+    :param criterion: 损失函数。
+    :param args: 验证过程中的参数。
 
-    返回:
-    float: 验证集上的平均准确率。
+    :return: 验证集上的平均准确率。
     """
     batch_time = AverageMeter('Time', ':6.3f')
     losses = AverageMeter('Loss', ':.4e')
@@ -121,23 +118,20 @@ def run_training_loop(args: Namespace,
     """
     运行训练循环。
 
-    参数:
-    args (Namespace): 命令行参数的命名空间。
-    train_loader (DataLoader): 训练集的 DataLoader。
-    val_loader (DataLoader): 验证集的 DataLoader。
-    model (nn.Module): 要训练的模型。
-    criterion (nn.Module): 损失函数。
-    optimizer (optim.Optimizer): 优化器。
-    device (torch.device): 训练使用的设备。
-    save_checkpoint (Callable): 保存模型检查点的函数。
-    train_sampler (Optional[Sampler]): 训练集的采样器，用于分布式训练。
-    ngpus_per_node (int): 每个节点的 GPU 数量。
-    amp (Optional[object]): 自动混合精度对象，用于混合精度训练。
+    :param args: 命令行参数的命名空间。
+    :param train_loader: 训练集的 DataLoader。
+    :param val_loader: 验证集的 DataLoader。
+    :param model: 要训练的模型。
+    :param criterion: 损失函数。
+    :param optimizer: 优化器。
+    :param device: 训练使用的设备。
+    :param save_checkpoint: 保存模型检查点的函数。
+    :param train_sampler: 训练集的采样器，用于分布式训练。
+    :param ngpus_per_node: 每个节点的 GPU 数量。
+    :param amp: 自动混合精度对象，用于混合精度训练。
 
-    返回:
-    None
+    :return: 无返回值。
     """
-
     best_acc1 = 0
     for epoch in range(args.start_epoch, args.epochs):
         if args.distributed:

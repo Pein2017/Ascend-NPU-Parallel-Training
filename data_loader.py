@@ -84,8 +84,20 @@ def get_dataloaders(data_path: str,
 
 
 if __name__ == '__main__':
-    # 定义数据集存储路径
-    data_path = '/home/HW/Pein/cifar10_data/'
-    # 确保数据路径存在
-    os.makedirs(data_path, exist_ok=True)
-    _ = get_dataloaders(data_path=data_path, batch_size=1, distributed=False)
+    
+    current_script_path = os.path.abspath(__file__)
+    # 获取当前脚本所在的目录
+    current_script_dir = os.path.dirname(current_script_path)
+    # 设置数据集存储路径为该目录下的子目录 'cifar10_data'
+    data_path = os.path.join(current_script_dir, 'cifar10_data')
+
+    # 检查数据路径是否存在且不为空
+    if os.path.exists(data_path) and os.listdir(data_path):
+        print(f"Dataset '{data_path}' already exists and is not empty. Skipping download.")
+    else:
+        # 确保数据路径存在
+        os.makedirs(data_path, exist_ok=True)
+        # 执行get_dataloaders
+        _ = get_dataloaders(data_path=data_path, batch_size=1, distributed=False, download=True)
+        print(f"Data downloaded to '{data_path}'.")
+
