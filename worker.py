@@ -62,16 +62,31 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         batch_size = args.batch_size
         num_workers = args.workers
         if_distributed = args.distributed
+        split_ratio = args.split_ratio
         # 获取数据加载器和采样器
         train_loader, val_loader, test_loader, train_sampler, val_sampler = get_dataloaders(
-            data_path, batch_size, num_workers, distributed=if_distributed)
+            data_path,
+            batch_size,
+            num_workers,
+            split_ratio,
+            distributed=if_distributed)
 
     # 定义损失函数（标准）和优化器
     criterion = nn.CrossEntropyLoss().to(device)  # 将损失函数也移到相应设备
-    optimizer = optim.SGD(model.parameters(),
-                          args.lr,
-                          momentum=args.momentum,
-                          weight_decay=args.weight_decay)
+    optimizer = optim.Adam(model.parameters(),
+                           lr=args.lr,
+                           weight_decay=args.weight_decay)
+
+    # optimizer = optim.SGD(model.parameters(),
+    #                       args.lr,
+    #                       momentum=args.momentum,
+    #                       weight_decay=args.weight_decay)
+
+    # optimizer = optim.lr_scheduler.ReduceLROnPlateau(optimizer,
+    #                                                  mode='min',
+    #                                                  factor=0.1,
+    #                                                  patience=10,
+    #                                                  verbose=True)
 
     # 如果使用自动混合精度（AMP）
     if args.amp:

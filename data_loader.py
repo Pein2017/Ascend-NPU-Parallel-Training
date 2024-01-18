@@ -9,8 +9,8 @@ def get_dataloaders(data_path: str,
                     batch_size: int,
                     num_workers: int = 4,
                     split_ratio: float = 0.9,
-                    distributed: bool = False,
-                    download: bool = False) -> tuple:
+                    distributed: bool = True,
+                    download: bool = True) -> tuple:
     """
     创建并返回CIFAR10数据集的数据加载器。
 

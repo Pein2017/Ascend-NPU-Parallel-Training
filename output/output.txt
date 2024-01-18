@@ -1,0 +1,18 @@
+/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/main_mine.py:35: UserWarning: Deterministic mode can slow down training.
+  warnings.warn('Deterministic mode can slow down training.')
+loading model...
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet101_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet101_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
+Use GPU/NPU: 0 for training
+Use GPU/NPU: 1 for training
+Use GPU/NPU: 2 for training
+Use GPU/NPU: 3 for training
+Use GPU/NPU: 7 for training
+Use GPU/NPU: 5 for training
+Use GPU/NPU: 6 for training
+Use GPU/NPU: 4 for training
+--------\\\\\\\\||||||||////////--------\\\\\\\\||||||||////////--------\\\\\\\\||||||||////////--------\\\\\\\\||||||||////////--------\\\\\\\\|
