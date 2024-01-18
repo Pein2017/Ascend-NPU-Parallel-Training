@@ -1,44 +1,68 @@
 import argparse
 import torchvision.models as models
 
+default_config = {
+    'data': '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar10_data',
+    'arch': 'resnet18',
+    'workers': 4,
+    'epochs': 5,
+    'start_epoch': 1,
+    'batch_size': 256,
+    'lr': 0.01,
+    'momentum': 0.9,
+    'weight_decay': 1e-4,
+    'print_freq': 5,
+    'checkpoint_path':
+    '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints',
+    'resume': False,
+    'evaluate': True,
+    'pretrained': True,
+    'world_size': 1,
+    'rank': 0,
+    'dist_url': 'tcp://192.168.10.31:23456',
+    'dist_backend': 'hccl',
+    'seed': 17,
+    'gpu': None,
+    'multiprocessing_distributed': True,
+    'dummy': False,
+    'device': 'npu',
+    'addr': '192.168.10.31',
+    'device_list': '0,1,2,3,4,5,6,7',
+    'amp': True,
+    'loss_scale': 1024.,
+    'opt_level': 'O2',
+}
 
-def manually_get_parse() -> argparse.ArgumentParser:
-    # 创建一个 ArgumentParser 实例
-    parser = argparse.ArgumentParser(
-        description='PyTorch CIFAR-10 Training with ResNet18')
 
-    # 设置默认参数
-    parser.set_defaults(
-        data='/home/HW/Pein/cifar10_data/',  # 数据集路径
-        arch='resnet34',  # 使用的网络架构
-        workers=4,  # 数据加载时的工作进程数
-        epochs=100,  # 训练的总轮次
-        start_epoch=1,  # 起始轮次
-        batch_size=512,  # 每批处理的样本数量
-        lr=0.015,  # 学习率
-        momentum=0.9,  # 动量
-        weight_decay=1e-4,  # 权重衰减
-        print_freq=50,  # 打印频率
-        resume='',  # 恢复训练的模型路径
-        evaluate=True,  # 是否在验证集上评估模型
-        pretrained=True,  # 是否使用预训练模型
-        world_size=1,  # 分布式训练的世界大小
-        rank=0,  # 分布式训练的节点排名
-        dist_url='tcp://192.168.10.31:23456',  # 分布式训练的URL
-        dist_backend='hccl',  # 分布式训练使用的后端
-        seed=17,  # 随机种子
-        gpu=None,  # 使用的GPU ID
-        multiprocessing_distributed=True,  # 是否使用多进程分布式训练
-        dummy=False,  # 是否使用假数据进行基准测试
-        device='npu',  # 使用的设备类型，如npu或gpu
-        addr='192.168.10.31',  # 主节点地址
-        device_list='0,1,2,3,4,5,6,7',  # 使用的设备列表
-        amp=True,  # 是否使用自动混合精度
-        loss_scale=1024.,  # 混合精度训练的损失缩放，
-        opt_level='O2',
-    )
+def manually_get_parse(config: dict) -> argparse.ArgumentParser:
+    """
+    创建并配置命令行参数解析器。
+
+    :param config: 包含默认配置的字典。
+    :return: 配置好的解析器
+    """
+    parser = argparse.ArgumentParser(description='PyTorch CIFAR-10 Training')
+
+    for key, value in config.items():
+        if isinstance(value, bool):
+            parser.add_argument(f'--{key}',
+                                type=lambda x: (str(x).lower() == 'true'),
+                                default=value,
+                                help=f'{key} (default: {value})')
+        elif value is None:
+            parser.add_argument(f'--{key}',
+                                default=value,
+                                help=f'{key} (default: {value})')
+        else:
+            parser.add_argument(f'--{key}',
+                                type=type(value),
+                                default=value,
+                                help=f'{key} (default: {value})')
 
     return parser
+
+
+configured_parser = manually_get_parse(default_config)
 
 
 def get_parse_args() -> argparse.Namespace:
