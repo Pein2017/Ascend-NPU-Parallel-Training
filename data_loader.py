@@ -7,6 +7,7 @@ import os
 
 def get_dataloaders(data_path: str,
                     batch_size: int,
+                    num_workers: int = 4,
                     split_ratio: float = 0.9,
                     distributed: bool = False,
                     download: bool = False) -> tuple:
@@ -68,23 +69,23 @@ def get_dataloaders(data_path: str,
                               shuffle=(train_sampler is None),
                               sampler=train_sampler,
                               drop_last=True,
-                              num_workers=4)
+                              num_workers=num_workers)
     val_loader = DataLoader(val_dataset,
                             batch_size=batch_size,
                             shuffle=False,
                             sampler=val_sampler,
                             drop_last=True,
-                            num_workers=4)
+                            num_workers=num_workers)
     test_loader = DataLoader(test_dataset,
                              batch_size=batch_size,
                              shuffle=False,
-                             num_workers=4)
+                             num_workers=num_workers)
 
     return train_loader, val_loader, test_loader, train_sampler, val_sampler
 
 
 if __name__ == '__main__':
-    
+
     current_script_path = os.path.abspath(__file__)
     # 获取当前脚本所在的目录
     current_script_dir = os.path.dirname(current_script_path)
@@ -93,11 +94,15 @@ if __name__ == '__main__':
 
     # 检查数据路径是否存在且不为空
     if os.path.exists(data_path) and os.listdir(data_path):
-        print(f"Dataset '{data_path}' already exists and is not empty. Skipping download.")
+        print(
+            f"Dataset '{data_path}' already exists and is not empty. Skipping download."
+        )
     else:
         # 确保数据路径存在
         os.makedirs(data_path, exist_ok=True)
         # 执行get_dataloaders
-        _ = get_dataloaders(data_path=data_path, batch_size=1, distributed=False, download=True)
+        _ = get_dataloaders(data_path=data_path,
+                            batch_size=1,
+                            distributed=False,
+                            download=True)
         print(f"Data downloaded to '{data_path}'.")
-

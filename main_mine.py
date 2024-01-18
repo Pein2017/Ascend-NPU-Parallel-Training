@@ -59,17 +59,32 @@ def verify_and_download_dataset(args: Namespace) -> None:
 
 def run_training(args: Namespace) -> None:
     """执行训练流程"""
-    ngpus_per_node = torch.cuda.device_count(
-    ) if args.device != 'npu' else len(args.process_device_map)
+
+    # 设置分布式URL和world_size
+    if args.dist_url == "env://" and args.world_size == -1:
+        args.world_size = int(os.environ["WORLD_SIZE"])
+
+    # 确定是否启用分布式处理
     args.distributed = args.world_size > 1 or args.multiprocessing_distributed
-    args.world_size = ngpus_per_node * args.world_size if args.multiprocessing_distributed else args.world_size
+
+    # 设备映射
     args.process_device_map = device_id_to_process_device_map(args.device_list)
 
+    # 确定每个节点的设备数量
+    ngpus_per_node = len(
+        args.process_device_map
+    ) if args.device == 'npu' else torch.cuda.device_count()
+
+    # 处理多进程分布式训练
     if args.multiprocessing_distributed:
+        args.world_size *= ngpus_per_node
+        print('loading model...')
+        model = load_or_create_model(args)
         mp.spawn(main_worker,
                  nprocs=ngpus_per_node,
                  args=(ngpus_per_node, args))
     else:
+        raise Exception('Not support single process training now!')
         main_worker(args.gpu, ngpus_per_node, args)
 
 

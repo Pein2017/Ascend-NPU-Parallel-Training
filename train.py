@@ -139,7 +139,6 @@ def run_training_loop(args: Namespace,
 
         # 训练一个epoch
         train(train_loader, model, criterion, optimizer, epoch, device, args)
-        print(f'trained on epoch on npu:{args.gpu} \n')
         # 在全局rank为0的GPU上执行验证
         if args.gpu == 0:
             acc1 = validate(val_loader, model, criterion, args)

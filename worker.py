@@ -1,5 +1,6 @@
 import os
-from typing import Optional, Union, Namespace
+from typing import Optional, Union
+from argparse import Namespace
 
 import torch
 import torch.nn as nn
@@ -45,6 +46,7 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
     # 调整batch_size和workers
     args.batch_size = int(args.batch_size / ngpus_per_node)
     args.workers = int((args.workers + ngpus_per_node - 1) / ngpus_per_node)
+    init_distributed_training(args, ngpus_per_node, gpu)
 
     # 数据加载代码
     if args.dummy:
@@ -56,12 +58,13 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
                                         transforms.ToTensor())
     else:
         # CIFAR-10数据集的实际目录
-        data_path = args.data  # 例如：'/home/HW/Pein/cifar10_data/cifar-10-batches-py'
+        data_path = args.data
         batch_size = args.batch_size
-
+        num_workers = args.workers
+        if_distributed = args.distributed
         # 获取数据加载器和采样器
         train_loader, val_loader, test_loader, train_sampler, val_sampler = get_dataloaders(
-            data_path, args.batch_size, distributed=args.distributed)
+            data_path, batch_size, num_workers, distributed=if_distributed)
 
     # 定义损失函数（标准）和优化器
     criterion = nn.CrossEntropyLoss().to(device)  # 将损失函数也移到相应设备
@@ -79,12 +82,12 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
 
     # 如果使用分布式数据并行
     if args.distributed:
-        init_distributed_training(args, ngpus_per_node, gpu)
         model = torch.nn.parallel.DistributedDataParallel(
             model,
             device_ids=[args.gpu] if args.device == 'gpu' else None,
             broadcast_buffers=False)
     elif args.device == 'gpu':
+        print('nonono')
         model = torch.nn.DataParallel(model, device_ids=None)
     else:
         raise ValueError('Only DistributedDataParallel is supported.')
@@ -97,8 +100,11 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
     cudnn.benchmark = False
 
     # 保存检查点的函数
+    checkpoint_folder = args.checkpoint_path
+
+    # 定义checkpoint保存函数
     save_checkpoint_fn = lambda checkpoint, is_best: save_checkpoint(
-        checkpoint, is_best)
+        checkpoint, is_best, checkpoint_folder)
 
     # 运行训练循环
     run_training_loop(args,
@@ -112,6 +118,7 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
                       train_sampler,
                       ngpus_per_node=ngpus_per_node,
                       amp=amp)
+
     # 如果指定了评估，则执行验证过程并返回
     if args.evaluate and args.gpu == 0:
         print('Fianl validating at NPU:{}'.format(args.gpu))

@@ -67,24 +67,24 @@ def device_id_to_process_device_map(
     return process_device_map
 
 
-def set_device(device: torch.device) -> torch.device:
-    """
-    设置训练设备为GPU、NPU或CPU。
- 
-    :param device: PyTorch 设备对象.
-    :return: 设置的PyTorch设备对象。
-    """
-    if device.type == "npu":
-        torch_npu.npu.set_device(device)
-        print(f"set device to {device}")
-        return device
+def set_device(args: Namespace) -> torch.device:
+    """设置训练设备为GPU或NPU"""
+    if args.device == 'npu':
 
-    elif device.type == "cuda" and torch.cuda.is_available():
-        return device
+        loc = 'npu:{}'.format(args.gpu)
+        torch_npu.npu.set_device(loc)
+        print(f'set device to {loc}')
+        return torch.device(loc)
+
+    elif args.device == 'gpu' and torch.cuda.is_available():
+
+        return torch.device('cuda:{}'.format(args.gpu) if args.gpu else 'cuda')
 
     else:
-        print("warning: CPU is used for training!!!")
-        return torch.device("cpu")
+
+        print('warning: CPU is used for training!!!')
+
+        return torch.device('cpu')
 
 
 def init_distributed_training(args: Namespace, ngpus_per_node: int,
@@ -97,7 +97,6 @@ def init_distributed_training(args: Namespace, ngpus_per_node: int,
     :param ngpus_per_node: 每个节点上的GPU数量。
     :param gpu: 指定当前进程应使用的GPU索引，可以是字符串或整数.
     """
-
     if args.distributed:
         if args.dist_url == "env://" and args.rank == -1:
             args.rank = int(os.environ["RANK"])
