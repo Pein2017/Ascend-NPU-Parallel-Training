@@ -3,16 +3,16 @@ import torchvision.models as models
 
 default_config = {
     'data': '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar10_data',
-    'arch': 'resnet101',
+    'arch': 'resnet18',
     'workers': 4,
-    'epochs': 200,
+    'epochs': 30,
     'start_epoch': 1,
     'batch_size': 512,
-    'split_ratio': 0.9,
-    'lr': 0.1,
+    'split_ratio': 0.95,
+    'lr': 0.01,
     'momentum': 0.9,
     'weight_decay': 1e-4,
-    'print_freq': 10,
+    'print_freq': 5,
     'checkpoint_path':
     '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints',
     'resume': False,

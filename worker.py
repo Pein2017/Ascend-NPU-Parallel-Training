@@ -73,14 +73,14 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
 
     # 定义损失函数（标准）和优化器
     criterion = nn.CrossEntropyLoss().to(device)  # 将损失函数也移到相应设备
-    optimizer = optim.Adam(model.parameters(),
-                           lr=args.lr,
-                           weight_decay=args.weight_decay)
+    # optimizer = optim.Adam(model.parameters(),
+    #                        lr=args.lr,
+    #                        weight_decay=args.weight_decay)
 
-    # optimizer = optim.SGD(model.parameters(),
-    #                       args.lr,
-    #                       momentum=args.momentum,
-    #                       weight_decay=args.weight_decay)
+    optimizer = optim.SGD(model.parameters(),
+                          args.lr,
+                          momentum=args.momentum,
+                          weight_decay=args.weight_decay)
 
     # optimizer = optim.lr_scheduler.ReduceLROnPlateau(optimizer,
     #                                                  mode='min',
@@ -137,5 +137,5 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
     # 如果指定了评估，则执行验证过程并返回
     if args.evaluate and args.gpu == 0:
         print('Fianl validating at NPU:{}'.format(args.gpu))
-        validate(val_loader, model, criterion, args)
+        validate(test_loader, model, criterion, args)
         return

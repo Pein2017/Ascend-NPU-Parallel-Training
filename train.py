@@ -5,6 +5,7 @@ from argparse import Namespace
 from typing import Optional, Callable
 from torch.utils.data import DataLoader, Sampler
 from torch import nn, optim
+import torch.distributed as dist
 
 
 def train(train_loader: DataLoader, model: torch.nn.Module,
@@ -23,11 +24,11 @@ def train(train_loader: DataLoader, model: torch.nn.Module,
     """
     batch_time = AverageMeter('Time', ':6.3f')
     data_time = AverageMeter('Data', ':6.3f')
-    losses = AverageMeter('损失', ':.4e')
+    losses_meter = AverageMeter('损失', ':.4e')
     top1 = AverageMeter('准确率@1', ':6.2f')
     top5 = AverageMeter('准确率@5', ':6.2f')
     progress = ProgressMeter(len(train_loader),
-                             [batch_time, data_time, losses, top1, top5],
+                             [batch_time, data_time, losses_meter, top1, top5],
                              prefix="Epoch: [{}]".format(epoch))
 
     model.train()  # 切换到训练模式
@@ -43,7 +44,7 @@ def train(train_loader: DataLoader, model: torch.nn.Module,
         loss = criterion(output, target)
 
         acc1, acc5 = accuracy(output, target, topk=(1, 5))
-        losses.update(loss.item(), images.size(0))
+        losses_meter.update(loss.item(), images.size(0))
         top1.update(acc1[0], images.size(0))
         top5.update(acc5[0], images.size(0))
 
@@ -54,8 +55,10 @@ def train(train_loader: DataLoader, model: torch.nn.Module,
         batch_time.update(time.time() - end)
         end = time.time()
 
-        if i % args.print_freq == 0:
-            progress.display(i + 1)
+        losses_meter.all_reduce()
+        if dist.get_rank() == 0:
+            if i % args.print_freq == 0:
+                progress.display(i + 1)
 
 
 def validate(val_loader: DataLoader, model: torch.nn.Module,
@@ -71,10 +74,11 @@ def validate(val_loader: DataLoader, model: torch.nn.Module,
     :return: 验证集上的平均准确率。
     """
     batch_time = AverageMeter('Time', ':6.3f')
-    losses = AverageMeter('Loss', ':.4e')
+    losses_meter = AverageMeter('Loss', ':.4e')
     top1 = AverageMeter('Acc@1', ':6.2f')
     top5 = AverageMeter('Acc@5', ':6.2f')
-    progress = ProgressMeter(len(val_loader), [batch_time, losses, top1, top5],
+    progress = ProgressMeter(len(val_loader),
+                             [batch_time, losses_meter, top1, top5],
                              prefix='Test: ')
 
     model.eval()  # 切换到评估模式
@@ -89,13 +93,14 @@ def validate(val_loader: DataLoader, model: torch.nn.Module,
             loss = criterion(output, target)
 
             acc1, acc5 = accuracy(output, target, topk=(1, 5))
-            losses.update(loss.item(), images.size(0))
+            losses_meter.update(loss.item(), images.size(0))
             top1.update(acc1[0], images.size(0))
             top5.update(acc5[0], images.size(0))
 
             batch_time.update(time.time() - end)
             end = time.time()
 
+            # losses_meter.all_reduce()
             if i % args.print_freq == 0:
                 progress.display(i + 1)
 
@@ -140,7 +145,7 @@ def run_training_loop(args: Namespace,
         # 训练一个epoch
         train(train_loader, model, criterion, optimizer, epoch, device, args)
         # 在全局rank为0的GPU上执行验证
-        if args.gpu == 0:
+        if dist.get_rank() == 0:
             acc1 = validate(val_loader, model, criterion, args)
             is_best = acc1 > best_acc1
             best_acc1 = max(acc1, best_acc1)
