@@ -11,7 +11,11 @@ from torch.utils.data import DataLoader, Sampler
 from utilis import AverageMeter, ProgressMeter, accuracy
 
 
+<<<<<<< HEAD
 def create_meters(batch_size: int,
+=======
+def create_meters(batch_size: into,
+>>>>>>> b8f076adc2545ae3e406a7a80b071fea9a695191
                   prefix: str) -> Tuple[List[AverageMeter], ProgressMeter]:
     """
     创建用于跟踪训练或验证过程中的各项指标的度量器。
@@ -20,7 +24,10 @@ def create_meters(batch_size: int,
     :param prefix: 显示信息前的前缀字符串。
     :return: 包含度量器列表和进度度量器的元组。
     """
+<<<<<<< HEAD
 
+=======
+>>>>>>> b8f076adc2545ae3e406a7a80b071fea9a695191
     batch_processing_time = AverageMeter('批次处理时间', ':6.3f')
     data_loading_time = AverageMeter('数据加载时间', ':6.3f')
     losses_meter = AverageMeter('损失', ':.4e')

@@ -267,6 +267,7 @@ class ProgressMeter(object):
         entries = [" *"]
         entries += [meter.summary() for meter in self.meters]
         print(" ".join(entries))
+        print('\n')
 
     def _get_batch_fmtstr(self, num_batches):
         """生成批次格式化字符串。"""
