@@ -1,9 +1,10 @@
+from argparse import Namespace
+from typing import Callable
+
 import torch
 import torch.nn as nn  # noqa: F401
 import torch_npu  # noqa: F401
-from typing import Callable
 import torchvision.models as models
-from argparse import Namespace
 
 
 class CIFAR10Net(nn.Module):

@@ -1,15 +1,18 @@
-from enum import Enum
 import os
 import shutil
+import warnings
+from argparse import Namespace
+from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
 
 import torch
 import torch.distributed as dist
 import torch_npu
+from apex import amp
 from torch.nn import Module
 from torch.optim import Optimizer
-from argparse import Namespace
-from apex import amp
+
+warnings.filterwarnings("ignore")
 
 
 def load_checkpoint(
@@ -167,6 +170,7 @@ class AverageMeter:
         self.name = name
         self.fmt = fmt
         self.summary_type = summary_type
+        self.total = torch.tensor([0, 0], dtype=torch.float32)  # 初始化为零张量
         self.reset()
 
     def reset(self):
@@ -189,26 +193,23 @@ class AverageMeter:
         self.avg = self.sum / self.count
 
     def all_reduce(self):
-        """
-        当使用分布式训练时，这个方法可以帮助同步不同进程间的统计数据。
-        """
-        device = torch.device("npu:0" if torch.npu.is_available() else "cpu")
-        total = torch.tensor([self.sum, self.count],
-                             dtype=torch.float32,
-                             device=device)
-
-        try:
-            dist.all_reduce(total, dist.ReduceOp.SUM, async_op=False)
-        except Exception as e:
-            print(f"Error in all_reduce: {e}")
-            return
-
-        self.sum, self.count = total.tolist()
+        """当使用分布式训练时，同步不同进程间的统计数据。"""
+        current_device = torch.device(f"npu:{dist.get_rank()}")
+        world_size = dist.get_world_size()
+        self.total = torch.tensor([self.sum, self.count],
+                                  dtype=torch.float32,
+                                  device=current_device)
+        dist.all_reduce(self.total, dist.ReduceOp.SUM, async_op=False)
+        self.sum = self.total[0].item() / world_size
+        self.count = self.total[1].item() / world_size
         self.avg = self.sum / self.count
 
     def __str__(self):
-        """返回格式化的统计信息字符串。"""
-        fmtstr = "{name} {val" + self.fmt + "} ({avg" + self.fmt + "})"
+        """返回格式化的统计信息字符串"""
+        if '时间' in self.name:
+            fmtstr = "{name} {val:.3f}秒 (平均: {avg:.3f}秒)"
+        else:
+            fmtstr = "{name} {val" + self.fmt + "} (平均: {avg" + self.fmt + "})"
         return fmtstr.format(**self.__dict__)
 
     def summary(self):
@@ -259,6 +260,7 @@ class ProgressMeter(object):
         entries = [self.prefix + self.batch_fmtstr.format(batch)]
         entries += [str(meter) for meter in self.meters]
         print("\t".join(entries))
+        print('\n')
 
     def display_summary(self):
         """显示所有度量指标的摘要信息。"""
