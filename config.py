@@ -1,18 +1,19 @@
 import argparse
+
 import torchvision.models as models
 
 default_config = {
     'data': '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar10_data',
-    'arch': 'resnet18',
-    'workers': 4,
-    'epochs': 30,
+    'arch': 'resnet101',
+    'workers': 0,
+    'epochs': 100,
     'start_epoch': 1,
-    'batch_size': 512,
-    'split_ratio': 0.95,
-    'lr': 0.01,
+    'batch_size': 1024,
+    'split_ratio': 0.9,
+    'lr': 0.1,
     'momentum': 0.9,
     'weight_decay': 1e-4,
-    'print_freq': 5,
+    'print_freq': 20,
     'checkpoint_path':
     '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints',
     'resume': False,

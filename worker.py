@@ -1,19 +1,19 @@
 import os
-from typing import Optional, Union
 from argparse import Namespace
+from typing import Optional, Union
 
 import torch
+import torch.backends.cudnn as cudnn
 import torch.nn as nn
 import torch.optim as optim
 import torchvision.datasets as datasets
 import torchvision.transforms as transforms
-import torch.backends.cudnn as cudnn
 from apex import amp
-
-from model import load_or_create_model
 from data_loader import get_dataloaders
-from train import validate, run_training_loop
-from utilis import init_distributed_training, set_device, save_checkpoint, load_checkpoint
+from model import load_or_create_model
+from train import run_training_loop, validate
+from utilis import (init_distributed_training, load_checkpoint,
+                    save_checkpoint, set_device)
 
 
 def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
@@ -50,12 +50,41 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
 
     # 数据加载代码
     if args.dummy:
+        from torch.utils.data import DataLoader
+        from torch.utils.data.distributed import DistributedSampler
         print("=> Dummy data is used!")
         # 使用假数据来模拟CIFAR-10的数据结构和大小
-        train_dataset = datasets.FakeData(50000, (3, 32, 32), 10,
+        train_dataset = datasets.FakeData(1000, (3, 32, 32), 10,
                                           transforms.ToTensor())
-        val_dataset = datasets.FakeData(10000, (3, 32, 32), 10,
+        val_dataset = datasets.FakeData(100, (3, 32, 32), 10,
                                         transforms.ToTensor())
+        test_dataset = datasets.FakeData(100, (3, 32, 32), 10,
+                                         transforms.ToTensor())
+
+        # 根据是否进行分布式训练来创建采样器
+        if args.distributed:
+            train_sampler = DistributedSampler(train_dataset)
+            val_sampler = DistributedSampler(val_dataset,
+                                             shuffle=False,
+                                             drop_last=True)
+        else:
+            train_sampler = None
+            val_sampler = None
+
+        # 创建 DataLoader 实例
+        train_loader = DataLoader(train_dataset,
+                                  batch_size=args.batch_size,
+                                  shuffle=True,
+                                  num_workers=args.workers)
+        val_loader = DataLoader(val_dataset,
+                                batch_size=args.batch_size,
+                                shuffle=False,
+                                num_workers=args.workers)
+        test_loader = DataLoader(test_dataset,
+                                 batch_size=args.batch_size,
+                                 shuffle=False,
+                                 num_workers=args.workers)
+
     else:
         # CIFAR-10数据集的实际目录
         data_path = args.data
@@ -65,11 +94,13 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         split_ratio = args.split_ratio
         # 获取数据加载器和采样器
         train_loader, val_loader, test_loader, train_sampler, val_sampler = get_dataloaders(
-            data_path,
-            batch_size,
-            num_workers,
-            split_ratio,
-            distributed=if_distributed)
+            data_path=data_path,
+            dataset_name='cifar10',
+            batch_size=batch_size,
+            num_workers=num_workers,
+            split_ratio=split_ratio,
+            distributed=if_distributed,
+        )
 
     # 定义损失函数（标准）和优化器
     criterion = nn.CrossEntropyLoss().to(device)  # 将损失函数也移到相应设备
@@ -136,6 +167,6 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
 
     # 如果指定了评估，则执行验证过程并返回
     if args.evaluate and args.gpu == 0:
-        print('Fianl validating at NPU:{}'.format(args.gpu))
+        print('Final validating at NPU:{}'.format(args.gpu))
         validate(test_loader, model, criterion, args)
         return

@@ -1,11 +1,14 @@
 import time
-import torch
-from utilis import AverageMeter, ProgressMeter, accuracy
 from argparse import Namespace
-from typing import Optional, Callable
-from torch.utils.data import DataLoader, Sampler
-from torch import nn, optim
+from typing import Callable, List, Optional, Tuple
+
+import torch
 import torch.distributed as dist
+from torch import Tensor, nn, optim
+from torch.nn import Module
+from torch.utils.data import DataLoader, Sampler
+from train_utilis import create_meters, process_batch, update_meters
+from utilis import AverageMeter, ProgressMeter, accuracy
 
 
 def train(train_loader: DataLoader, model: torch.nn.Module,
@@ -22,43 +25,39 @@ def train(train_loader: DataLoader, model: torch.nn.Module,
     :param device: 计算设备。
     :param args: 训练参数。
     """
-    batch_time = AverageMeter('Time', ':6.3f')
-    data_time = AverageMeter('Data', ':6.3f')
-    losses_meter = AverageMeter('损失', ':.4e')
-    top1 = AverageMeter('准确率@1', ':6.2f')
-    top5 = AverageMeter('准确率@5', ':6.2f')
-    progress = ProgressMeter(len(train_loader),
-                             [batch_time, data_time, losses_meter, top1, top5],
-                             prefix="Epoch: [{}]".format(epoch))
+    meters, progress = create_meters(len(train_loader), f"Epoch: [{epoch}]")
+    batch_processing_time, data_loading_time, losses_meter, top1, top5 = meters
 
     model.train()  # 切换到训练模式
 
     end = time.time()
-    for i, (images, target) in enumerate(train_loader):
-        data_time.update(time.time() - end)
+    for i, batch in enumerate(train_loader):
+        data_loading_time.update(time.time() - end)
 
-        images = images.to(device, non_blocking=True)
-        target = target.to(device, non_blocking=True)
-
-        output = model(images)
-        loss = criterion(output, target)
-
-        acc1, acc5 = accuracy(output, target, topk=(1, 5))
-        losses_meter.update(loss.item(), images.size(0))
-        top1.update(acc1[0], images.size(0))
-        top5.update(acc5[0], images.size(0))
+        loss, acc1, acc5 = process_batch(batch,
+                                         model,
+                                         criterion,
+                                         device,
+                                         is_training=True)
+        update_meters([losses_meter, top1, top5], loss, acc1, acc5,
+                      batch[0].size(0))
 
         optimizer.zero_grad()
         loss.backward()
         optimizer.step()
 
-        batch_time.update(time.time() - end)
+        batch_processing_time.update(time.time() - end)
         end = time.time()
 
         losses_meter.all_reduce()
-        if dist.get_rank() == 0:
+        if args.gpu == 0:
             if i % args.print_freq == 0:
                 progress.display(i + 1)
+                print('\n')
+
+    # 显示训练过程的摘要
+    if args.gpu == 0:
+        progress.display_summary()
 
 
 def validate(val_loader: DataLoader, model: torch.nn.Module,
@@ -73,36 +72,28 @@ def validate(val_loader: DataLoader, model: torch.nn.Module,
 
     :return: 验证集上的平均准确率。
     """
-    batch_time = AverageMeter('Time', ':6.3f')
-    losses_meter = AverageMeter('Loss', ':.4e')
-    top1 = AverageMeter('Acc@1', ':6.2f')
-    top5 = AverageMeter('Acc@5', ':6.2f')
-    progress = ProgressMeter(len(val_loader),
-                             [batch_time, losses_meter, top1, top5],
-                             prefix='Test: ')
+    meters, progress = create_meters(len(val_loader), "Test: ")
+    batch_processing_time, _, losses_meter, top1, top5 = meters
 
     model.eval()  # 切换到评估模式
+    end = time.time()
 
-    with torch.no_grad():
+    for i, batch in enumerate(val_loader):
+
+        loss, acc1, acc5 = process_batch(batch,
+                                         model,
+                                         criterion,
+                                         args.device,
+                                         is_training=False)
+        update_meters([losses_meter, top1, top5], loss, acc1, acc5,
+                      batch[0].size(0))
+
+        batch_processing_time.update(time.time() - end)
         end = time.time()
-        for i, (images, target) in enumerate(val_loader):
-            images = images.to(args.device, non_blocking=True)
-            target = target.to(args.device, non_blocking=True)
 
-            output = model(images)
-            loss = criterion(output, target)
-
-            acc1, acc5 = accuracy(output, target, topk=(1, 5))
-            losses_meter.update(loss.item(), images.size(0))
-            top1.update(acc1[0], images.size(0))
-            top5.update(acc5[0], images.size(0))
-
-            batch_time.update(time.time() - end)
-            end = time.time()
-
-            # losses_meter.all_reduce()
-            if i % args.print_freq == 0:
-                progress.display(i + 1)
+        # losses_meter.all_reduce()
+        if i % args.print_freq == 0:
+            progress.display(i + 1)
 
     progress.display_summary()
 
@@ -145,13 +136,12 @@ def run_training_loop(args: Namespace,
         # 训练一个epoch
         train(train_loader, model, criterion, optimizer, epoch, device, args)
         # 在全局rank为0的GPU上执行验证
-        if dist.get_rank() == 0:
+        if args.gpu == 0:
             acc1 = validate(val_loader, model, criterion, args)
             is_best = acc1 > best_acc1
             best_acc1 = max(acc1, best_acc1)
 
             # 在全局rank为0的GPU上保存检查点
-            print(f'saving checkpoint at GPU:{args.gpu} \n ')
             checkpoint = {
                 'epoch': epoch + 1,
                 'arch': args.arch,
