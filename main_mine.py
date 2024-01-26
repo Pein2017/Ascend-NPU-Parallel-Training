@@ -1,36 +1,28 @@
 '''逐行测试时启用'''
-import sys
+# import sys
 
-sys.path.append('/data/Pein/Pytorch/Ascend-NPU-Parallel-Training')
+# sys.path.append('/data/Pein/Pytorch/Ascend-NPU-Parallel-Training')
 
 import os
 import random
-import sys
 import warnings
 from argparse import Namespace
-from typing import Optional, Union
 
 import torch
 import torch.backends.cudnn as cudnn
 import torch.multiprocessing as mp
-import torch.nn as nn
 import torch.nn.parallel
 import torch.optim
 import torch.utils.data
 import torch.utils.data.distributed
 import torch_npu  # noqa: F401
-import torchvision.datasets as datasets
-import torchvision.transforms as transforms
-from apex import amp
 
-warnings.filterwarnings("ignore")
+# warnings.filterwarnings("ignore")
 
 from config import configured_parser
 from data_loader import get_dataloaders
-from model import CIFAR10Net, load_or_create_model
-from train import run_training_loop, train, validate
-from utilis import (device_id_to_process_device_map, init_distributed_training,
-                    save_checkpoint, set_device)
+from model import load_or_create_model
+from utilis import (device_id_to_process_device_map, init_distributed_training)
 from worker import main_worker
 
 
@@ -54,15 +46,19 @@ def setup_environment(args: Namespace) -> None:
 
 def verify_and_download_dataset(args: Namespace) -> None:
     """验证数据集是否存在，若不存在则下载"""
+    download = False
     data_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                             'cifar10_data')
+                             f'{args.dataset_name}_data')
     if not os.path.exists(data_path) or not os.listdir(data_path):
         os.makedirs(data_path, exist_ok=True)
         _ = get_dataloaders(data_path=data_path,
+                            dataset_name=args.dataset_name,
                             batch_size=1,
                             distributed=False,
                             download=True)
         print(f"Data downloaded to '{data_path}'.")
+    else:
+        print(f"Data downloaded at '{data_path}'.")
 
 
 def run_training(args: Namespace) -> None:
@@ -86,8 +82,9 @@ def run_training(args: Namespace) -> None:
     # 处理多进程分布式训练
     if args.multiprocessing_distributed:
         args.world_size *= ngpus_per_node
-        print('loading model...')
+        print('Loading model...')
         model = load_or_create_model(args)
+        print(f'Model {args.arch} loaded')
         mp.spawn(main_worker,
                  nprocs=ngpus_per_node,
                  args=(ngpus_per_node, args))
@@ -97,8 +94,7 @@ def run_training(args: Namespace) -> None:
 
 
 def main():
-    # TODO: 最终打印一个全局的best_acc1，同时探索是否是global 还是 nonlocal变量
-    best_acc1 = 0
+
     args = configured_parser.parse_args()
     setup_environment(args)
     verify_and_download_dataset(args)

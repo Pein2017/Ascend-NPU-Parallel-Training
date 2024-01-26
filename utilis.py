@@ -1,6 +1,5 @@
 import os
 import shutil
-import warnings
 from argparse import Namespace
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
@@ -12,7 +11,7 @@ from apex import amp
 from torch.nn import Module
 from torch.optim import Optimizer
 
-warnings.filterwarnings("ignore")
+# warnings.filterwarnings("ignore")
 
 
 def load_checkpoint(
@@ -55,7 +54,7 @@ def device_id_to_process_device_map(
         device_list: List[Union[str, int]]) -> Dict[int, int]:
     """
     此函数接收一个设备ID列表，然后为每个设备ID分配一个进程ID。
-    
+
     :param device_list: 包含设备ID的列表，ID可以是字符串或整数类型。
     :return: 一个字典，其中键是进程ID（整数），值是对应的设备ID（整数）。
     """
@@ -73,21 +72,18 @@ def device_id_to_process_device_map(
 def set_device(args: Namespace) -> torch.device:
     """设置训练设备为GPU或NPU"""
     if args.device == 'npu':
-
         loc = 'npu:{}'.format(args.gpu)
+
         torch_npu.npu.set_device(loc)
-        print(f'set device to {loc}')
-        return torch.device(loc)
-
-    elif args.device == 'gpu' and torch.cuda.is_available():
-
-        return torch.device('cuda:{}'.format(args.gpu) if args.gpu else 'cuda')
-
+    elif args.device == 'gpu':
+        loc = 'cuda:{}'.format(args.gpu)
+        torch.cuda.set_device(loc)
+        print('Set device to', loc)
     else:
+        loc = 'cpu'
+        print('Set device to CPU')
 
-        print('warning: CPU is used for training!!!')
-
-        return torch.device('cpu')
+    return torch.device(loc)
 
 
 def init_distributed_training(args: Namespace, ngpus_per_node: int,
@@ -139,14 +135,14 @@ def save_checkpoint(state: dict,
         print(f"Error saving checkpoint: {e}")
 
 
-class Summary(Enum):
+class MetricType(Enum):
     NONE = 0
     AVERAGE = 1
-    SUM = 2
+    TOTAL_SUM = 2
     COUNT = 3
 
 
-class AverageMeter:
+class MetricTracker:
     """
     计算并存储平均值和当前值。
 
@@ -156,7 +152,7 @@ class AverageMeter:
     Attributes:
         name (str): 计量器的名称。
         fmt (str): 输出格式。
-        summary_type (Summary): 摘要类型，决定输出摘要的形式。
+        metric_type (MetricType): 决定输出计量的形式。
         val (float): 最新的数值。
         avg (float): 平均值。
         sum (float): 总和。
@@ -166,10 +162,10 @@ class AverageMeter:
     def __init__(self,
                  name: str,
                  fmt: str = ":f",
-                 summary_type: Summary = Summary.AVERAGE):
+                 metric_type: MetricType = MetricType.AVERAGE):
         self.name = name
         self.fmt = fmt
-        self.summary_type = summary_type
+        self.metric_type = metric_type
         self.total = torch.tensor([0, 0], dtype=torch.float32)  # 初始化为零张量
         self.reset()
 
@@ -213,67 +209,61 @@ class AverageMeter:
         return fmtstr.format(**self.__dict__)
 
     def summary(self):
-        """根据summary_type返回相应的摘要信息。"""
+        """根据metric_type返回相应的摘要信息。"""
         fmtstr = {
-            Summary.NONE: "",
-            Summary.AVERAGE: "{name} {avg:.3f}",
-            Summary.SUM: "{name} {sum:.3f}",
-            Summary.COUNT: "{name} {count:.3f}"
-        }.get(self.summary_type, "")
+            MetricType.NONE: "",
+            MetricType.AVERAGE: "{name} {avg:.3f}",
+            MetricType.TOTAL_SUM: "{name} {sum:.3f}",
+            MetricType.COUNT: "{name} {count:.3f}"
+        }.get(self.metric_type, "")
 
         if fmtstr == "":
-            raise ValueError("Invalid summary type %r" % self.summary_type)
+            raise ValueError("Invalid summary type %r" % self.metric_type)
 
         return fmtstr.format(**self.__dict__)
 
 
-class ProgressMeter(object):
+class ProgressMeter:
     """
     进度度量器，用于显示训练过程中的进度和指标。
-
-    此类提供了方法来格式化并打印训练过程中的进度和不同度量指标的值。可以用于显示当前批次的进度，以及累积的平均值、总和等。
-
-    Attributes:
-        num_batches (int): 批次总数。
-        meters (list of AverageMeter): 存储各种度量指标的对象列表。
-        prefix (str): 打印信息前的前缀字符串。
     """
 
-    def __init__(self, num_batches, meters, prefix=""):
+    def __init__(self,
+                 total_batches: int,
+                 trackers: List[MetricTracker],
+                 prefix: str = ""):
         """
         初始化进度度量器。
-
-        :param num_batches: 批次总数。
-        :param meters: 度量器对象的列表。
+        :param total_batches: 批次总数。
+        :param trackers: MetricTracker 对象的列表。
         :param prefix: 显示信息前的前缀字符串。
         """
-        self.batch_fmtstr = self._get_batch_fmtstr(num_batches)
-        self.meters = meters
+        self.batch_format_str = self._generate_batch_format_string(
+            total_batches)
+        self.trackers = trackers
         self.prefix = prefix
 
-    def display(self, batch):
+    def display(self, current_batch: int):
         """
         显示当前批次的进度和度量指标。
-
-        :param batch: 当前批次编号。
+        :param current_batch: 当前批次编号。
         """
-        entries = [self.prefix + self.batch_fmtstr.format(batch)]
-        entries += [str(meter) for meter in self.meters]
+        entries = [
+            f"{self.prefix}{self.batch_format_str.format(current_batch)}"
+        ]
+        entries += [str(tracker) for tracker in self.trackers]
         print("\t".join(entries))
-        print('\n')
 
     def display_summary(self):
         """显示所有度量指标的摘要信息。"""
-        entries = [" *"]
-        entries += [meter.summary() for meter in self.meters]
+        entries = [f"{self.prefix} *"]
+        entries += [tracker.summary() for tracker in self.trackers]
         print(" ".join(entries))
-        print('\n')
 
-    def _get_batch_fmtstr(self, num_batches):
+    def _generate_batch_format_string(self, total_batches: int):
         """生成批次格式化字符串。"""
-        num_digits = len(str(num_batches // 1))
-        fmt = "{:" + str(num_digits) + "d}"
-        return "[" + fmt + "/" + fmt.format(num_batches) + "]"
+        num_digits = len(str(total_batches))
+        return f"[{{:>{num_digits}}} / {total_batches}]"
 
 
 def accuracy(output: torch.Tensor, target: torch.Tensor,

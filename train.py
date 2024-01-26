@@ -1,19 +1,24 @@
 import time
 from argparse import Namespace
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, Optional, Tuple
 
 import torch
 import torch.distributed as dist
-from torch import Tensor, nn, optim
+from torch import nn, optim
 from torch.nn import Module
 from torch.utils.data import DataLoader, Sampler
+from torch.utils.tensorboard import SummaryWriter
 from train_utilis import create_meters, process_batch, update_meters
-from utilis import AverageMeter, ProgressMeter, accuracy
 
 
-def train(train_loader: DataLoader, model: torch.nn.Module,
-          criterion: torch.nn.Module, optimizer: torch.optim.Optimizer,
-          epoch: int, device: torch.device, args: Namespace) -> None:
+def train(train_loader: DataLoader,
+          model: torch.nn.Module,
+          criterion: torch.nn.Module,
+          optimizer: torch.optim.Optimizer,
+          current_epoch: int,
+          device: torch.device,
+          args: Namespace,
+          writer: SummaryWriter = None) -> None:
     """
     训练模型的函数。
 
@@ -21,24 +26,26 @@ def train(train_loader: DataLoader, model: torch.nn.Module,
     :param model: 训练模型。
     :param criterion: 损失函数。
     :param optimizer: 优化器。
-    :param epoch: 当前训练周期。
+    :param current_epoch: 当前训练周期。
     :param device: 计算设备。
     :param args: 训练参数。
     """
-    meters, progress = create_meters(len(train_loader), f"Epoch: [{epoch}]")
-    batch_processing_time, data_loading_time, losses_meter, top1, top5 = meters
+
+    meters, progress = create_meters(len(train_loader),
+                                     f"Epoch:[{current_epoch}]")
+    losses_meter, top1, top5, batch_processing_time, data_loading_time = meters
 
     model.train()  # 切换到训练模式
 
     end = time.time()
     for i, batch in enumerate(train_loader):
         data_loading_time.update(time.time() - end)
-
         loss, acc1, acc5 = process_batch(batch,
                                          model,
                                          criterion,
                                          device,
                                          is_training=True)
+
         update_meters([losses_meter, top1, top5], loss, acc1, acc5,
                       batch[0].size(0))
 
@@ -49,19 +56,28 @@ def train(train_loader: DataLoader, model: torch.nn.Module,
         batch_processing_time.update(time.time() - end)
         end = time.time()
 
-        losses_meter.all_reduce()
-        if args.gpu == 0:
-            if i % args.print_freq == 0:
-                progress.display(i + 1)
-                print('\n')
+        if i % args.print_freq == 0 and args.gpu == 0:
+            progress.display(i + 1)
+            print('\n')
 
+    # 同步设备间的度量数据
+    losses_meter.all_reduce()
+    top1.all_reduce()
+    top5.all_reduce()
     # 显示训练过程的摘要
     if args.gpu == 0:
         progress.display_summary()
+        if writer:
+            writer.add_scalar('Loss/train', losses_meter.avg, current_epoch)
+            writer.add_scalar('Top1/train', top1.avg, current_epoch)
 
 
-def validate(val_loader: DataLoader, model: torch.nn.Module,
-             criterion: torch.nn.Module, args: Namespace) -> float:
+def validate(val_loader: DataLoader,
+             model: torch.nn.Module,
+             criterion: torch.nn.Module,
+             args: Namespace,
+             current_epoch: int,
+             writer: SummaryWriter = None) -> float:
     """
     在验证数据集上验证模型的性能。
 
@@ -72,7 +88,7 @@ def validate(val_loader: DataLoader, model: torch.nn.Module,
 
     :return: 验证集上的平均准确率。
     """
-    meters, progress = create_meters(len(val_loader), "Test: ")
+    meters, progress = create_meters(len(val_loader), "Test:")
     batch_processing_time, _, losses_meter, top1, top5 = meters
 
     model.eval()  # 切换到评估模式
@@ -91,9 +107,12 @@ def validate(val_loader: DataLoader, model: torch.nn.Module,
         batch_processing_time.update(time.time() - end)
         end = time.time()
 
-        # losses_meter.all_reduce()
         if i % args.print_freq == 0:
             progress.display(i + 1)
+
+    if writer:
+        writer.add_scalar('Loss/val', losses_meter.avg, current_epoch)
+        writer.add_scalar('Top1/val', top1.avg, current_epoch)
 
     progress.display_summary()
 
@@ -110,7 +129,7 @@ def run_training_loop(args: Namespace,
                       save_checkpoint: Callable,
                       train_sampler: Optional[Sampler] = None,
                       ngpus_per_node: int = 1,
-                      amp: Optional[object] = None) -> None:
+                      amp: Optional[object] = None) -> Tuple[float, int]:
     """
     运行训练循环。
 
@@ -126,24 +145,45 @@ def run_training_loop(args: Namespace,
     :param ngpus_per_node: 每个节点的 GPU 数量。
     :param amp: 自动混合精度对象，用于混合精度训练。
 
-    :return: 无返回值。
+    :return: 最佳准确率及其对应的epoch（best_acc1, best_epoch）。
     """
-    best_acc1 = 0
-    for epoch in range(args.start_epoch, args.epochs):
-        if args.distributed:
-            train_sampler.set_epoch(epoch)
 
+    writer = None
+    if args.gpu == 0 and getattr(args, 'tb_log_path', None) is not None:
+        writer = SummaryWriter(log_dir=args.tb_log_path)
+        print('tensorboar enabled at', args.tb_log_path)
+
+    best_acc1 = 0
+    best_epoch = args.start_epoch
+
+    for current_epoch in range(args.start_epoch, args.epochs):
+        if args.distributed:
+            train_sampler.set_epoch(current_epoch)
         # 训练一个epoch
-        train(train_loader, model, criterion, optimizer, epoch, device, args)
+        train(train_loader,
+              model,
+              criterion,
+              optimizer,
+              current_epoch,
+              device,
+              args,
+              writer=writer)
+
         # 在全局rank为0的GPU上执行验证
         if args.gpu == 0:
-            acc1 = validate(val_loader, model, criterion, args)
+            acc1 = validate(val_loader,
+                            model,
+                            criterion,
+                            args,
+                            current_epoch=current_epoch,
+                            writer=writer)
             is_best = acc1 > best_acc1
             best_acc1 = max(acc1, best_acc1)
+            best_epoch = current_epoch if is_best else best_epoch
 
             # 在全局rank为0的GPU上保存检查点
             checkpoint = {
-                'epoch': epoch + 1,
+                'epoch': current_epoch,
                 'arch': args.arch,
                 'state_dict': model.state_dict(),
                 'best_acc1': best_acc1,
@@ -152,3 +192,7 @@ def run_training_loop(args: Namespace,
             if args.amp and amp is not None:
                 checkpoint['amp'] = amp.state_dict()
             save_checkpoint(checkpoint, is_best)
+
+    if writer:
+        writer.close()
+    return (best_acc1, best_epoch)

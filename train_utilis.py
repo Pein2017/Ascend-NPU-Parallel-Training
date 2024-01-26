@@ -1,18 +1,14 @@
 import time
-from argparse import Namespace
-from typing import Callable, List, Optional, Tuple
+from typing import Callable, List, Tuple
 
-import pandas as pd
 import torch
-import torch.distributed as dist
-from torch import Tensor, nn, optim
+from torch import Tensor
 from torch.nn import Module
-from torch.utils.data import DataLoader, Sampler
-from utilis import AverageMeter, ProgressMeter, accuracy
+from utilis import MetricTracker, ProgressMeter, accuracy
 
 
 def create_meters(batch_size: int,
-                  prefix: str) -> Tuple[List[AverageMeter], ProgressMeter]:
+                  prefix: str) -> Tuple[List[MetricTracker], ProgressMeter]:
     """
     创建用于跟踪训练或验证过程中的各项指标的度量器。
 
@@ -20,14 +16,18 @@ def create_meters(batch_size: int,
     :param prefix: 显示信息前的前缀字符串。
     :return: 包含度量器列表和进度度量器的元组。
     """
-    batch_processing_time = AverageMeter('批次处理时间', ':6.3f')
-    data_loading_time = AverageMeter('数据加载时间', ':6.3f')
-    losses_meter = AverageMeter('损失', ':.4e')
-    top1 = AverageMeter('准确率@1', ':6.2f')
-    top5 = AverageMeter('准确率@5', ':6.2f')
+    batch_processing_time = MetricTracker('批次处理时间:', ':1.2f')
+    data_loading_time = MetricTracker('数据加载时间:', ':1.2f')
+    losses_meter = MetricTracker('loss:', ':1.4e')
+    top1 = MetricTracker('top-1:', ':1.3f')
+    top5 = MetricTracker('top-5', ':1.3f')
 
     meters = [
-        batch_processing_time, data_loading_time, losses_meter, top1, top5
+        losses_meter,
+        top1,
+        top5,
+        batch_processing_time,
+        data_loading_time,
     ]
     progress = ProgressMeter(batch_size, meters, prefix=prefix)
 
@@ -63,7 +63,7 @@ def process_batch(batch: Tuple[Tensor, Tensor], model: Module,
     return loss, acc1, acc5
 
 
-def update_meters(meters: List[AverageMeter], loss: Tensor, acc1: Tensor,
+def update_meters(meters: List[MetricTracker], loss: Tensor, acc1: Tensor,
                   acc5: Tensor, batch_size: int) -> None:
     """
     更新训练或验证过程中的度量器。

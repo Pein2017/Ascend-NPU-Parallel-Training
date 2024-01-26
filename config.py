@@ -3,17 +3,20 @@ import argparse
 import torchvision.models as models
 
 default_config = {
-    'data': '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar10_data',
+    'data_path':
+    '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data',
+    'dataset_name': 'cifar100',
+    'tb_log_path': '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs',
     'arch': 'resnet101',
     'workers': 0,
-    'epochs': 100,
+    'epochs': 400,
     'start_epoch': 1,
-    'batch_size': 1024,
+    'batch_size': 2048,
     'split_ratio': 0.9,
     'lr': 0.1,
     'momentum': 0.9,
     'weight_decay': 1e-4,
-    'print_freq': 20,
+    'print_freq': 100,
     'checkpoint_path':
     '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints',
     'resume': False,
@@ -21,7 +24,7 @@ default_config = {
     'pretrained': True,
     'world_size': 1,
     'rank': 0,
-    'dist_url': 'tcp://192.168.10.31:23456',
+    'dist_url': 'tcp://192.168.10.31:12345',
     'dist_backend': 'hccl',
     'seed': 17,
     'gpu': None,

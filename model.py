@@ -2,47 +2,49 @@ from argparse import Namespace
 from typing import Callable
 
 import torch
-import torch.nn as nn  # noqa: F401
-import torch_npu  # noqa: F401
+import torch.nn as nn
 import torchvision.models as models
 
 
-class CIFAR10Net(nn.Module):
+class CIFARNet(nn.Module):
 
-    def __init__(
-        self,
-        device: str,
-        model_func: Callable,
-        num_classes: int = 10,
-        pretrained: bool = False,
-    ):
-        super(CIFAR10Net, self).__init__()
+    def __init__(self,
+                 model_func: Callable,
+                 num_classes: int = 10,
+                 pretrained: bool = False,
+                 device: torch.device = torch.device('npu')):
+        super(CIFARNet, self).__init__()
         self.model = model_func(pretrained=pretrained)
+        self.num_classes = num_classes
+        self.device = device
 
-        # 需要检查模型是否有 'fc' 属性
+        # 替换最后的全连接层以适应 CIFAR10/100 的类别数
         if hasattr(self.model, 'fc'):
             self.model.fc = nn.Linear(self.model.fc.in_features, num_classes)
+        elif hasattr(self.model, 'classifier'):  # 对于 VGG 等模型
+            num_features = self.model.classifier[-1].in_features
+            self.model.classifier[-1] = nn.Linear(num_features, num_classes)
         else:
-            # 对于没有 'fc' 的模型，需要适当的处理
-            raise NotImplementedError("Model does not have a 'fc' layer")
-
-        self.device = device
+            raise NotImplementedError(
+                "Model does not have 'fc' or 'classifier' layer")
 
     def forward(self, x):
         return self.model(x)
 
     def to_device(self):
-        self.model = self.model.to(self.device)
+        self.to(self.device)
 
 
-def load_or_create_model(args: Namespace) -> CIFAR10Net:
-    """加载或创建模型"""
-    # 通过传递 model_func 和相关参数来创建 CIFAR10Net 实例
+def load_or_create_model(
+    args: Namespace, device: torch.device = torch.device('npu')) -> CIFARNet:
+    """加载或创建模型，兼容 CIFAR10 和 CIFAR100 数据集"""
+    # 通过传递 model_func 和相关参数来创建 CIFARNet 实例
     model_func = models.__dict__[args.arch]
-    model = CIFAR10Net(model_func=model_func,
-                       num_classes=10,
-                       pretrained=args.pretrained,
-                       device=args.device)
+    num_classes = 100 if args.dataset_name == 'cifar100' else 10
+    model = CIFARNet(model_func=model_func,
+                     num_classes=num_classes,
+                     pretrained=args.pretrained,
+                     device=device)
     return model
 
 
@@ -50,8 +52,7 @@ if __name__ == '__main__':
     # 创建 CIFAR-10 的模型实例
     device = 'npu' if torch.npu.is_available() else 'cpu'  # 示例中使用 npu 如果可用
     model_name = 'resnet50'
-    model = CIFAR10Net(model_func=models.__dict__[model_name],
-                       num_classes=10,
-                       pretrained=True,
-                       device=device)
-    # model.to_device()
+    model = CIFARNet(model_func=models.__dict__[model_name],
+                     num_classes=10,
+                     pretrained=True,
+                     device=device)

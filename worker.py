@@ -1,6 +1,5 @@
-import os
 from argparse import Namespace
-from typing import Optional, Union
+from typing import Optional, Union, Tuple
 
 import torch
 import torch.backends.cudnn as cudnn
@@ -15,21 +14,19 @@ from train import run_training_loop, validate
 from utilis import (init_distributed_training, load_checkpoint,
                     save_checkpoint, set_device)
 
+# warnings.filterwarnings("ignore")
+
 
 def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
-                args: Namespace):
+                args: Namespace) -> Tuple[float, int]:
     """
     主工作函数，用于初始化和执行分布式训练。
 
     :param gpu: 用于训练的 GPU/NPU 的标识符，可以是设备编号或名称。
     :param ngpus_per_node: 每个节点上的 GPU 数量。
     :param args: 包含训练配置和参数的命名空间。
-
-    全局变量:
-    best_acc1: 用于跟踪目前为止的最佳精度。
+    :return: 训练过程中的最佳准确率和对应的 epoch（best_acc1, best_epoch）。
     """
-
-    global best_acc1  # 全局变量，用于跟踪最佳精度
 
     args.gpu = args.process_device_map[gpu]
 
@@ -37,11 +34,15 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         print("Use GPU/NPU: {} for training".format(args.gpu))
 
     # 设置设备
+
     device = set_device(args)
+    print('after set_device')  ## TODO: delete
 
     # 创建或加载模型
-    model = load_or_create_model(args)
-    model.to(device)
+
+    model = load_or_create_model(args, device)
+
+    model.to_device()
 
     # 调整batch_size和workers
     args.batch_size = int(args.batch_size / ngpus_per_node)
@@ -86,8 +87,9 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
                                  num_workers=args.workers)
 
     else:
-        # CIFAR-10数据集的实际目录
-        data_path = args.data
+        # CIFAR数据集的实际目录
+        data_path = args.data_path
+        dataset_name = args.dataset_name
         batch_size = args.batch_size
         num_workers = args.workers
         if_distributed = args.distributed
@@ -95,7 +97,7 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         # 获取数据加载器和采样器
         train_loader, val_loader, test_loader, train_sampler, val_sampler = get_dataloaders(
             data_path=data_path,
-            dataset_name='cifar10',
+            dataset_name=dataset_name,
             batch_size=batch_size,
             num_workers=num_workers,
             split_ratio=split_ratio,
@@ -153,20 +155,24 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         checkpoint, is_best, checkpoint_folder)
 
     # 运行训练循环
-    run_training_loop(args,
-                      train_loader,
-                      val_loader,
-                      model,
-                      criterion,
-                      optimizer,
-                      device,
-                      save_checkpoint_fn,
-                      train_sampler,
-                      ngpus_per_node=ngpus_per_node,
-                      amp=amp)
+
+    best_acc1, best_epoch = run_training_loop(args,
+                                              train_loader,
+                                              val_loader,
+                                              model,
+                                              criterion,
+                                              optimizer,
+                                              device,
+                                              save_checkpoint_fn,
+                                              train_sampler,
+                                              ngpus_per_node=ngpus_per_node,
+                                              amp=amp)
 
     # 如果指定了评估，则执行验证过程并返回
     if args.evaluate and args.gpu == 0:
+        print('\n')
+        print('-' * 20)
+        print(f'best acc1: {best_acc1:3f} at epoch {best_epoch}')
+        print('\n')
         print('Final validating at NPU:{}'.format(args.gpu))
         validate(test_loader, model, criterion, args)
-        return

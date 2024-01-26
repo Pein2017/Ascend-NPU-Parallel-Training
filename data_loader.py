@@ -1,7 +1,6 @@
 import os
 from typing import Optional, Tuple
 
-import torch
 from torch.utils.data import DataLoader, random_split
 from torch.utils.data.distributed import DistributedSampler
 from torchvision import datasets, transforms
@@ -14,9 +13,10 @@ def get_dataloaders(
     num_workers: int = 4,
     split_ratio: float = 0.9,
     distributed: bool = True,
-    download: bool = True,
+    download: bool = False,
     transform: Optional[Tuple[transforms.Compose, transforms.Compose]] = None
-) -> tuple:
+) -> Tuple[DataLoader, DataLoader, DataLoader, Optional[DistributedSampler],
+           Optional[DistributedSampler]]:
     """
     创建并返回 CIFAR10 或 CIFAR100 数据集的数据加载器。
 
@@ -107,12 +107,12 @@ def get_dataloaders(
 
 
 if __name__ == '__main__':
-
+    dataset_name = 'cifar100'
     current_script_path = os.path.abspath(__file__)
     # 获取当前脚本所在的目录
     current_script_dir = os.path.dirname(current_script_path)
     # 设置数据集存储路径为该目录下的子目录 'cifar10_data'
-    data_path = os.path.join(current_script_dir, 'cifar10_data')
+    data_path = os.path.join(current_script_dir, f'{dataset_name}_data')
 
     # 检查数据路径是否存在且不为空
     if os.path.exists(data_path) and os.listdir(data_path):
@@ -124,6 +124,7 @@ if __name__ == '__main__':
         os.makedirs(data_path, exist_ok=True)
         # 执行get_dataloaders
         _ = get_dataloaders(data_path=data_path,
+                            dataset_name=dataset_name,
                             batch_size=1,
                             distributed=False,
                             download=True)

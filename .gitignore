@@ -2,5 +2,6 @@
 cache/
 __pycache__/
 cifar10_data/
+cifar100_data/
 checkpoints/*.pth
 /fusion_result.json
