@@ -10,6 +10,8 @@ from torch.utils.data import DataLoader, Sampler
 from torch.utils.tensorboard import SummaryWriter
 from train_utilis import create_meters, process_batch, update_meters
 
+from tb_log_visualization import export_tb_log_to_figure
+
 
 def train(train_loader: DataLoader,
           model: torch.nn.Module,
@@ -150,8 +152,17 @@ def run_training_loop(args: Namespace,
 
     writer = None
     if args.gpu == 0 and getattr(args, 'tb_log_path', None) is not None:
-        writer = SummaryWriter(log_dir=args.tb_log_path)
-        print('tensorboar enabled at', args.tb_log_path)
+        # 获取 args 中的属性，构建自定义后缀
+        arch = getattr(args, 'arch', 'default_arch')
+        world_size = getattr(args, 'world_size', 'default_world_size')
+        batch_size = world_size * getattr(args, 'batch_size',
+                                          'default_batch_size')
+        lr = getattr(args, 'lr', 'default_lr')
+        custom_suffix = f"{arch}-batch:{batch_size}-lr:{lr}"
+
+        writer = SummaryWriter(log_dir=args.tb_log_path,
+                               filename_suffix=custom_suffix)
+        print('TensorBoard enabled at', args.tb_log_path)
 
     best_acc1 = 0
     best_epoch = args.start_epoch
@@ -195,4 +206,14 @@ def run_training_loop(args: Namespace,
 
     if writer:
         writer.close()
+
+        # 定义保存图表的文件名
+        fig_name = 'train_val_metrics.png'
+
+        # 定义 TensorBoard 日志的自定义后缀
+        custom_suffix
+
+        # 调用 export_tb_log_to_figure 函数
+        export_tb_log_to_figure(custom_suffix, fig_name, args.tb_log_path)
+
     return (best_acc1, best_epoch)
