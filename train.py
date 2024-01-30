@@ -10,13 +10,14 @@ from torch.utils.data import DataLoader, Sampler
 from torch.utils.tensorboard import SummaryWriter
 from train_utilis import create_meters, process_batch, update_meters
 
+from optimizer import OptimizerManager
 from tb_log_visualization import export_tb_log_to_figure
 
 
 def train(train_loader: DataLoader,
           model: torch.nn.Module,
           criterion: torch.nn.Module,
-          optimizer: torch.optim.Optimizer,
+          optimizer_manager: OptimizerManager,
           current_epoch: int,
           device: torch.device,
           args: Namespace,
@@ -51,9 +52,9 @@ def train(train_loader: DataLoader,
         update_meters([losses_meter, top1, top5], loss, acc1, acc5,
                       batch[0].size(0))
 
-        optimizer.zero_grad()
+        optimizer_manager.zero_grad()
         loss.backward()
-        optimizer.step()
+        optimizer_manager.step()
 
         batch_processing_time.update(time.time() - end)
         end = time.time()
@@ -126,7 +127,7 @@ def run_training_loop(args: Namespace,
                       val_loader: DataLoader,
                       model: nn.Module,
                       criterion: nn.Module,
-                      optimizer: optim.Optimizer,
+                      optimizer_manager: OptimizerManager,
                       device: torch.device,
                       save_checkpoint: Callable,
                       train_sampler: Optional[Sampler] = None,
@@ -140,7 +141,7 @@ def run_training_loop(args: Namespace,
     :param val_loader: 验证集的 DataLoader。
     :param model: 要训练的模型。
     :param criterion: 损失函数。
-    :param optimizer: 优化器。
+    :param optimizer_manager: 管理优化器的对象。
     :param device: 训练使用的设备。
     :param save_checkpoint: 保存模型检查点的函数。
     :param train_sampler: 训练集的采样器，用于分布式训练。
@@ -174,7 +175,7 @@ def run_training_loop(args: Namespace,
         train(train_loader,
               model,
               criterion,
-              optimizer,
+              optimizer_manager,
               current_epoch,
               device,
               args,
@@ -198,7 +199,7 @@ def run_training_loop(args: Namespace,
                 'arch': args.arch,
                 'state_dict': model.state_dict(),
                 'best_acc1': best_acc1,
-                'optimizer': optimizer.state_dict(),
+                'optimizer': optimizer_manager.optimizer.state_dict(),
             }
             if args.amp and amp is not None:
                 checkpoint['amp'] = amp.state_dict()

@@ -58,7 +58,7 @@ def export_tb_log_to_figure(custom_suffix, fig_name, log_dir):
     plt.tight_layout()
 
     # 构建保存路径并保存图像
-    save_path = os.path.join(log_dir, fig_name)
+    save_path = os.path.join(log_dir, custom_suffix, fig_name)
     plt.savefig(save_path)
 
     # 关闭绘图窗口

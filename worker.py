@@ -1,5 +1,5 @@
 from argparse import Namespace
-from typing import Optional, Union, Tuple
+from typing import Optional, Tuple, Union
 
 import torch
 import torch.backends.cudnn as cudnn
@@ -10,6 +10,7 @@ import torchvision.transforms as transforms
 from apex import amp
 from data_loader import get_dataloaders
 from model import load_or_create_model
+from optimizer import CriterionManager, OptimizerManager
 from train import run_training_loop, validate
 from utilis import (init_distributed_training, load_checkpoint,
                     save_checkpoint, set_device)
@@ -34,12 +35,9 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         print("Use GPU/NPU: {} for training".format(args.gpu))
 
     # 设置设备
-
     device = set_device(args)
-    print('after set_device')  ## TODO: delete
 
     # 创建或加载模型
-
     model = load_or_create_model(args, device)
 
     model.to_device()
@@ -85,7 +83,6 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
                                  batch_size=args.batch_size,
                                  shuffle=False,
                                  num_workers=args.workers)
-
     else:
         # CIFAR数据集的实际目录
         data_path = args.data_path
@@ -104,30 +101,32 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
             distributed=if_distributed,
         )
 
-    # 定义损失函数（标准）和优化器
-    criterion = nn.CrossEntropyLoss().to(device)  # 将损失函数也移到相应设备
-    # optimizer = optim.Adam(model.parameters(),
-    #                        lr=args.lr,
-    #                        weight_decay=args.weight_decay)
+    # 定义损失函数和优化器
+    criterion_manager = CriterionManager(args.criterion)
+    criterion_manager.to_device(device)
+    criterion = criterion_manager.criterion
 
-    optimizer = optim.SGD(model.parameters(),
-                          args.lr,
-                          momentum=args.momentum,
-                          weight_decay=args.weight_decay)
+    # # TODO:这里的criterion直接取manager.criterion,而不是传入整个mananger,不然改动太大
 
-    # optimizer = optim.lr_scheduler.ReduceLROnPlateau(optimizer,
-    #                                                  mode='min',
-    #                                                  factor=0.1,
-    #                                                  patience=10,
-    #                                                  verbose=True)
+    optimizer_manager = OptimizerManager(model.parameters(),
+                                         optimizer_type=args.optimizer,
+                                         lr=args.lr,
+                                         momentum=args.momentum,
+                                         weight_decay=args.weight_decay)
+
+    if args.scheduler:
+        optimizer_manager.create_scheduler(args.scheduler,
+                                           mode=args.scheduler_mode,
+                                           factor=args.scheduler_factor,
+                                           patience=args.scheduler_patience)
 
     # 如果使用自动混合精度（AMP）
     if args.amp:
-        model, optimizer = amp.initialize(model,
-                                          optimizer,
-                                          opt_level=args.opt_level,
-                                          loss_scale=args.loss_scale)
-
+        model, optimizer_manager.optimizer = amp.initialize(
+            model,
+            optimizer_manager.optimizer,
+            opt_level=args.opt_level,
+            loss_scale=args.loss_scale)
     # 如果使用分布式数据并行
     if args.distributed:
         model = torch.nn.parallel.DistributedDataParallel(
@@ -141,8 +140,8 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         raise ValueError('Only DistributedDataParallel is supported.')
 
     if args.resume:
-        model, optimizer, args.start_epoch, best_acc1 = load_checkpoint(
-            args.resume, model, optimizer, args, device)
+        model, args.start_epoch, best_acc1 = load_checkpoint(
+            args.resume, model, optimizer_manager, args, device)
 
     # 对于NPU，False
     cudnn.benchmark = False
@@ -161,7 +160,7 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
                                               val_loader,
                                               model,
                                               criterion,
-                                              optimizer,
+                                              optimizer_manager,
                                               device,
                                               save_checkpoint_fn,
                                               train_sampler,
