@@ -18,6 +18,19 @@ class CIFARNet(nn.Module):
         self.num_classes = num_classes
         self.device = device
 
+        # 修改ResNet的第一层卷积和去掉maxpooling
+        if isinstance(self.model, models.ResNet):
+            # 修改第一层卷积
+            self.model.conv1 = nn.Conv2d(3,
+                                         64,
+                                         kernel_size=3,
+                                         stride=1,
+                                         padding=1,
+                                         bias=False)
+            # 去掉maxpooling
+            self.model.maxpool = nn.Identity()
+            print('Model adjusted for CIFAR-10/100 dataset')
+
         # 替换最后的全连接层以适应 CIFAR10/100 的类别数
         if hasattr(self.model, 'fc'):
             self.model.fc = nn.Linear(self.model.fc.in_features, num_classes)
@@ -33,6 +46,11 @@ class CIFARNet(nn.Module):
 
     def to_device(self):
         self.to(self.device)
+
+    def unfreeze(self):
+        """解冻模型的所有参数"""
+        for param in self.parameters():
+            param.requires_grad = True
 
 
 def load_or_create_model(

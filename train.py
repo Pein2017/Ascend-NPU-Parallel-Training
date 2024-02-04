@@ -1,3 +1,4 @@
+from logging import raiseExceptions
 import time
 from argparse import Namespace
 from typing import Callable, Optional, Tuple
@@ -11,7 +12,8 @@ from torch.utils.tensorboard import SummaryWriter
 from train_utilis import create_meters, process_batch, update_meters
 
 from optimizer import OptimizerManager
-from tb_log_visualization import export_tb_log_to_figure
+# from tb_log_visualization import export_tb_log_to_figure
+from tb_log_visualization import TBLogExporter
 
 
 def train(train_loader: DataLoader,
@@ -48,7 +50,6 @@ def train(train_loader: DataLoader,
                                          criterion,
                                          device,
                                          is_training=True)
-
         update_meters([losses_meter, top1, top5], loss, acc1, acc5,
                       batch[0].size(0))
 
@@ -59,9 +60,10 @@ def train(train_loader: DataLoader,
         batch_processing_time.update(time.time() - end)
         end = time.time()
 
-        if i % args.print_freq == 0 and args.gpu == 0:
-            progress.display(i + 1)
-            print('\n')
+        if args.verbose:
+            if i % args.print_freq == 0 and args.gpu == 0:
+                progress.display(i + 1)
+                print('\n')
 
     # 同步设备间的度量数据
     losses_meter.all_reduce()
@@ -69,10 +71,13 @@ def train(train_loader: DataLoader,
     top5.all_reduce()
     # 显示训练过程的摘要
     if args.gpu == 0:
-        progress.display_summary()
+        if args.verbose:
+            progress.display_summary()
         if writer:
+            current_lr = optimizer_manager.optimizer.param_groups[0]['lr']
             writer.add_scalar('Loss/train', losses_meter.avg, current_epoch)
             writer.add_scalar('Top1/train', top1.avg, current_epoch)
+            writer.add_scalar('Learning_Rate', current_lr, current_epoch)
 
 
 def validate(val_loader: DataLoader,
@@ -80,7 +85,7 @@ def validate(val_loader: DataLoader,
              criterion: torch.nn.Module,
              args: Namespace,
              current_epoch: int,
-             writer: SummaryWriter = None) -> float:
+             writer: SummaryWriter = None) -> Tuple[float, float]:
     """
     在验证数据集上验证模型的性能。
 
@@ -88,8 +93,9 @@ def validate(val_loader: DataLoader,
     :param model: 验证模型。
     :param criterion: 损失函数。
     :param args: 验证过程中的参数。
-
-    :return: 验证集上的平均准确率。
+    :param current_epoch: 当前的训练周期。
+    :param writer: 用于TensorBoard日志记录的SummaryWriter实例。
+    :return: 验证集上的平均准确率和平均损失值。
     """
     meters, progress = create_meters(len(val_loader), "Test:")
     batch_processing_time, _, losses_meter, top1, top5 = meters
@@ -98,7 +104,6 @@ def validate(val_loader: DataLoader,
     end = time.time()
 
     for i, batch in enumerate(val_loader):
-
         loss, acc1, acc5 = process_batch(batch,
                                          model,
                                          criterion,
@@ -110,16 +115,17 @@ def validate(val_loader: DataLoader,
         batch_processing_time.update(time.time() - end)
         end = time.time()
 
-        if i % args.print_freq == 0:
+        if args.verbose and i % args.print_freq == 0:
             progress.display(i + 1)
 
     if writer:
         writer.add_scalar('Loss/val', losses_meter.avg, current_epoch)
         writer.add_scalar('Top1/val', top1.avg, current_epoch)
 
-    progress.display_summary()
+    if args.verbose:
+        progress.display_summary()
 
-    return top1.avg
+    return top1.avg, losses_meter.avg
 
 
 def run_training_loop(args: Namespace,
@@ -152,18 +158,29 @@ def run_training_loop(args: Namespace,
     """
 
     writer = None
-    if args.gpu == 0 and getattr(args, 'tb_log_path', None) is not None:
-        # 获取 args 中的属性，构建自定义后缀
-        arch = getattr(args, 'arch', 'default_arch')
+
+    if args.gpu == 0:
+
         world_size = getattr(args, 'world_size', 'default_world_size')
         batch_size = world_size * getattr(args, 'batch_size',
                                           'default_batch_size')
-        lr = getattr(args, 'lr', 'default_lr')
-        custom_suffix = f"{arch}-batch:{batch_size}-lr:{lr}"
 
-        writer = SummaryWriter(log_dir=args.tb_log_path,
-                               filename_suffix=custom_suffix)
-        print('TensorBoard enabled at', args.tb_log_path)
+        # 检查 tb_log_path 是否非空
+        if getattr(args, 'tb_log_path', None) is not None:
+            # 继续获取其它属性，用于构建自定义后缀
+            arch = getattr(args, 'arch', 'default_arch')
+            lr = getattr(args, 'lr', 'default_lr')
+            optimizer_name = getattr(args, 'optimizer_name',
+                                     'default_optimizer_name')
+
+            # 构建自定义后缀
+            # NOTE: 这里添加了'-'用于区分log_event默认的保存格式。
+            custom_suffix = f"-{arch}-batch:{batch_size}-lr:{lr}-{optimizer_name}"
+
+            # 初始化 SummaryWriter
+            writer = SummaryWriter(log_dir=args.tb_log_path,
+                                   filename_suffix=custom_suffix)
+            print('TensorBoard enabled at', args.tb_log_path)
 
     best_acc1 = 0
     best_epoch = args.start_epoch
@@ -183,12 +200,15 @@ def run_training_loop(args: Namespace,
 
         # 在全局rank为0的GPU上执行验证
         if args.gpu == 0:
-            acc1 = validate(val_loader,
-                            model,
-                            criterion,
-                            args,
-                            current_epoch=current_epoch,
-                            writer=writer)
+
+            acc1, val_loss = validate(val_loader,
+                                      model,
+                                      criterion,
+                                      args,
+                                      current_epoch=current_epoch,
+                                      writer=writer)
+            if args.scheduler:
+                optimizer_manager.scheduler_step(val_loss)
             is_best = acc1 > best_acc1
             best_acc1 = max(acc1, best_acc1)
             best_epoch = current_epoch if is_best else best_epoch
@@ -209,12 +229,27 @@ def run_training_loop(args: Namespace,
         writer.close()
 
         # 定义保存图表的文件名
-        fig_name = 'train_val_metrics.png'
+        # NOTE: 最终文件命名为{custom_suffix}-{fig_name}
+        fig_name = '-metrics.png'
 
-        # 定义 TensorBoard 日志的自定义后缀
-        custom_suffix
+        if not custom_suffix:
+            raiseExceptions(
+                'should specify custom_suffix when using TensorBoard')
 
-        # 调用 export_tb_log_to_figure 函数
-        export_tb_log_to_figure(custom_suffix, fig_name, args.tb_log_path)
+        # 实例化 TBLogExporter 类
+        exporter = TBLogExporter(log_dir=args.tb_log_path,
+                                 custom_suffix=custom_suffix[1:])
+
+        # 定义您想要绘制的指标
+        metrics = [
+            'Loss/train', 'Loss/val', 'Top1/train', 'Top1/val', 'Learning_Rate'
+        ]
+
+        # 调用 export 方法，传入指标和图表文件名
+        exporter.export(metrics=metrics, fig_name=fig_name)
+
+        # # 调用 export_tb_log_to_figure 函数
+        # # NOTE:省略掉前面加的'-'
+        # export_tb_log_to_figure(custom_suffix[1:], fig_name, args.tb_log_path)
 
     return (best_acc1, best_epoch)

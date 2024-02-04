@@ -59,6 +59,13 @@ def process_batch(batch: Tuple[Tensor, Tensor], model: Module,
 
     loss = criterion(output, target)
     acc1, acc5 = accuracy(output, target, topk=(1, 5))
+    if loss < 0 or acc1 > 100 or acc5 > 100:
+        print(
+            f"Error from process_batch, batch information: {batch[0].size(0)} , target: {target.size(0)}"
+        )
+        raise ValueError(
+            f"During training, Loss: {loss}, Top1: {acc1}, Top5: {acc5}. "
+            "Loss and accuracy should be non-negative and less than 100")
 
     return loss, acc1, acc5
 

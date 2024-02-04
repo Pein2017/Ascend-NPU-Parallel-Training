@@ -288,4 +288,9 @@ def accuracy(output: torch.Tensor, target: torch.Tensor,
         for k in topk:
             correct_k = correct[:k].reshape(-1).float().sum(0, keepdim=True)
             res.append(correct_k.mul_(100.0 / batch_size))
-        return res
+    # 如果res中有值大于1，raise Error
+    for i in res:
+        if i > 100.0:
+            print(f'Error from utilis.accuracy')
+            raise ValueError("Accuracy cannot be larger than 100")
+    return res

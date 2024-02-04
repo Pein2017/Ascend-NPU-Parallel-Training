@@ -39,7 +39,7 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
 
     # 创建或加载模型
     model = load_or_create_model(args, device)
-
+    model.unfreeze()
     model.to_device()
 
     # 调整batch_size和workers
@@ -107,12 +107,16 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
     criterion = criterion_manager.criterion
 
     # # TODO:这里的criterion直接取manager.criterion,而不是传入整个mananger,不然改动太大
+    optimizer_params = {
+        'lr': getattr(args, 'lr', 1e-3),
+        'momentum': getattr(args, 'momentum', 0.9),
+        'weight_decay': getattr(args, 'weight_decay', 0),
+        'betas': getattr(args, 'betas', (0.9, 0.999)),
+    }
 
     optimizer_manager = OptimizerManager(model.parameters(),
-                                         optimizer_type=args.optimizer,
-                                         lr=args.lr,
-                                         momentum=args.momentum,
-                                         weight_decay=args.weight_decay)
+                                         optimizer_type=args.optimizer_name,
+                                         optimizer_params=optimizer_params)
 
     if args.scheduler:
         optimizer_manager.create_scheduler(args.scheduler,
@@ -174,4 +178,4 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
         print(f'best acc1: {best_acc1:3f} at epoch {best_epoch}')
         print('\n')
         print('Final validating at NPU:{}'.format(args.gpu))
-        validate(test_loader, model, criterion, args)
+        validate(test_loader, model, criterion, args, current_epoch=best_epoch)
