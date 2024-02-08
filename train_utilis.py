@@ -4,6 +4,7 @@ from typing import Callable, List, Tuple
 import torch
 from torch import Tensor
 from torch.nn import Module
+import torch.distributed as dist
 from utilis import MetricTracker, ProgressMeter, accuracy
 
 
@@ -85,3 +86,23 @@ def update_meters(meters: List[MetricTracker], loss: Tensor, acc1: Tensor,
     losses_meter.update(loss.item(), batch_size)
     top1.update(acc1[0], batch_size)
     top5.update(acc5[0], batch_size)
+
+
+def broadcast_early_stop(early_stop_decision, device):
+    """
+    广播早停决策给所有进程。
+    
+    :param early_stop_decision: 是否需要早停的决策（在全局rank为0的进程中为True或False）。
+    :param device: 指定广播操作使用的设备。
+    """
+    if dist.is_initialized():
+        # 将决策转换为一个tensor
+        early_stop_tensor = torch.tensor([int(early_stop_decision)],
+                                         dtype=torch.int,
+                                         device=device)
+        # 广播早停决策
+        dist.broadcast(early_stop_tensor, src=0)
+        # 返回广播后的早停决策
+        return bool(early_stop_tensor.item())
+    else:
+        raise RuntimeError("Distribution is not initialized.")

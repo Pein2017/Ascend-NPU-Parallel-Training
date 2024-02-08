@@ -106,23 +106,26 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
     criterion_manager.to_device(device)
     criterion = criterion_manager.criterion
 
-    # # TODO:这里的criterion直接取manager.criterion,而不是传入整个mananger,不然改动太大
     optimizer_params = {
         'lr': getattr(args, 'lr', 1e-3),
         'momentum': getattr(args, 'momentum', 0.9),
-        'weight_decay': getattr(args, 'weight_decay', 0),
-        'betas': getattr(args, 'betas', (0.9, 0.999)),
+        'weight_decay': getattr(args, 'weight_decay', 5e-4),
+        'betas': getattr(args, 'betas', (0.9, 0.95)),
     }
 
-    optimizer_manager = OptimizerManager(model.parameters(),
-                                         optimizer_type=args.optimizer_name,
-                                         optimizer_params=optimizer_params)
+    optimizer_manager = OptimizerManager(
+        model.parameters(),
+        optimizer_type=args.optimizer_name,
+        optimizer_params=optimizer_params,
+        patience=getattr(args, 'early_stop_patience', 7),
+        early_stop_delta=getattr(args, 'early_stop_delta', 1e-6))
 
     if args.scheduler:
-        optimizer_manager.create_scheduler(args.scheduler,
-                                           mode=args.scheduler_mode,
-                                           factor=args.scheduler_factor,
-                                           patience=args.scheduler_patience)
+        optimizer_manager.create_scheduler(
+            args.scheduler,
+            scheduler_patience=args.scheduler_patience,
+            mode=args.scheduler_mode,
+            factor=args.scheduler_factor)
 
     # 如果使用自动混合精度（AMP）
     if args.amp:
@@ -150,15 +153,6 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
     # 对于NPU，False
     cudnn.benchmark = False
 
-    # 保存检查点的函数
-    checkpoint_folder = args.checkpoint_path
-
-    # 定义checkpoint保存函数
-    save_checkpoint_fn = lambda checkpoint, is_best: save_checkpoint(
-        checkpoint, is_best, checkpoint_folder)
-
-    # 运行训练循环
-
     best_acc1, best_epoch = run_training_loop(args,
                                               train_loader,
                                               val_loader,
@@ -166,7 +160,6 @@ def main_worker(gpu: Optional[Union[str, int]], ngpus_per_node: int,
                                               criterion,
                                               optimizer_manager,
                                               device,
-                                              save_checkpoint_fn,
                                               train_sampler,
                                               ngpus_per_node=ngpus_per_node,
                                               amp=amp)

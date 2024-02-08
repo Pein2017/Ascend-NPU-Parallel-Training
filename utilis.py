@@ -109,28 +109,30 @@ def init_distributed_training(args: Namespace, ngpus_per_node: int,
         )
 
 
-def save_checkpoint(state: dict,
-                    is_best: bool,
-                    folder: str,
-                    filename: str = "checkpoint.pth") -> None:
+def save_checkpoint(state: dict, is_best: bool, checkpoint_folder: str,
+                    check_point_suffix: str) -> None:
     """
     保存训练过程中的模型检查点。
     如果当前检查点是最佳模型，检查点保存为“model_best.pth”。
 
     :param state: 要保存的模型状态(参数和其他信息)
     :param is_best: 布尔值，指示当前检查点是否是迄今为止最佳的模型。
-    :param folder: 保存检查点的文件夹路径。
-    :param filename: 检查点文件的名称，默认为"checkpoint.pth"。
+    :param checkpoint_folder: 保存检查点的文件夹路径。
+    :param check_point_suffix: 检查点文件的名称。
     """
     try:
-        if not os.path.exists(folder):
-            os.makedirs(folder)
+        if not os.path.exists(checkpoint_folder):
+            os.makedirs(checkpoint_folder)
 
-        file_path = os.path.join(folder, filename)
+        file_path = os.path.join(checkpoint_folder,
+                                 check_point_suffix + f'-checkpoint.pth')
         torch.save(state, file_path)
 
         if is_best:
-            shutil.copyfile(file_path, os.path.join(folder, "model_best.pth"))
+            shutil.copyfile(
+                file_path,
+                os.path.join(checkpoint_folder,
+                             check_point_suffix + f'-best_model.pth'))
     except Exception as e:
         print(f"Error saving checkpoint: {e}")
 
@@ -291,6 +293,6 @@ def accuracy(output: torch.Tensor, target: torch.Tensor,
     # 如果res中有值大于1，raise Error
     for i in res:
         if i > 100.0:
-            print(f'Error from utilis.accuracy')
+            print(f'Error from utilis.accuracy, get value of {i}')
             raise ValueError("Accuracy cannot be larger than 100")
     return res

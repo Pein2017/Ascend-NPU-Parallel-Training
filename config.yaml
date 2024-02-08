@@ -1,0 +1,58 @@
+training:
+  lr: 0.0005
+  batch_size: 1024
+  verbose: false
+  seed: 17
+  print_freq: 100
+  split_ratio: 0.95
+  workers: 0
+  start_epoch: 0
+  epochs: 10000
+
+model:
+  arch: resnet101
+  pretrained: true
+
+optimizer:
+  name: AdamW
+  momentum: 0.9
+  weight_decay: 0.0005
+  criterion: CrossEntropyLoss
+
+scheduler:
+  type: ReduceLROnPlateau
+  mode: min
+  factor: 0.5
+  patience: 10
+
+early_stopping:
+  delta: 0.0001
+  patience: 30
+
+data:
+  path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data
+  dataset_name: cifar100
+
+logging:
+  tb_log_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs/
+  checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
+
+evaluation:
+  resume: false
+  evaluate: true
+
+distributed_training:
+  world_size: 1
+  rank: 0
+  dist_url: tcp://192.168.10.31:12345
+  dist_backend: hccl
+  multiprocessing_distributed: true
+  addr: 192.168.10.31
+  device: npu
+  gpu: null
+  device_list: "0,1,2,3,4,5,6,7"
+
+amp:
+  enabled: true
+  loss_scale: 1024.
+  opt_level: O2

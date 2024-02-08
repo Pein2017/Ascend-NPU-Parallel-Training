@@ -4,90 +4,114 @@ Data downloaded at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_dat
 Loading model...
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
-Model resnet152 loaded
-Use GPU/NPU: 0 for training
-Use GPU/NPU: 1 for training
-Use GPU/NPU: 3 for training
+Model adjusted for CIFAR-10/100 dataset
+Model resnet18 loaded
 Use GPU/NPU: 2 for training
-Use GPU/NPU: 6 for training
-Use GPU/NPU: 4 for training
+Use GPU/NPU: 1 for training
+Use GPU/NPU: 0 for training
 Use GPU/NPU: 5 for training
+Use GPU/NPU: 4 for training
+Use GPU/NPU: 3 for training
+Use GPU/NPU: 6 for training
 Use GPU/NPU: 7 for training
---------\\\\\\\\||||||||////////--------\\\\\\\\||//root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
-  warnings.warn(msg)
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
-  tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
-  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+--------\\\\\\\\||||||||//Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
   Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
   Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
   Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
   Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
   Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
   Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
--Selected optimization level O2:  FP16 training with FP32 batchnorm and FP32 master weights.
+Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
+  tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+  Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+-Model adjusted for CIFAR-10/100 dataset
+All layers of parameter are unfreezed!
+Selected optimization level O2:  FP16 training with FP32 batchnorm and FP32 master weights.
 
 Defaults for this optimization level are:
 enabled                : True
@@ -116,23 +140,25 @@ combine_ddp            : None
 ddp_replica_count      : 4
 check_combined_tensors : None
 user_cast_preferred    : None
-TensorBoard enabled at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs
-tb log exported successfully to /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs/fig/resnet152-batch:2048-lr:0.005-AdamW-exp1--metrics.png
+TensorBoard enabled at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs/
+Early stopping triggered
+Early stopping triggered across all processes.
+tb log exported successfully to /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs/figs/resnet18/batch:2048-lr:0.05-AdamW-exp1-metrics.png
 
 
 --------------------
-best acc1: 75.390625 at epoch 950
+best acc1: 23.437500 at epoch 8
 
 
 Final validating at NPU:0
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet152_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet152_Weights.DEFAULT` to get the most up-to-date weights.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet18_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet18_Weights.DEFAULT` to get the most up-to-date weights.
   warnings.warn(msg)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/utils/storage.py:50: UserWarning: TypedStorage is deprecated. It will be removed in the future and UntypedStorage will be the only storage class. This should only matter to you if you are using storages directly.  To access UntypedStorage directly, use tensor.untyped_storage() instead of tensor.storage()
   tensor = torch.tensor([], dtype=storage.dtype, device=storage.device)
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch/autograd/__init__.py:200: UserWarning: Grad strides do not match bucket view strides. This may indicate grad was not created according to the gradient layout contract, or that the param's strides changed since DDP was constructed.  This is not an error, but may impair performance.
-grad.sizes() = [100, 2048], strides() = [2048, 1]
-bucket_view.sizes() = [204800], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
+grad.sizes() = [100, 512], strides() = [512, 1]
+bucket_view.sizes() = [51200], strides() = [1] (Triggered internally at torch_npu/csrc/distributed/reducer.cpp:315.)
   Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
-total time:9850.456963300705
+Total time cost：00h:02mins:24s

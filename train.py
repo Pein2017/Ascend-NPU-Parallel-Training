@@ -1,18 +1,20 @@
 from logging import raiseExceptions
 import time
+import os
 from argparse import Namespace
 from typing import Callable, Optional, Tuple
 
+from tqdm import tqdm
 import torch
 import torch.distributed as dist
 from torch import nn, optim
 from torch.nn import Module
 from torch.utils.data import DataLoader, Sampler
 from torch.utils.tensorboard import SummaryWriter
-from train_utilis import create_meters, process_batch, update_meters
+from train_utilis import create_meters, process_batch, update_meters, broadcast_early_stop
 
+from utilis import save_checkpoint
 from optimizer import OptimizerManager
-# from tb_log_visualization import export_tb_log_to_figure
 from tb_log_visualization import TBLogExporter
 
 
@@ -135,7 +137,6 @@ def run_training_loop(args: Namespace,
                       criterion: nn.Module,
                       optimizer_manager: OptimizerManager,
                       device: torch.device,
-                      save_checkpoint: Callable,
                       train_sampler: Optional[Sampler] = None,
                       ngpus_per_node: int = 1,
                       amp: Optional[object] = None) -> Tuple[float, int]:
@@ -149,7 +150,6 @@ def run_training_loop(args: Namespace,
     :param criterion: 损失函数。
     :param optimizer_manager: 管理优化器的对象。
     :param device: 训练使用的设备。
-    :param save_checkpoint: 保存模型检查点的函数。
     :param train_sampler: 训练集的采样器，用于分布式训练。
     :param ngpus_per_node: 每个节点的 GPU 数量。
     :param amp: 自动混合精度对象，用于混合精度训练。
@@ -158,13 +158,11 @@ def run_training_loop(args: Namespace,
     """
 
     writer = None
-
+    '''在全局rank为0的GPU上初始化SummaryWriter'''
     if args.gpu == 0:
-
         world_size = getattr(args, 'world_size', 'default_world_size')
         batch_size = world_size * getattr(args, 'batch_size',
                                           'default_batch_size')
-
         # 检查 tb_log_path 是否非空
         if getattr(args, 'tb_log_path', None) is not None:
             # 继续获取其它属性，用于构建自定义后缀
@@ -172,13 +170,15 @@ def run_training_loop(args: Namespace,
             lr = getattr(args, 'lr', 'default_lr')
             optimizer_name = getattr(args, 'optimizer_name',
                                      'default_optimizer_name')
-
+            tb_event_path = os.path.join(getattr(args, 'tb_log_path'),
+                                         'events')
             # 构建自定义后缀
             # NOTE: 这里添加了'-'用于区分log_event默认的保存格式。
             custom_suffix = f"-{arch}-batch:{batch_size}-lr:{lr}-{optimizer_name}"
 
             # 初始化 SummaryWriter
-            writer = SummaryWriter(log_dir=args.tb_log_path,
+            save_event_path = os.path.join(args.tb_log_path, 'events')
+            writer = SummaryWriter(log_dir=save_event_path,
                                    filename_suffix=custom_suffix)
             print('TensorBoard enabled at', args.tb_log_path)
 
@@ -198,9 +198,10 @@ def run_training_loop(args: Namespace,
               args,
               writer=writer)
 
-        # 在全局rank为0的GPU上执行验证
+        early_stop_decision = False
+        is_best = False
+        # 在全局rank为0的GPU上执行验证和保存模型的逻辑
         if args.gpu == 0:
-
             acc1, val_loss = validate(val_loader,
                                       model,
                                       criterion,
@@ -209,47 +210,73 @@ def run_training_loop(args: Namespace,
                                       writer=writer)
             if args.scheduler:
                 optimizer_manager.scheduler_step(val_loss)
+
             is_best = acc1 > best_acc1
-            best_acc1 = max(acc1, best_acc1)
+            best_acc1 = max(acc1, best_acc1) if is_best else best_acc1
             best_epoch = current_epoch if is_best else best_epoch
 
-            # 在全局rank为0的GPU上保存检查点
+            # 检查早停
+            optimizer_manager.check_early_stopping(val_loss)
+            if optimizer_manager.early_stop:
+                print("Early stopping triggered")
+                early_stop_decision = True
+
+            # 保存检查点
             checkpoint = {
-                'epoch': current_epoch,
+                'best_epoch': best_epoch,
+                'best_acc1': best_acc1,
                 'arch': args.arch,
                 'state_dict': model.state_dict(),
-                'best_acc1': best_acc1,
                 'optimizer': optimizer_manager.optimizer.state_dict(),
+                'scheduler': optimizer_manager.scheduler.state_dict(),
             }
+
             if args.amp and amp is not None:
                 checkpoint['amp'] = amp.state_dict()
-            save_checkpoint(checkpoint, is_best)
+
+            checkpoint_folder = args.checkpoint_folder
+            check_point_suffix = custom_suffix[1::]
+
+            save_checkpoint(checkpoint,
+                            is_best,
+                            checkpoint_folder=checkpoint_folder,
+                            check_point_suffix=check_point_suffix)
+
+        # 广播早停决策给所有进程
+        if args.distributed:
+            early_stop_tensor = torch.tensor([int(early_stop_decision)],
+                                             dtype=torch.int,
+                                             device=device)
+            dist.broadcast(early_stop_tensor, src=0)
+            early_stop_decision = bool(early_stop_tensor.item())
+
+        if early_stop_decision:
+            print("Early stopping triggered across all processes." if args.
+                  gpu == 0 else "")
+            break
 
     if writer:
         writer.close()
 
         # 定义保存图表的文件名
         # NOTE: 最终文件命名为{custom_suffix}-{fig_name}
-        fig_name = '-metrics.png'
+        fig_name = 'metrics.png'
 
         if not custom_suffix:
             raiseExceptions(
                 'should specify custom_suffix when using TensorBoard')
 
         # 实例化 TBLogExporter 类
-        exporter = TBLogExporter(log_dir=args.tb_log_path,
+        exporter = TBLogExporter(tb_log_path=args.tb_log_path,
                                  custom_suffix=custom_suffix[1:])
-
-        # 定义您想要绘制的指标
-        metrics = [
-            'Loss/train', 'Loss/val', 'Top1/train', 'Top1/val', 'Learning_Rate'
-        ]
+        # 定义想要绘制的指标
+        grouped_metrics = {
+            'Loss': ['Loss/train', 'Loss/val'],
+            'Top1': ['Top1/train', 'Top1/val'],
+            'Learning Rate': ['Learning_Rate'],
+        }
 
         # 调用 export 方法，传入指标和图表文件名
-        exporter.export(metrics=metrics, fig_name=fig_name)
-
-        # # 调用 export_tb_log_to_figure 函数
-        # # NOTE:省略掉前面加的'-'
-        # export_tb_log_to_figure(custom_suffix[1:], fig_name, args.tb_log_path)
+        exporter.export(grouped_metrics=grouped_metrics, fig_name=fig_name)
 
     return (best_acc1, best_epoch)

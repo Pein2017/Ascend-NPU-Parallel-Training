@@ -51,6 +51,7 @@ class CIFARNet(nn.Module):
         """解冻模型的所有参数"""
         for param in self.parameters():
             param.requires_grad = True
+        print('All layers of parameter are unfreezed!')
 
 
 def load_or_create_model(

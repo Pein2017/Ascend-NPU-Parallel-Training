@@ -83,7 +83,8 @@ def run_training(args: Namespace) -> None:
     if args.multiprocessing_distributed:
         args.world_size *= ngpus_per_node
         print('Loading model...')
-        model = load_or_create_model(args)
+        model = load_or_create_model(args)  # NOTE:为了确保pre-trained模型参数已经被下载
+        del model
         print(f'Model {args.arch} loaded')
         mp.spawn(main_worker,
                  nprocs=ngpus_per_node,
@@ -109,4 +110,7 @@ if __name__ == '__main__':
     main()
     # 结束计时
     end_time = time.time()
-    print('total time:{}'.format(end_time - start_time))
+    # 将时间转换为小时和分钟的形式,如，1小时，30分钟
+    m, s = divmod(end_time - start_time, 60)
+    h, m = divmod(m, 60)
+    print("Total time cost：%02dh:%02dmins:%02ds" % (h, m, s))

@@ -12,19 +12,21 @@ class OptimizerManager:
     优化器管理器类，用于创建和管理 PyTorch 优化器及学习率调度器。
     """
 
-    def __init__(self, model_parameters: nn.Parameter, optimizer_type: str,
-                 optimizer_params: Dict[str, Any]):
-        """
-        初始化 OptimizerManager。
-
-        :param model_parameters: 模型的参数。
-        :param optimizer_type: 优化器类型，如 'SGD', 'Adam', 'AdamW'。
-        :param optimizer_params: 优化器参数的字典。
-        """
+    def __init__(self,
+                 model_parameters,
+                 optimizer_type: str,
+                 optimizer_params: Dict[str, Any],
+                 patience: int = 7,
+                 early_stop_delta: float = 1e-6):
         self.optimizer = self.create_optimizer(model_parameters,
                                                optimizer_type,
                                                optimizer_params)
         self.scheduler: Optional[_LRScheduler] = None
+        self.early_stop = False
+        self.patience = patience
+        self.early_stop_delta = early_stop_delta
+        self.best_loss = None
+        self.early_stop_counter = 0
 
     def create_optimizer(self, parameters: nn.Parameter, optimizer_type: str,
                          optimizer_params: Dict[str, Any]) -> optim.Optimizer:
@@ -68,8 +70,12 @@ class OptimizerManager:
     def zero_grad(self) -> None:
         self.optimizer.zero_grad()
 
-    def create_scheduler(self, scheduler_type, **kwargs):
+    def create_scheduler(self,
+                         scheduler_type: str,
+                         scheduler_patience: int = None,
+                         **kwargs: Any) -> None:
         if scheduler_type == 'ReduceLROnPlateau':
+            kwargs['patience'] = scheduler_patience
             self.scheduler = ReduceLROnPlateau(self.optimizer, **kwargs)
         elif scheduler_type == 'StepLR':
             self.scheduler = StepLR(self.optimizer, **kwargs)
@@ -93,6 +99,19 @@ class OptimizerManager:
         else:
             raise RuntimeError(
                 "Scheduler not initialized. Call create_scheduler() first.")
+
+    def check_early_stopping(self, val_loss: float):
+        if self.best_loss is None:
+            self.best_loss = val_loss
+
+        elif val_loss > self.best_loss - self.early_stop_delta:
+            self.early_stop_counter += 1
+            if self.early_stop_counter >= self.patience:
+                self.early_stop = True
+
+        else:
+            self.best_loss = val_loss
+            self.early_stop_counter = 0
 
 
 class CriterionManager:

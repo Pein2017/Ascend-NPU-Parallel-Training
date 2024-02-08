@@ -1,6 +1,7 @@
 import os
 from typing import Optional, Tuple
 
+import numpy as np
 from torch.utils.data import DataLoader, random_split
 from torch.utils.data.distributed import DistributedSampler
 from torchvision import datasets, transforms
@@ -26,15 +27,17 @@ def get_dataloaders(
     :param split_ratio: 训练集划分比例。
     :return: 训练、验证和测试数据加载器的元组。
     """
-    mean = {
-        'cifar10': (0.4914, 0.4822, 0.4465),
-        'cifar100': (0.5071, 0.4867, 0.4408),
-    }
+    # mean = {
+    #     'cifar10': (0.4914, 0.4822, 0.4465),
+    #     'cifar100': (0.5071, 0.4867, 0.4408),
+    # }
 
-    std = {
-        'cifar10': (0.2023, 0.1994, 0.2010),
-        'cifar100': (0.2675, 0.2565, 0.2761),
-    }
+    # std = {
+    #     'cifar10': [0.2470, 0.2435, 0.2616],
+    #     'cifar100': (0.2675, 0.2565, 0.2761),
+    # }
+
+    # 选择数据集
 
     # 选择数据集
     if dataset_name == 'cifar10':
@@ -44,16 +47,26 @@ def get_dataloaders(
     else:
         raise ValueError(f"{dataset_name}不支持，请选择 'cifar10' 或 'cifar100'。")
 
+    # 临时下载数据集以计算均值和标准差
+    temp_dataset = Dataset(root=data_path,
+                           train=True,
+                           download=download,
+                           transform=None)
+    data = np.array(temp_dataset.data) / 255.0  # 转换到0-1范围
+    mean = data.mean(axis=(0, 1, 2))
+    std = data.std(axis=(0, 1, 2))
+    del temp_dataset, data
+
     if transform is None:
-        # 默认转换
-        normalize = transforms.Normalize(mean=mean[dataset_name],
-                                         std=std[dataset_name])
+        # 使用计算得到的均值和标准差
+        normalize = transforms.Normalize(mean=mean, std=std)
         train_transform = transforms.Compose([
             transforms.RandomCrop(32, padding=4),
             transforms.RandomHorizontalFlip(),
             transforms.ToTensor(),
             normalize,
         ])
+
         test_transform = transforms.Compose([
             transforms.ToTensor(),
             normalize,
@@ -66,6 +79,7 @@ def get_dataloaders(
                             train=True,
                             download=download,
                             transform=train_transform)
+
     test_dataset = Dataset(root=data_path,
                            train=False,
                            download=download,
