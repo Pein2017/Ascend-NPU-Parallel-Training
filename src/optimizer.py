@@ -16,17 +16,45 @@ class OptimizerManager:
                  model_parameters,
                  optimizer_type: str,
                  optimizer_params: Dict[str, Any],
-                 patience: int = 7,
+                 patience: int = 10,
                  early_stop_delta: float = 1e-6):
+
+        self.optimizer_params = optimizer_params
         self.optimizer = self.create_optimizer(model_parameters,
                                                optimizer_type,
-                                               optimizer_params)
+                                               self.optimizer_params)
         self.scheduler: Optional[_LRScheduler] = None
         self.early_stop = False
         self.patience = patience
         self.early_stop_delta = early_stop_delta
         self.best_loss = None
         self.early_stop_counter = 0
+
+    def update_optimizer_state(self,
+                               optimizer_state_dict,
+                               params_to_restore=None):
+        """
+        根据提供的状态字典更新优化器的特定状态，其他状态使用初始化时的参数设置。
+
+        :param optimizer_state_dict: 一个包含优化器状态的字典。
+        :param params_to_restore: 一个列表，包含需要根据状态还原的指标名称。
+        """
+        if params_to_restore is None:
+            params_to_restore = []
+
+        # 使用全新的optimizer_params初始化优化器的状态
+        for group in self.optimizer.param_groups:
+            for param_name, param_value in self.optimizer_params.items():
+                if param_name in group:
+                    group[param_name] = param_value
+
+        # 只更新指定的指标
+        for group, group_state_dict in zip(
+                self.optimizer.param_groups,
+                optimizer_state_dict['param_groups']):
+            for param_name in params_to_restore:
+                if param_name in group_state_dict:
+                    group[param_name] = group_state_dict[param_name]
 
     def create_optimizer(self, parameters: nn.Parameter, optimizer_type: str,
                          optimizer_params: Dict[str, Any]) -> optim.Optimizer:

@@ -1,22 +1,20 @@
 training:
-  lr: 0.0005
-  batch_size: 1024
-  verbose: false
+  lr: 5e-4
+  batch_size: 4096
+  verbose: true
   seed: 17
-  print_freq: 100
-  split_ratio: 0.95
+  split_ratio: 0.6
+  print_freq: 20
   workers: 0
   start_epoch: 0
-  epochs: 10000
-
-model:
-  arch: resnet101
-  pretrained: true
+  epochs: 10
+  debug_mode: true
 
 optimizer:
   name: AdamW
   momentum: 0.9
-  weight_decay: 0.0005
+  weight_decay: 5e-4
+  betas: [0.9, 0.95]
   criterion: CrossEntropyLoss
 
 scheduler:
@@ -26,31 +24,38 @@ scheduler:
   patience: 10
 
 early_stopping:
-  delta: 0.0001
+  delta: 1e-6
   patience: 30
+
+model:
+  arch: resnet18
+  pretrained: true
 
 data:
   path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data
   dataset_name: cifar100
+  dummy: false
 
 logging:
   tb_log_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs/
   checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
+  checkpoint_path:
 
 evaluation:
-  resume: false
   evaluate: true
 
 distributed_training:
+  distributed: true
   world_size: 1
   rank: 0
   dist_url: tcp://192.168.10.31:12345
   dist_backend: hccl
   multiprocessing_distributed: true
   addr: 192.168.10.31
+  gpu: None
   device: npu
-  gpu: null
-  device_list: "0,1,2,3,4,5,6,7"
+  device_list: [0, 1, 2, 3, 4, 5, 6, 7]
+  port: 17
 
 amp:
   enabled: true

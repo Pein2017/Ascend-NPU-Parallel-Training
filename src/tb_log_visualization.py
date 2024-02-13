@@ -54,6 +54,10 @@ class TBLogExporter:
             for metric in metrics:
                 # 提取图例名称，即metric的子标签
                 legend_name = metric.split('/')[-1]  # 例如 'train' 或 'val'
+                print(f'Plotting {metric} as {legend_name} in {group_name}')
+                print(
+                    f'tb_event has {len(tb_event.scalars.Items(metric))} items'
+                )
 
                 data = tb_event.scalars.Items(metric)
 
@@ -86,7 +90,7 @@ class TBLogExporter:
 if __name__ == '__main__':
     # Testing
 
-    custom_suffix = 'resnet101-batch:2048-lr:0.05-SGD'
+    custom_suffix = 'resnet18-batch:1024-lr:5e-4-AdamW'
     fig_name = 'metrics.png'
     tb_log_path = '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/tb_logs/'
 

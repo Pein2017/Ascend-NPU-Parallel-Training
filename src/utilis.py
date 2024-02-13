@@ -3,11 +3,11 @@ import shutil
 from argparse import Namespace
 from enum import Enum
 from typing import Dict, List, Optional, Tuple, Union
+from uu import Error
 
 import torch
 import torch.distributed as dist
 import torch_npu
-from apex import amp
 from torch.nn import Module
 from torch.optim import Optimizer
 
@@ -15,97 +15,102 @@ from torch.optim import Optimizer
 
 
 def load_checkpoint(
-        checkpoint_path: str, model: Module, optimizer: Optimizer,
-        args: Namespace,
-        device: str) -> Tuple[Module, Optimizer, int, Optional[float]]:
+        checkpoint_path: str) -> Tuple[dict, dict, int, Optional[float]]:
     """
-    加载训练检查点。
+    简化的加载训练检查点功能。
 
     :param checkpoint_path: 检查点文件的路径，类型为字符串。
-    :param model: 要加载状态的模型，类型为 torch.nn.Module。
-    :param optimizer: 优化器，类型为 torch.optim.Optimizer。
-    :param args: 包含训练配置和参数的命名空间，类型为 argparse.Namespace。
-    :param device: 计算设备，类型为字符串。
-    :return: 更新后的模型、优化器、开始epoch和最佳精度。返回类型为元组。
+    :return: 一个元组，包含模型的state_dict，优化器的状态字典，最佳训练周期（best_epoch），和最佳准确率（best_acc1）。
     """
-    if os.path.isfile(checkpoint_path):
-        print("=> loading checkpoint '{}'".format(checkpoint_path))
-        checkpoint = torch.load(checkpoint_path, map_location=device)
 
-        args.start_epoch = checkpoint['epoch']
-        best_acc1 = checkpoint.get('best_acc1', None)
+    if checkpoint_path is not os.path.isfile(checkpoint_path):
+        raise FileNotFoundError(f"No checkpoint found at '{checkpoint_path}'")
 
-        model.load_state_dict(checkpoint['state_dict'])
-        optimizer.load_state_dict(checkpoint['optimizer'])
+    print(f"=> loading checkpoint '{checkpoint_path}'")
+    checkpoint = torch.load(checkpoint_path)
 
-        if 'amp' in checkpoint and args.amp:
-            amp.load_state_dict(checkpoint['amp'])
+    model_state_dict = checkpoint.get('state_dict')
+    optimizer_state_dict = checkpoint.get('optimizer')
+    best_epoch = checkpoint.get('best_epoch', 0)
+    best_acc1 = checkpoint.get('best_acc1', None)
 
-        print("=> loaded checkpoint '{}' (epoch {})".format(
-            checkpoint_path, checkpoint['epoch']))
-    else:
-        print("=> no checkpoint found at '{}'".format(checkpoint_path))
-        best_acc1 = None
+    print(
+        f"=> loaded checkpoint '{checkpoint_path}' (epoch {best_epoch}, best_acc1={best_acc1})"
+    )
 
-    return model, optimizer, args.start_epoch, best_acc1
+    return model_state_dict, optimizer_state_dict, best_epoch, best_acc1
 
 
 def device_id_to_process_device_map(
-        device_list: List[Union[str, int]]) -> Dict[int, int]:
+        device_list: Union[str, List[Union[str, int]]]) -> Dict[int, int]:
     """
     此函数接收一个设备ID列表，然后为每个设备ID分配一个进程ID。
 
-    :param device_list: 包含设备ID的列表，ID可以是字符串或整数类型。
+    :param device_list: 可以是逗号分隔的设备ID字符串或包含设备ID的列表，ID可以是字符串或整数类型。
     :return: 一个字典，其中键是进程ID（整数），值是对应的设备ID（整数）。
     """
-    devices = device_list.split(",")
-    devices = [int(x) for x in devices]
+    # 检测输入类型并转换为整数列表
+    if isinstance(device_list, str):
+        devices = [int(x) for x in device_list.split(",")]
+    elif isinstance(device_list, list):
+        devices = [int(x) for x in device_list]
+    else:
+        raise ValueError(
+            "device_list must be either a comma-separated string or a list of integers/strings."
+        )
+
     devices.sort()
 
-    process_device_map = dict()
-    for process_id, device_id in enumerate(devices):
-        process_device_map[process_id] = device_id
+    process_device_map = {
+        process_id: device_id
+        for process_id, device_id in enumerate(devices)
+    }
 
     return process_device_map
 
 
-def set_device(args: Namespace) -> torch.device:
+def set_device(device: str, gpu: Optional[Union[str, int]]) -> torch.device:
     """设置训练设备为GPU或NPU"""
-    if args.device == 'npu':
-        loc = 'npu:{}'.format(args.gpu)
-
+    if device == 'npu':
+        loc = 'npu:{}'.format(gpu)
         torch_npu.npu.set_device(loc)
-    elif args.device == 'gpu':
-        loc = 'cuda:{}'.format(args.gpu)
+    elif device == 'gpu':
+        loc = 'cuda:{}'.format(gpu)
         torch.cuda.set_device(loc)
-        print('Set device to', loc)
     else:
         loc = 'cpu'
-        print('Set device to CPU')
 
+    print(f'Set device {loc} for training.')
     return torch.device(loc)
 
 
-def init_distributed_training(args: Namespace, ngpus_per_node: int,
+def init_distributed_training(distributed: bool, dist_url: str, rank: int,
+                              dist_backend: str, world_size: int,
+                              multiprocessing_distributed: bool,
+                              ngpus_per_node: int,
                               gpu: Optional[Union[str, int]]) -> None:
     """
-    初始化分布式训练环境。
-    此函数用于设置分布式训练的环境参数。在多进程分布式训练中，计算每个进程的独特排名。
+    初始化分布式训练环境，显式传入所需参数。
 
-    :param args: 包含分布式训练设置的命名空间对象。
+    :param distributed: 是否启用分布式训练。
+    :param dist_url: 分布式训练的URL，用于进程间通信。
+    :param rank: 当前进程的全局排名。
+    :param dist_backend: 分布式训练使用的后端。
+    :param world_size: 分布式训练中的总进程数。
+    :param multiprocessing_distributed: 是否使用多进程分布式训练。
     :param ngpus_per_node: 每个节点上的GPU数量。
-    :param gpu: 指定当前进程应使用的GPU索引，可以是字符串或整数.
+    :param gpu: 指定当前进程应使用的GPU索引，可以是字符串或整数。
     """
-    if args.distributed:
-        if args.dist_url == "env://" and args.rank == -1:
-            args.rank = int(os.environ["RANK"])
-        if args.multiprocessing_distributed:
-            args.rank = args.rank * ngpus_per_node + gpu
+    if distributed:
+        if dist_url == "env://" and rank == -1:
+            rank = int(os.environ["RANK"])
+        if multiprocessing_distributed:
+            rank = rank * ngpus_per_node + gpu
         dist.init_process_group(
-            backend=args.dist_backend,
-            init_method=args.dist_url,
-            world_size=args.world_size,
-            rank=args.rank,
+            backend=dist_backend,
+            init_method=dist_url,
+            world_size=world_size,
+            rank=rank,
         )
 
 
@@ -188,7 +193,7 @@ class MetricTracker:
         self.val = val
         self.sum += val * n
         self.count += n
-        self.avg = self.sum / self.count
+        self.avg = self.sum / self.count if self.count != 0 else 0
 
     def all_reduce(self):
         """当使用分布式训练时，同步不同进程间的统计数据。"""
@@ -198,9 +203,11 @@ class MetricTracker:
                                   dtype=torch.float32,
                                   device=current_device)
         dist.all_reduce(self.total, dist.ReduceOp.SUM, async_op=False)
-        self.sum = self.total[0].item() / world_size
-        self.count = self.total[1].item() / world_size
-        self.avg = self.sum / self.count
+        self.sum = self.total[0].item()
+        self.count = self.total[1].item()
+
+        # 在计算平均值前确保count不为0
+        self.avg = self.sum / self.count if self.count != 0 else 0
 
     def __str__(self):
         """返回格式化的统计信息字符串"""
