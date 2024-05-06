@@ -1,3 +1,3 @@
-Index,Architecture,Configuration,Event File Path,Commit
-0,resnet34,batch-256-lr-1e-1-SGD,,res34 training
+Index,Architecture,Configuration,Event File Dir,Commit
+0,resnet34,batch-256-lr-1e-1-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-1e-1-SGD/2024-05-06 14:12:54,res34 training
 1,resnet34,batch-256-lr-1e-1-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-1e-1-SGD/2024-05-06 12:57:34,res34 training
