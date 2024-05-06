@@ -1,0 +1,232 @@
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_6.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_0.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_1.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_2.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/optimizerProcess.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_0.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_6.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_4.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/model_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_7.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_4.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_7.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_2.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_5.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/utilisProcess.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_3.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_1.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/setup_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_5.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_3.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/tb_log_exporter.log
+2024-05-06 11:52:50,833 - INFO - MainProcess - Dataset cifar100 already exists at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data'. No download needed.
+2024-05-06 11:52:50,834 - DEBUG - MainProcess - Loading model...
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
+  warnings.warn(msg)
+2024-05-06 11:52:51,285 - DEBUG - MainProcess - Model resnet18 downloaded.
+2024-05-06 11:52:51,291 - DEBUG - MainProcess - Worker processes spawned successfully. Waiting for results...
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-06 11:53:10,392 - DEBUG - Worker:0 - Initialized logger for npu0.
+2024-05-06 11:53:10,841 - DEBUG - ModelProcess - All layers are unfrozen for training
+2024-05-06 11:53:12,511 - DEBUG - Worker:0 - Model resnet18 loaded with pretrained=False and moved to npu:0.
+2024-05-06 11:53:12,512 - DEBUG - Worker:0 - Adjusted batch size to 128 and worker count to 0.
+2024-05-06 11:53:12,825 - INFO - Worker:1 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,091 - INFO - Worker:3 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,092 - INFO - Worker:5 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,315 - INFO - Worker:2 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,407 - INFO - Worker:7 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,532 - INFO - Worker:4 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,687 - INFO - Worker:6 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,695 - INFO - Worker:0 - Distributed training initialized for 8 nodes.
+2024-05-06 11:53:13,695 - DEBUG - Worker:0 - train_ratio is 0.1, test_ratio is 0.8
+--2024-05-06 11:53:38,435 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.1 and batch size 128.
+2024-05-06 11:53:38,435 - DEBUG - Worker:0 - Training size is 4, val size is 4, test size is 313
+2024-05-06 11:53:38,436 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau set with parameters: {'mode': 'min', 'factor': 0.2, 'patience': 100}
+2024-05-06 11:53:38,437 - DEBUG - Worker:0 - Training debug mode is enabled, Verbose mode is on, Printing frequency set to every 300 iterations, Starting from epoch 0.
+---Warning: Device do not support double dtype now, dtype cast repalce with float.
+[W IscloseKernelNpu.cpp:32] Warning: Device do not support double dtype of rtol and atol now, dtype cast repalce with float. (function operator())
+---\\\\\\\\||||||||/Files already downloaded and verified
+Files already downloaded and verified
+Epoch:[0][1 / 4]	Loss 4.6973e+00 (平均: 4.6973e+00)	Top-1 accuracy 0.781 (平均: 0.781)	Top-5 accuracy 6.250 (平均: 6.250)	Batch Processing: 7.43 (平均: 7.43)	Data Loading: 0.09 (平均: 0.09)
+Epoch:[0] * Loss Avg: 4.757 Top-1 accuracy Avg: 1.318 Top-5 accuracy Avg: 6.079 Batch Processing: Avg: 1.934 Data Loading: Avg: 0.080
+Test:[1 / 4]	Loss 7.0783e-01 (平均: 7.0783e-01)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 9.713 (平均: 9.713)	Batch Processing: 0.78 (平均: 0.78)	Data Loading: 4.69 (平均: 4.69)
+Test: * Loss Avg: 0.241 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 8.952 Batch Processing: Avg: 0.977 Data Loading: Avg: 6.250
+Epoch:[1][1 / 4]	Loss 5.0582e+00 (平均: 5.0582e+00)	Top-1 accuracy 2.344 (平均: 2.344)	Top-5 accuracy 7.031 (平均: 7.031)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.07 (平均: 0.07)
+Epoch:[1] * Loss Avg: 4.913 Top-1 accuracy Avg: 2.295 Top-5 accuracy Avg: 8.179 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.1398e-02 (平均: 8.1398e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 15.323 (平均: 15.323)	Batch Processing: 0.78 (平均: 0.78)	Data Loading: 5.47 (平均: 5.47)
+Test: * Loss Avg: 0.081 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 14.404 Batch Processing: Avg: 0.586 Data Loading: Avg: 4.492
+Epoch:[2][1 / 4]	Loss 4.9250e+00 (平均: 4.9250e+00)	Top-1 accuracy 2.344 (平均: 2.344)	Top-5 accuracy 8.594 (平均: 8.594)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[2] * Loss Avg: 5.054 Top-1 accuracy Avg: 2.856 Top-5 accuracy Avg: 10.620 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.1124e-02 (平均: 8.1124e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 27.408 (平均: 27.408)	Batch Processing: 0.78 (平均: 0.78)	Data Loading: 5.47 (平均: 5.47)
+Test: * Loss Avg: 0.081 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 27.787 Batch Processing: Avg: 1.172 Data Loading: Avg: 5.273
+Epoch:[3][1 / 4]	Loss 4.9387e+00 (平均: 4.9387e+00)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 6.250 (平均: 6.250)	Batch Processing: 0.09 (平均: 0.09)	Data Loading: 0.07 (平均: 0.07)
+Epoch:[3] * Loss Avg: 4.957 Top-1 accuracy Avg: 2.612 Top-5 accuracy Avg: 11.670 Batch Processing: Avg: 0.097 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.1536e-02 (平均: 8.1536e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 54.961 (平均: 54.961)	Batch Processing: 0.78 (平均: 0.78)	Data Loading: 9.38 (平均: 9.38)
+Test: * Loss Avg: 0.082 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 53.265 Batch Processing: Avg: 0.781 Data Loading: Avg: 5.469
+Epoch:[4][1 / 4]	Loss 4.6955e+00 (平均: 4.6955e+00)	Top-1 accuracy 3.906 (平均: 3.906)	Top-5 accuracy 10.156 (平均: 10.156)	Batch Processing: 0.09 (平均: 0.09)	Data Loading: 0.07 (平均: 0.07)
+Epoch:[4] * Loss Avg: 4.788 Top-1 accuracy Avg: 3.174 Top-5 accuracy Avg: 12.524 Batch Processing: Avg: 0.096 Data Loading: Avg: 0.075
+Test:[1 / 4]	Loss 8.2173e-02 (平均: 8.2173e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 9.562 (平均: 9.562)	Batch Processing: 1.56 (平均: 1.56)	Data Loading: 8.59 (平均: 8.59)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 8.790 Batch Processing: Avg: 1.172 Data Loading: Avg: 8.008
+Epoch:[5][1 / 4]	Loss 4.5617e+00 (平均: 4.5617e+00)	Top-1 accuracy 3.125 (平均: 3.125)	Top-5 accuracy 11.719 (平均: 11.719)	Batch Processing: 0.09 (平均: 0.09)	Data Loading: 0.07 (平均: 0.07)
+Epoch:[5] * Loss Avg: 4.635 Top-1 accuracy Avg: 4.004 Top-5 accuracy Avg: 13.184 Batch Processing: Avg: 0.095 Data Loading: Avg: 0.074
+Test:[1 / 4]	Loss 8.1601e-02 (平均: 8.1601e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 8.367 (平均: 8.367)	Batch Processing: 1.56 (平均: 1.56)	Data Loading: 7.81 (平均: 7.81)
+Test: * Loss Avg: 0.081 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 7.487 Batch Processing: Avg: 1.953 Data Loading: Avg: 7.812
+Epoch:[6][1 / 4]	Loss 4.4621e+00 (平均: 4.4621e+00)	Top-1 accuracy 3.125 (平均: 3.125)	Top-5 accuracy 17.188 (平均: 17.188)	Batch Processing: 0.09 (平均: 0.09)	Data Loading: 0.07 (平均: 0.07)
+Epoch:[6] * Loss Avg: 4.579 Top-1 accuracy Avg: 3.784 Top-5 accuracy Avg: 13.940 Batch Processing: Avg: 0.095 Data Loading: Avg: 0.075
+Test:[1 / 4]	Loss 8.1632e-02 (平均: 8.1632e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 6.132 (平均: 6.132)	Batch Processing: 0.78 (平均: 0.78)	Data Loading: 11.72 (平均: 11.72)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 6.071 Batch Processing: Avg: 1.953 Data Loading: Avg: 11.328
+Epoch:[7][1 / 4]	Loss 4.5170e+00 (平均: 4.5170e+00)	Top-1 accuracy 2.344 (平均: 2.344)	Top-5 accuracy 11.719 (平均: 11.719)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[7] * Loss Avg: 4.432 Top-1 accuracy Avg: 4.712 Top-5 accuracy Avg: 16.553 Batch Processing: Avg: 0.096 Data Loading: Avg: 0.075
+Test:[1 / 4]	Loss 8.2988e-02 (平均: 8.2988e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 5.061 (平均: 5.061)	Batch Processing: 5.47 (平均: 5.47)	Data Loading: 15.62 (平均: 15.62)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.958 Batch Processing: Avg: 4.297 Data Loading: Avg: 15.430
+Epoch:[8][1 / 4]	Loss 4.2888e+00 (平均: 4.2888e+00)	Top-1 accuracy 7.031 (平均: 7.031)	Top-5 accuracy 20.312 (平均: 20.312)	Batch Processing: 0.09 (平均: 0.09)	Data Loading: 0.07 (平均: 0.07)
+Epoch:[8] * Loss Avg: 4.371 Top-1 accuracy Avg: 4.565 Top-5 accuracy Avg: 17.700 Batch Processing: Avg: 0.095 Data Loading: Avg: 0.074
+Test:[1 / 4]	Loss 8.2371e-02 (平均: 8.2371e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.763 (平均: 4.763)	Batch Processing: 2.34 (平均: 2.34)	Data Loading: 16.41 (平均: 16.41)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.879 Batch Processing: Avg: 3.711 Data Loading: Avg: 18.359
+Epoch:[9][1 / 4]	Loss 4.1655e+00 (平均: 4.1655e+00)	Top-1 accuracy 6.250 (平均: 6.250)	Top-5 accuracy 22.656 (平均: 22.656)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[9] * Loss Avg: 4.287 Top-1 accuracy Avg: 5.615 Top-5 accuracy Avg: 20.117 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.078
+Test:[1 / 4]	Loss 8.4402e-02 (平均: 8.4402e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.635 (平均: 4.635)	Batch Processing: 3.12 (平均: 3.12)	Data Loading: 18.75 (平均: 18.75)
+Test: * Loss Avg: 0.084 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.742 Batch Processing: Avg: 3.125 Data Loading: Avg: 17.383
+Epoch:[10][1 / 4]	Loss 4.2276e+00 (平均: 4.2276e+00)	Top-1 accuracy 6.250 (平均: 6.250)	Top-5 accuracy 23.438 (平均: 23.438)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[10] * Loss Avg: 4.265 Top-1 accuracy Avg: 5.566 Top-5 accuracy Avg: 19.946 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.2419e-02 (平均: 8.2419e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.429 (平均: 4.429)	Batch Processing: 7.03 (平均: 7.03)	Data Loading: 21.88 (平均: 21.88)
+Test: * Loss Avg: 0.082 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.515 Batch Processing: Avg: 6.445 Data Loading: Avg: 20.117
+Epoch:[11][1 / 4]	Loss 4.4055e+00 (平均: 4.4055e+00)	Top-1 accuracy 4.688 (平均: 4.688)	Top-5 accuracy 22.656 (平均: 22.656)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[11] * Loss Avg: 4.215 Top-1 accuracy Avg: 5.664 Top-5 accuracy Avg: 20.825 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.5310e-02 (平均: 8.5310e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.510 (平均: 4.510)	Batch Processing: 2.34 (平均: 2.34)	Data Loading: 21.09 (平均: 21.09)
+Test: * Loss Avg: 0.088 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.469 Batch Processing: Avg: 2.539 Data Loading: Avg: 18.945
+Epoch:[12][1 / 4]	Loss 4.2547e+00 (平均: 4.2547e+00)	Top-1 accuracy 5.469 (平均: 5.469)	Top-5 accuracy 18.750 (平均: 18.750)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[12] * Loss Avg: 4.165 Top-1 accuracy Avg: 6.323 Top-5 accuracy Avg: 22.900 Batch Processing: Avg: 0.097 Data Loading: Avg: 0.075
+Test:[1 / 4]	Loss 8.2428e-02 (平均: 8.2428e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.248 (平均: 4.248)	Batch Processing: 4.69 (平均: 4.69)	Data Loading: 25.00 (平均: 25.00)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.342 Batch Processing: Avg: 3.516 Data Loading: Avg: 18.555
+Epoch:[13][1 / 4]	Loss 4.1906e+00 (平均: 4.1906e+00)	Top-1 accuracy 3.906 (平均: 3.906)	Top-5 accuracy 17.188 (平均: 17.188)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[13] * Loss Avg: 4.106 Top-1 accuracy Avg: 7.178 Top-5 accuracy Avg: 22.437 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.078
+Test:[1 / 4]	Loss 8.2821e-02 (平均: 8.2821e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.096 (平均: 4.096)	Batch Processing: 6.25 (平均: 6.25)	Data Loading: 25.00 (平均: 25.00)
+Test: * Loss Avg: 0.082 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.261 Batch Processing: Avg: 4.883 Data Loading: Avg: 18.555
+Epoch:[14][1 / 4]	Loss 4.0731e+00 (平均: 4.0731e+00)	Top-1 accuracy 10.156 (平均: 10.156)	Top-5 accuracy 24.219 (平均: 24.219)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[14] * Loss Avg: 4.096 Top-1 accuracy Avg: 6.885 Top-5 accuracy Avg: 23.608 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.2745e-02 (平均: 8.2745e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.153 (平均: 4.153)	Batch Processing: 6.25 (平均: 6.25)	Data Loading: 19.53 (平均: 19.53)
+Test: * Loss Avg: 0.082 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.370 Batch Processing: Avg: 5.469 Data Loading: Avg: 16.992
+Epoch:[15][1 / 4]	Loss 3.9557e+00 (平均: 3.9557e+00)	Top-1 accuracy 7.812 (平均: 7.812)	Top-5 accuracy 32.812 (平均: 32.812)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[15] * Loss Avg: 4.051 Top-1 accuracy Avg: 7.007 Top-5 accuracy Avg: 24.438 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.3201e-02 (平均: 8.3201e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.457 (平均: 4.457)	Batch Processing: 5.47 (平均: 5.47)	Data Loading: 19.53 (平均: 19.53)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.388 Batch Processing: Avg: 5.859 Data Loading: Avg: 18.750
+Epoch:[16][1 / 4]	Loss 4.1083e+00 (平均: 4.1083e+00)	Top-1 accuracy 4.688 (平均: 4.688)	Top-5 accuracy 22.656 (平均: 22.656)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[16] * Loss Avg: 4.063 Top-1 accuracy Avg: 7.129 Top-5 accuracy Avg: 24.976 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.2650e-02 (平均: 8.2650e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.385 (平均: 4.385)	Batch Processing: 5.47 (平均: 5.47)	Data Loading: 17.97 (平均: 17.97)
+Test: * Loss Avg: 0.082 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.293 Batch Processing: Avg: 5.664 Data Loading: Avg: 20.117
+Epoch:[17][1 / 4]	Loss 4.0817e+00 (平均: 4.0817e+00)	Top-1 accuracy 7.031 (平均: 7.031)	Top-5 accuracy 23.438 (平均: 23.438)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[17] * Loss Avg: 4.041 Top-1 accuracy Avg: 7.227 Top-5 accuracy Avg: 25.122 Batch Processing: Avg: 0.097 Data Loading: Avg: 0.076
+Test:[1 / 4]	Loss 8.3381e-02 (平均: 8.3381e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.176 (平均: 4.176)	Batch Processing: 8.59 (平均: 8.59)	Data Loading: 23.44 (平均: 23.44)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.175 Batch Processing: Avg: 6.641 Data Loading: Avg: 22.852
+Epoch:[18][1 / 4]	Loss 4.0742e+00 (平均: 4.0742e+00)	Top-1 accuracy 8.594 (平均: 8.594)	Top-5 accuracy 27.344 (平均: 27.344)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[18] * Loss Avg: 4.023 Top-1 accuracy Avg: 7.520 Top-5 accuracy Avg: 25.732 Batch Processing: Avg: 0.097 Data Loading: Avg: 0.076
+Test:[1 / 4]	Loss 8.2840e-02 (平均: 8.2840e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.155 (平均: 4.155)	Batch Processing: 5.47 (平均: 5.47)	Data Loading: 25.78 (平均: 25.78)
+Test: * Loss Avg: 0.082 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.162 Batch Processing: Avg: 6.055 Data Loading: Avg: 21.289
+Epoch:[19][1 / 4]	Loss 4.0218e+00 (平均: 4.0218e+00)	Top-1 accuracy 4.688 (平均: 4.688)	Top-5 accuracy 25.000 (平均: 25.000)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[19] * Loss Avg: 4.012 Top-1 accuracy Avg: 7.812 Top-5 accuracy Avg: 25.732 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.5149e-02 (平均: 8.5149e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.072 (平均: 4.072)	Batch Processing: 6.25 (平均: 6.25)	Data Loading: 28.91 (平均: 28.91)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.190 Batch Processing: Avg: 5.859 Data Loading: Avg: 22.656
+Epoch:[20][1 / 4]	Loss 3.8992e+00 (平均: 3.8992e+00)	Top-1 accuracy 13.281 (平均: 13.281)	Top-5 accuracy 30.469 (平均: 30.469)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[20] * Loss Avg: 3.983 Top-1 accuracy Avg: 8.862 Top-5 accuracy Avg: 26.904 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.3376e-02 (平均: 8.3376e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.028 (平均: 4.028)	Batch Processing: 7.03 (平均: 7.03)	Data Loading: 23.44 (平均: 23.44)
+Test: * Loss Avg: 0.084 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.156 Batch Processing: Avg: 6.445 Data Loading: Avg: 21.680
+Epoch:[21][1 / 4]	Loss 4.0946e+00 (平均: 4.0946e+00)	Top-1 accuracy 3.906 (平均: 3.906)	Top-5 accuracy 25.781 (平均: 25.781)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[21] * Loss Avg: 3.988 Top-1 accuracy Avg: 7.959 Top-5 accuracy Avg: 26.953 Batch Processing: Avg: 0.096 Data Loading: Avg: 0.076
+Test:[1 / 4]	Loss 8.2608e-02 (平均: 8.2608e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.151 (平均: 4.151)	Batch Processing: 7.81 (平均: 7.81)	Data Loading: 21.88 (平均: 21.88)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.122 Batch Processing: Avg: 5.859 Data Loading: Avg: 23.828
+Epoch:[22][1 / 4]	Loss 4.0117e+00 (平均: 4.0117e+00)	Top-1 accuracy 11.719 (平均: 11.719)	Top-5 accuracy 21.875 (平均: 21.875)	Batch Processing: 0.09 (平均: 0.09)	Data Loading: 0.07 (平均: 0.07)
+Epoch:[22] * Loss Avg: 3.930 Top-1 accuracy Avg: 8.423 Top-5 accuracy Avg: 29.004 Batch Processing: Avg: 0.095 Data Loading: Avg: 0.075
+Test:[1 / 4]	Loss 8.4882e-02 (平均: 8.4882e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.077 (平均: 4.077)	Batch Processing: 9.38 (平均: 9.38)	Data Loading: 25.00 (平均: 25.00)
+Test: * Loss Avg: 0.087 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.080 Batch Processing: Avg: 8.008 Data Loading: Avg: 24.805
+Epoch:[23][1 / 4]	Loss 3.9525e+00 (平均: 3.9525e+00)	Top-1 accuracy 7.031 (平均: 7.031)	Top-5 accuracy 21.094 (平均: 21.094)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[23] * Loss Avg: 3.951 Top-1 accuracy Avg: 8.545 Top-5 accuracy Avg: 28.296 Batch Processing: Avg: 0.098 Data Loading: Avg: 0.077
+Test:[1 / 4]	Loss 8.2392e-02 (平均: 8.2392e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.146 (平均: 4.146)	Batch Processing: 7.03 (平均: 7.03)	Data Loading: 23.44 (平均: 23.44)
+Test: * Loss Avg: 0.083 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.116 Batch Processing: Avg: 6.445 Data Loading: Avg: 23.828
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+2024-05-06 11:55:19,336 - DEBUG - Worker:0 - 
+--------------------
+2024-05-06 11:55:19,336 - DEBUG - Worker:0 - For validation, best acc1: 9.375 at epoch 29
+2024-05-06 11:55:19,336 - DEBUG - Worker:0 - Final testing at NPU/GPU: 0
+-2024-05-06 11:55:50,188 - DEBUG - Worker:0 - Test results: 
+Loss: 4.024357482147217, Top-1: 7.23, Top-5: 24.83
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+Epoch:[24][1 / 4]	Loss 3.9503e+00 (平均: 3.9503e+00)	Top-1 accuracy 9.375 (平均: 9.375)	Top-5 accuracy 32.031 (平均: 32.031)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[24] * Loss Avg: 3.937 Top-1 accuracy Avg: 8.203 Top-5 accuracy Avg: 28.223 Batch Processing: Avg: 0.099 Data Loading: Avg: 0.079
+Test:[1 / 4]	Loss 8.8945e-02 (平均: 8.8945e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.107 (平均: 4.107)	Batch Processing: 6.25 (平均: 6.25)	Data Loading: 23.44 (平均: 23.44)
+Test: * Loss Avg: 0.087 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.168 Batch Processing: Avg: 5.273 Data Loading: Avg: 22.266
+Epoch:[25][1 / 4]	Loss 3.9225e+00 (平均: 3.9225e+00)	Top-1 accuracy 10.938 (平均: 10.938)	Top-5 accuracy 28.125 (平均: 28.125)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[25] * Loss Avg: 3.930 Top-1 accuracy Avg: 7.959 Top-5 accuracy Avg: 28.540 Batch Processing: Avg: 0.103 Data Loading: Avg: 0.079
+Test:[1 / 4]	Loss 8.8711e-02 (平均: 8.8711e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.181 (平均: 4.181)	Batch Processing: 3.91 (平均: 3.91)	Data Loading: 17.97 (平均: 17.97)
+Test: * Loss Avg: 0.087 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.126 Batch Processing: Avg: 6.445 Data Loading: Avg: 24.023
+Epoch:[26][1 / 4]	Loss 3.9249e+00 (平均: 3.9249e+00)	Top-1 accuracy 7.031 (平均: 7.031)	Top-5 accuracy 28.125 (平均: 28.125)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[26] * Loss Avg: 3.943 Top-1 accuracy Avg: 7.666 Top-5 accuracy Avg: 27.588 Batch Processing: Avg: 0.103 Data Loading: Avg: 0.079
+Test:[1 / 4]	Loss 8.8570e-02 (平均: 8.8570e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.224 (平均: 4.224)	Batch Processing: 4.69 (平均: 4.69)	Data Loading: 18.75 (平均: 18.75)
+Test: * Loss Avg: 0.087 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.126 Batch Processing: Avg: 7.422 Data Loading: Avg: 23.828
+Epoch:[27][1 / 4]	Loss 3.8319e+00 (平均: 3.8319e+00)	Top-1 accuracy 7.812 (平均: 7.812)	Top-5 accuracy 32.812 (平均: 32.812)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[27] * Loss Avg: 3.921 Top-1 accuracy Avg: 8.813 Top-5 accuracy Avg: 28.516 Batch Processing: Avg: 0.103 Data Loading: Avg: 0.079
+Test:[1 / 4]	Loss 8.8320e-02 (平均: 8.8320e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.090 (平均: 4.090)	Batch Processing: 7.03 (平均: 7.03)	Data Loading: 28.12 (平均: 28.12)
+Test: * Loss Avg: 0.087 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.073 Batch Processing: Avg: 8.398 Data Loading: Avg: 26.562
+Epoch:[28][1 / 4]	Loss 3.9475e+00 (平均: 3.9475e+00)	Top-1 accuracy 11.719 (平均: 11.719)	Top-5 accuracy 26.562 (平均: 26.562)	Batch Processing: 0.11 (平均: 0.11)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[28] * Loss Avg: 3.892 Top-1 accuracy Avg: 9.253 Top-5 accuracy Avg: 29.443 Batch Processing: Avg: 0.103 Data Loading: Avg: 0.079
+Test:[1 / 4]	Loss 8.8653e-02 (平均: 8.8653e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.128 (平均: 4.128)	Batch Processing: 8.59 (平均: 8.59)	Data Loading: 24.22 (平均: 24.22)
+Test: * Loss Avg: 0.087 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.089 Batch Processing: Avg: 8.203 Data Loading: Avg: 26.953
+Epoch:[29][1 / 4]	Loss 3.8545e+00 (平均: 3.8545e+00)	Top-1 accuracy 10.938 (平均: 10.938)	Top-5 accuracy 33.594 (平均: 33.594)	Batch Processing: 0.10 (平均: 0.10)	Data Loading: 0.08 (平均: 0.08)
+Epoch:[29] * Loss Avg: 3.898 Top-1 accuracy Avg: 8.154 Top-5 accuracy Avg: 28.345 Batch Processing: Avg: 0.102 Data Loading: Avg: 0.079
+Test:[1 / 4]	Loss 8.8547e-02 (平均: 8.8547e-02)	Top-1 accuracy 0.000 (平均: 0.000)	Top-5 accuracy 4.090 (平均: 4.090)	Batch Processing: 6.25 (平均: 6.25)	Data Loading: 22.66 (平均: 22.66)
+Test: * Loss Avg: 0.087 Top-1 accuracy Avg: 0.000 Top-5 accuracy Avg: 4.048 Batch Processing: Avg: 9.375 Data Loading: Avg: 26.367
+before: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs
+************
+events.out.tfevents.1714967618.bms-sldzkf-01.3935241.0debug-batch-1024-lr-1e-1-SGD 2
+************
+2024-05-06 11:55:59,497 - DEBUG - MainProcess - Results received. <multiprocessing.sharedctypes.c_double_Array_3 object at 0xfffcf700bc40>
+2024-05-06 11:55:59,497 - INFO - MainProcess - Finished! Best accuracy: 9.375 at epoch 29. Test top1 accuracy: 7.23
+2024-05-06 11:55:59,497 - INFO - MainProcess - Total time cost: 00h:03mins:08s

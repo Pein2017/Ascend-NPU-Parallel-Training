@@ -1,0 +1,63 @@
+2024-05-06 14:11:44,482 - DEBUG - UtilisProcess - Set device npu:7 for training.
+2024-05-06 14:11:44,621 - DEBUG - UtilisProcess - Set device npu:4 for training.
+2024-05-06 14:11:44,680 - DEBUG - UtilisProcess - Set device npu:6 for training.
+2024-05-06 14:11:45,014 - DEBUG - UtilisProcess - Set device npu:2 for training.
+2024-05-06 14:11:45,080 - DEBUG - UtilisProcess - Set device npu:1 for training.
+2024-05-06 14:11:45,127 - DEBUG - UtilisProcess - Set device npu:0 for training.
+2024-05-06 14:11:45,293 - DEBUG - UtilisProcess - Set device npu:3 for training.
+2024-05-06 14:11:45,344 - DEBUG - UtilisProcess - Set device npu:5 for training.
+2024-05-06 14:11:47,124 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=4, World Size=8
+2024-05-06 14:11:47,634 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=7, World Size=8
+2024-05-06 14:11:47,677 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=0, World Size=8
+2024-05-06 14:11:47,724 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=2, World Size=8
+2024-05-06 14:11:47,827 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=6, World Size=8
+2024-05-06 14:11:47,926 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=5, World Size=8
+2024-05-06 14:11:48,385 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=1, World Size=8
+2024-05-06 14:11:48,604 - DEBUG - UtilisProcess - Initializing distributed training initialized successfully: Rank=3, World Size=8
+2024-05-06 14:13:40,312 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch0-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:13:52,587 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch1-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:14:04,909 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch2-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:14:28,483 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch4-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:14:51,986 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch6-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:15:26,911 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch9-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:15:50,210 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch11-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:16:02,921 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch12-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:16:14,683 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch13-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:17:12,988 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch18-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:17:36,939 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch20-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:17:48,693 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch21-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:18:35,802 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch25-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:18:59,053 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch27-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:19:22,084 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch29-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:19:33,433 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch30-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:19:45,354 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch31-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:20:41,882 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch36-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:21:47,385 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch42-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:23:15,791 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch50-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:24:11,207 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch55-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:25:16,847 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch61-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:28:11,213 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch77-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:30:33,461 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch90-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:31:28,417 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch95-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:32:44,780 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch102-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:43:30,368 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch161-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:45:55,744 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch174-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 14:47:12,790 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch181-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:03:10,070 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch269-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:08:55,549 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch300-batch-256-lr-1e-1-SGD-regular.pth
+2024-05-06 15:14:27,087 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch330-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:14:38,145 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch331-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:15:00,567 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch333-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:15:45,099 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch337-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:15:56,575 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch338-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:16:30,149 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch341-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:31:04,707 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch421-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:33:49,640 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch436-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:52:27,878 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch538-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:52:39,239 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch539-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:53:34,807 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch544-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:53:57,659 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch546-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 15:54:52,748 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch551-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 16:03:54,715 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch600-batch-256-lr-1e-1-SGD-regular.pth
+2024-05-06 16:14:20,748 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch657-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 16:17:20,200 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch674-batch-256-lr-1e-1-SGD-best.pth

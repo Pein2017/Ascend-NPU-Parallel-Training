@@ -1,0 +1,9 @@
+2024-05-06 14:11:45,128 - DEBUG - Worker:0 - Initialized logger for npu0.
+2024-05-06 14:11:47,677 - DEBUG - Worker:0 - Model resnet34 loaded with pretrained=False and moved to npu:0.
+2024-05-06 14:11:47,677 - DEBUG - Worker:0 - Adjusted batch size to 32 and worker count to 0.
+2024-05-06 14:11:48,638 - INFO - Worker:0 - Distributed training initialized for 8 nodes.
+2024-05-06 14:11:48,638 - DEBUG - Worker:0 - train_ratio is 0.9, test_ratio is 0.05
+2024-05-06 14:12:54,469 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and batch size 32.
+2024-05-06 14:12:54,470 - DEBUG - Worker:0 - Training size is 175, val size is 9, test size is 79
+2024-05-06 14:12:54,475 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau set with parameters: {'mode': 'min', 'factor': 0.2, 'patience': 100}
+2024-05-06 14:12:54,476 - DEBUG - Worker:0 - Training debug mode is disabled, Verbose mode is off, Printing frequency set to every 300 iterations, Starting from epoch 0.

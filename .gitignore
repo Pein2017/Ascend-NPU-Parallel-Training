@@ -3,8 +3,9 @@ cache/
 __pycache__/
 cifar10_data/
 cifar100_data/
-checkpoints/*.pth
+checkpoints/
 kernel_meta/
 kernel_meta_temp_2719437144361587855/
 /fusion_result.json
 /checkpoints/*.pth
+3-tb_logs/events
