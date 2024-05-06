@@ -2828,3 +2828,79 @@ Epoch:704, top1:55.221, top5:83.056, loss:1.647
 Epoch:705, top1:55.406, top5:82.723, loss:1.647
 2024-05-06 16:22:46,363 - DEBUG - Train:0 - Validation results: top1:72.222, top5:92.361, loss:1.110
 2024-05-06 16:22:46,363 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:22:56,837 - DEBUG - Train:0 - Updating 
+Epoch:706, top1:55.121, top5:82.688, loss:1.654
+2024-05-06 16:22:57,100 - DEBUG - Train:0 - Validation results: top1:69.792, top5:93.403, loss:1.190
+2024-05-06 16:22:57,101 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:23:07,865 - DEBUG - Train:0 - Updating 
+Epoch:707, top1:54.839, top5:82.417, loss:1.667
+2024-05-06 16:23:08,126 - DEBUG - Train:0 - Validation results: top1:70.139, top5:90.625, loss:1.163
+2024-05-06 16:23:08,127 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:23:18,755 - DEBUG - Train:0 - Updating 
+Epoch:708, top1:54.616, top5:82.638, loss:1.666
+2024-05-06 16:23:19,016 - DEBUG - Train:0 - Validation results: top1:69.792, top5:92.708, loss:1.177
+2024-05-06 16:23:19,017 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:23:29,413 - DEBUG - Train:0 - Updating 
+Epoch:709, top1:54.969, top5:82.920, loss:1.653
+2024-05-06 16:23:29,674 - DEBUG - Train:0 - Validation results: top1:72.222, top5:92.361, loss:1.176
+2024-05-06 16:23:29,674 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:23:40,157 - DEBUG - Train:0 - Updating 
+Epoch:710, top1:54.904, top5:82.717, loss:1.655
+2024-05-06 16:23:40,427 - DEBUG - Train:0 - Validation results: top1:69.792, top5:92.708, loss:1.201
+2024-05-06 16:23:40,427 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:23:50,925 - DEBUG - Train:0 - Updating 
+Epoch:711, top1:55.158, top5:82.779, loss:1.652
+2024-05-06 16:23:51,188 - DEBUG - Train:0 - Validation results: top1:73.958, top5:93.056, loss:1.157
+2024-05-06 16:23:51,188 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:24:01,680 - DEBUG - Train:0 - Updating 
+Epoch:712, top1:54.975, top5:82.667, loss:1.662
+2024-05-06 16:24:01,942 - DEBUG - Train:0 - Validation results: top1:71.875, top5:92.708, loss:1.191
+2024-05-06 16:24:01,942 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:24:12,394 - DEBUG - Train:0 - Updating 
+Epoch:713, top1:55.426, top5:82.692, loss:1.647
+2024-05-06 16:24:12,658 - DEBUG - Train:0 - Validation results: top1:70.833, top5:92.014, loss:1.160
+2024-05-06 16:24:12,658 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:24:22,530 - DEBUG - Train:0 - Updating 
+Epoch:714, top1:54.938, top5:82.522, loss:1.655
+2024-05-06 16:24:22,789 - DEBUG - Train:0 - Validation results: top1:70.139, top5:93.056, loss:1.177
+2024-05-06 16:24:22,790 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:24:32,698 - DEBUG - Train:0 - Updating 
+Epoch:715, top1:54.938, top5:82.772, loss:1.655
+2024-05-06 16:24:32,957 - DEBUG - Train:0 - Validation results: top1:73.958, top5:92.014, loss:1.132
+2024-05-06 16:24:32,958 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:24:42,840 - DEBUG - Train:0 - Updating 
+Epoch:716, top1:54.739, top5:82.612, loss:1.658
+2024-05-06 16:24:43,101 - DEBUG - Train:0 - Validation results: top1:72.569, top5:92.014, loss:1.169
+2024-05-06 16:24:43,101 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:24:52,932 - DEBUG - Train:0 - Updating 
+Epoch:717, top1:55.143, top5:82.748, loss:1.647
+2024-05-06 16:24:53,190 - DEBUG - Train:0 - Validation results: top1:75.347, top5:91.319, loss:1.142
+2024-05-06 16:24:53,190 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:25:03,851 - DEBUG - Train:0 - Updating 
+Epoch:718, top1:55.433, top5:82.721, loss:1.643
+2024-05-06 16:25:04,108 - DEBUG - Train:0 - Validation results: top1:73.958, top5:93.403, loss:1.100
+2024-05-06 16:25:04,108 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:25:14,472 - DEBUG - Train:0 - Updating 
+Epoch:719, top1:55.042, top5:82.790, loss:1.657
+2024-05-06 16:25:14,730 - DEBUG - Train:0 - Validation results: top1:70.833, top5:91.667, loss:1.240
+2024-05-06 16:25:14,731 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:25:26,041 - DEBUG - Train:0 - Updating 
+Epoch:720, top1:55.051, top5:82.661, loss:1.655
+2024-05-06 16:25:26,301 - DEBUG - Train:0 - Validation results: top1:73.264, top5:92.708, loss:1.146
+2024-05-06 16:25:26,302 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:25:36,357 - DEBUG - Train:0 - Updating 
+Epoch:721, top1:54.967, top5:82.721, loss:1.659
+2024-05-06 16:25:36,619 - DEBUG - Train:0 - Validation results: top1:71.528, top5:93.056, loss:1.181
+2024-05-06 16:25:36,620 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:25:46,934 - DEBUG - Train:0 - Updating 
+Epoch:722, top1:55.386, top5:82.964, loss:1.640
+2024-05-06 16:25:47,192 - DEBUG - Train:0 - Validation results: top1:71.528, top5:94.097, loss:1.202
+2024-05-06 16:25:47,192 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:25:56,991 - DEBUG - Train:0 - Updating 
+Epoch:723, top1:55.145, top5:82.663, loss:1.652
+2024-05-06 16:25:57,250 - DEBUG - Train:0 - Validation results: top1:69.792, top5:93.750, loss:1.178
+2024-05-06 16:25:57,250 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003
+2024-05-06 16:26:07,545 - DEBUG - Train:0 - Updating 
+Epoch:724, top1:55.629, top5:82.790, loss:1.642
+2024-05-06 16:26:07,804 - DEBUG - Train:0 - Validation results: top1:72.569, top5:90.972, loss:1.146
+2024-05-06 16:26:07,804 - DEBUG - Train:0 - Learning rate: 0.0008000000000000003

@@ -61,3 +61,4 @@
 2024-05-06 16:03:54,715 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch600-batch-256-lr-1e-1-SGD-regular.pth
 2024-05-06 16:14:20,748 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch657-batch-256-lr-1e-1-SGD-best.pth
 2024-05-06 16:17:20,200 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch674-batch-256-lr-1e-1-SGD-best.pth
+2024-05-06 16:24:53,521 - DEBUG - UtilisProcess - Checkpoint saved at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints/resnet34/epoch717-batch-256-lr-1e-1-SGD-best.pth
