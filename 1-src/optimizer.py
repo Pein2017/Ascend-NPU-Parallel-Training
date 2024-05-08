@@ -14,7 +14,7 @@ from torch.optim.lr_scheduler import (
 
 optimizer_logger = setup_logger(
     name="OptimizerProcess",
-    log_file_name="optimizerProcess.log",
+    log_file_name="optimizer_process.log",
     level=logging.INFO,
     console=False,
 )

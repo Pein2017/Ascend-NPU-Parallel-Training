@@ -12,7 +12,7 @@ from stats_tracker import ModelStatsTracker
 from tb_log_visualization import TBLogExporter
 from torch import nn
 from torch.utils.data import DataLoader, Sampler
-from train_utilis import create_meters, process_batch, update_meters
+from train_utilis import create_meters, process_batch, record_metrics, update_meters
 from utilis import save_checkpoint
 
 
@@ -105,8 +105,8 @@ def validate(
     train_logger: logging.Logger,
     current_epoch: int,
     device: torch.device,
-    gpu: int,
     tracker: Optional[ModelStatsTracker],
+    prefix: str = "Test",
     verbose: bool = False,
     print_freq: int = 100,
 ) -> Tuple[Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker]:
@@ -120,14 +120,14 @@ def validate(
     :param current_epoch: Current epoch of training for context.
     :param device: The device computations will be performed on.
     :param tracker: ModelStatsTracker object, for tracking the model's statistics.
-    :param gpu: GPU index to determine if specific information should be printed on this GPU.
+    :param prefix: Prefix to add to the progress bar.
     :param verbose: Flag to print detailed information during validation.
     :param print_freq: Frequency of printing detailed information.
     :return: Tuple containing the tracker, losses_meter, top1 get_topk_acc meter, and top5 get_topk_acc meter.
     """
 
-    meters, progress = create_meters(batch_size=len(val_loader), prefix="Test:")
-    batch_processing_time, _, losses_meter, top1, top5 = meters
+    meters, progress = create_meters(batch_size=len(val_loader), prefix=f"{prefix}:")
+    losses_meter, top1, top5, batch_processing_time, data_loading_time = meters
 
     model.eval()
     end = time.time()
@@ -152,7 +152,7 @@ def validate(
         batch_processing_time.update(val=time.time() - end)
         end: float = time.time()
 
-        if verbose and i % print_freq == 0 and gpu == 0:
+        if verbose and i % print_freq == 0:
             train_logger.debug(msg=progress.display(current_batch=i + 1))
 
     if verbose:
@@ -188,6 +188,7 @@ def run_training_loop(
     debug_mode: bool = False,
     tracker: Optional[ModelStatsTracker] = None,
     train_sampler: Optional[Sampler] = None,
+    val_sampler: Optional[Sampler] = None,
     ckpt_save_interval: int = 300,
 ) -> Tuple[float, int]:
     """
@@ -195,18 +196,17 @@ def run_training_loop(
     """
     gpu = device.index
     log_level: int = logging.DEBUG if gpu == 0 else logging.INFO
-    train_logger = setup_logger(
+    train_logger: logging.Logger = setup_logger(
         name=f"Train:{gpu}",
         log_file_name=f"train_{gpu}.log",
         level=log_level,
         console=False,
     )
-    # todo Tensorboard event not initilized
+
     # Setup logging and TensorBoard
     writer, custom_suffix = setup_tensorboard_and_commit(
         train_logger=train_logger,
         gpu=gpu,
-        world_size=world_size,
         batch_size=batch_size,
         arch=arch,
         lr=lr,
@@ -217,7 +217,7 @@ def run_training_loop(
 
     best_acc1 = 0.0
     best_epoch = start_epoch
-
+    # Add the model graph to TensorBoard
     if gpu == 0:
         input_tensor = torch.randn(1, 3, 32, 32)
         input_tensor = input_tensor.to(f"npu:{gpu}")
@@ -227,14 +227,18 @@ def run_training_loop(
         # Add the model graph to TensorBoard
         writer.add_graph(model=model, input_to_model=input_tensor)
         train_logger.debug("Model graph added to TensorBoard.")
+    # start_time = time.time()
+    times = []
+    histogram_record_interval: int = max(1, epochs // hist_record_num)
     for current_epoch in range(start_epoch, epochs):
+        epoch_start = time.time()
         if distributed:
             train_sampler.set_epoch(current_epoch)
         else:
             train_logger.error("Distributed training is not enabled.")
             raise ValueError("Distributed training is not enabled.")
 
-        tracker, losses_meter, top1, top5 = train(
+        tracker, train_losses_meter, train_top1, train_top5 = train(
             train_loader=train_loader,
             model=model,
             criterion=criterion,
@@ -250,7 +254,7 @@ def run_training_loop(
 
         early_stop_decision = False
         is_best = False
-        histogram_record_interval: int = max(1, epochs // hist_record_num)
+
         if gpu == 0:
             if (
                 current_epoch % histogram_record_interval == 0
@@ -262,28 +266,6 @@ def run_training_loop(
                         values=param.cpu().data.numpy(),
                         global_step=current_epoch,
                     )
-                train_logger.debug(
-                    f"Parameters histogram recorded at epoch {current_epoch}."
-                )
-            # Record training metrics
-            writer.add_scalar(
-                tag="Loss/train",
-                scalar_value=losses_meter.avg,
-                global_step=current_epoch,
-            )
-            writer.add_scalar(
-                tag="Top1/train",
-                scalar_value=top1.avg,
-                global_step=current_epoch,
-            )
-            writer.add_scalar(
-                tag="Top5/train",
-                scalar_value=top5.avg,
-                global_step=current_epoch,
-            )
-            train_logger.debug(
-                msg=f"Updating \nEpoch:{current_epoch}, top1:{top1.avg:.3f}, top5:{top5.avg:.3f}, loss:{losses_meter.avg:.3f}"
-            )
 
             val_tracker, val_losses_meter, val_top1, val_top5 = validate(
                 val_loader=val_loader,
@@ -293,37 +275,34 @@ def run_training_loop(
                 current_epoch=current_epoch,
                 device=device,
                 tracker=tracker,
-                gpu=gpu,
+                prefix="Val:",
                 verbose=verbose,
                 print_freq=print_freq,
             )
 
-            writer.add_scalar(
-                tag="Loss/val",
-                scalar_value=val_losses_meter.avg,
-                global_step=current_epoch,
+            # Record training metrics
+            train_metrics = {
+                "Loss/train": train_losses_meter.avg,
+                "Top1/train": train_top1.avg,
+                "Top5/train": train_top5.avg,
+            }
+            val_metrics = {
+                "Loss/val": val_losses_meter.avg,
+                "Top1/val": val_top1.avg,
+                "Top5/val": val_top5.avg,
+            }
+            # Record training and validation metrics
+            record_metrics(
+                writer=writer, metrics_dict=train_metrics, global_step=current_epoch
             )
-            writer.add_scalar(
-                tag="Top1/val",
-                scalar_value=val_top1.avg,
-                global_step=current_epoch,
+            record_metrics(
+                writer=writer, metrics_dict=val_metrics, global_step=current_epoch
             )
+            # Record learning rate separately
             writer.add_scalar(
-                tag="Top5/val",
-                scalar_value=val_top5.avg,
-                global_step=current_epoch,
-            )
-            train_logger.debug(
-                msg=f"Validation results: top1:{val_top1.avg :.3f}, top5:{val_top5.avg:.3f}, loss:{val_losses_meter.avg:.3f}"
-            )
-            # Record learning rate
-            writer.add_scalar(
-                "Learning Rate",
+                tag="Learning Rate",
                 scalar_value=optimizer_manager.optimizer.param_groups[0]["lr"],
                 global_step=current_epoch,
-            )
-            train_logger.debug(
-                f"Learning rate: {optimizer_manager.optimizer.param_groups[0]['lr']}"
             )
 
             if scheduler_manager:
@@ -364,18 +343,34 @@ def run_training_loop(
             )
 
         # Broadcast early stopping decision to all processes
-        if distributed:
-            early_stop_tensor: torch.Tensor = torch.tensor(
-                data=[int(early_stop_decision)], dtype=torch.int, device=device
-            )
-            dist.broadcast(tensor=early_stop_tensor, src=0)
-            early_stop_decision = bool(early_stop_tensor.item())
+        early_stop_tensor: torch.Tensor = torch.tensor(
+            data=[int(early_stop_decision)], dtype=torch.int, device=device
+        )
+        dist.broadcast(tensor=early_stop_tensor, src=0)
+        early_stop_decision = bool(early_stop_tensor.item())
 
         if early_stop_decision:
             train_logger.info(
                 f"Early stopping triggered at {current_epoch} across all processes."
             )
             break
+
+        """time left calculation"""
+        epoch_duration = time.time() - epoch_start
+        times.append(epoch_duration)
+        average_epoch_duration = sum(times) / len(times)
+        estimated_time_left = (epochs - current_epoch - 1) * average_epoch_duration
+
+        # Convert seconds to hours and minutes for a more readable format
+        hours_left = int(estimated_time_left // 3600)
+        minutes_left = int((estimated_time_left % 3600) // 60)
+        train_logger.info(
+            f"Epoch {current_epoch + 1}/{epochs} completed in {epoch_duration:.2f} seconds."
+        )
+        train_logger.info(
+            f"Approximate time left: {hours_left} hours, {minutes_left} minutes"
+        )
+
     # Close the writer at the end of training
     if writer:
         writer.close()

@@ -19,12 +19,27 @@ from setup_utilis import setup_environment, setup_logger
 from utilis import device_id_to_process_device_map
 from worker import main_worker
 
+#! Clean up all the previs logs
+logs_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/"
+if os.path.exists(logs_path):
+    # List all files in the directory
+    files = os.listdir(logs_path)
+    # Filter for files that end with .log
+    log_files = [file for file in files if file.endswith(".log")]
+    # Remove each found log file
+    for log_file in log_files:
+        file_path = os.path.join(logs_path, log_file)
+        os.remove(file_path)
+        print(f"Removing {file_path}")
+
+
 main_logger: logging.Logger = setup_logger(
     name="MainProcess",
     log_file_name="main_process.log",
     level=logging.DEBUG,
     console=True,
 )
+main_logger.info(msg="Logger initialized.")
 
 
 def start_worker(config: Dict) -> Tuple[float, int, float]:
@@ -117,24 +132,11 @@ def main(config: Dict) -> None:
     best_acc1, best_epoch, top1 = result
 
     main_logger.info(
-        f"Finished! Best accuracy: {best_acc1} at epoch {best_epoch}. Test top1 accuracy: {top1}"
+        f"Finished! Best validation accuracy: {best_acc1} at epoch {best_epoch}. Test top1 accuracy: {top1}"
     )
 
 
 if __name__ == "__main__":
-    #! Clean up all the previs logs
-    logs_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/"
-    if os.path.exists(logs_path):
-        # List all files in the directory
-        files = os.listdir(logs_path)
-        # Filter for files that end with .log
-        log_files = [file for file in files if file.endswith(".log")]
-        # Remove each found log file
-        for log_file in log_files:
-            file_path = os.path.join(logs_path, log_file)
-            os.remove(file_path)
-            print(f"Removing {file_path}")
-
     start_time: float = time.time()
     main(config=config)
     end_time: float = time.time()
@@ -150,4 +152,7 @@ if __name__ == "__main__":
 
     main_logger.info(
         f"Total time cost: {int(hours):02d}h:{int(minutes):02d}mins:{int(seconds):02d}s"
+    )
+    main_logger.info(
+        f'lr: {config["training"]["lr"]} , batch_size: {config["training"]["batch_size"]}'
     )

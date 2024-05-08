@@ -79,13 +79,14 @@ def main_worker(
         f"Model {arch} loaded with pretrained={pretrained} and moved to {device}."
     )
 
-    # Adjust training parameters based on GPU availability
-    batch_size: int = int(config["training"]["batch_size"] / ngpus_per_node)
+    # Adjust training parameters based on NPU availability
+    batch_size = int(config["training"]["batch_size"])
+    adjusted_batch_size: int = int(batch_size / ngpus_per_node)
     workers: int = int(
         (config["training"]["workers"] + ngpus_per_node - 1) / ngpus_per_node
     )
     worker_logger.debug(
-        f"Adjusted batch size to {batch_size} and worker count to {workers}."
+        f"Adjusted batch size to {adjusted_batch_size} and worker count to {workers}."
     )
 
     # Extract distributed training parameters
@@ -153,7 +154,9 @@ def main_worker(
 
         # Create samplers based on whether distributed training is enabled
         if distributed:
-            train_sampler = DistributedSampler(dataset=train_dataset)
+            train_sampler = DistributedSampler(
+                dataset=train_dataset, shuffle=True, drop_last=True
+            )
             val_sampler = DistributedSampler(
                 dataset=val_dataset, shuffle=False, drop_last=True
             )
@@ -164,14 +167,16 @@ def main_worker(
         # Create data loaders
         train_loader = DataLoader(
             dataset=train_dataset,
-            batch_size=batch_size,
+            batch_size=adjusted_batch_size if distributed else batch_size,
             shuffle=True,
+            sampler=train_sampler,
             num_workers=num_workers,
         )
         val_loader = DataLoader(
             dataset=val_dataset,
-            batch_size=batch_size,
+            batch_size=adjusted_batch_size if distributed else batch_size,
             shuffle=False,
+            sampler=val_sampler,
             num_workers=num_workers,
         )
         test_loader = DataLoader(
@@ -185,8 +190,6 @@ def main_worker(
         dataset_path: str = config["data"]["path"]
         dataset_name: str = config["data"]["dataset_name"]
         train_ratio: float = config["training"]["train_ratio"]
-        test_ratio: float = config["training"]["test_ratio"]
-        worker_logger.debug(f"train_ratio is {train_ratio}, test_ratio is {test_ratio}")
 
         # Retrieve data loaders for training, validation, and testing datasets
         train_loader, val_loader, test_loader, train_sampler, val_sampler = (
@@ -194,17 +197,22 @@ def main_worker(
                 dataset_path=dataset_path,
                 dataset_name=dataset_name,
                 batch_size=batch_size,
+                adjusted_batch_size=adjusted_batch_size,
                 num_workers=num_workers,
                 train_ratio=train_ratio,
-                test_ratio=test_ratio,
                 distributed=distributed,
+                logger=worker_logger,
             )
         )
+        train_dataset_size = len(train_loader.dataset)
+        val_dataset_size = len(val_loader.dataset)
+        test_dataset_size = len(test_loader.dataset)
         worker_logger.debug(
             f"Data loaders for {dataset_name} initialized successfully with split ratio {train_ratio} and batch size {batch_size}."
         )
+        # TODO: check whether the following line is correct
         worker_logger.debug(
-            msg=f"Training size is {len(train_loader)}, val size is {len(val_loader)}, test size is {len(test_loader)}",
+            msg=f"Training size is {train_dataset_size}, val size is {val_dataset_size}, test size is {test_dataset_size}",
         )
 
     # Initialize the OptimizerManager
@@ -290,6 +298,7 @@ def main_worker(
     verbose: bool = config["training"].get("verbose", False)
     print_freq: int = config["training"].get("print_freq", 100)
     start_epoch: int = config["training"].get("start_epoch", 0)
+    ckpt_save_interval = config["training"].get("ckpt_save_interval", 300)
 
     # Setup for criterion using the CriterionManager
     criterion_type: str = config["optimizer"]["criterion"]
@@ -305,6 +314,7 @@ def main_worker(
         f'Printing frequency set to every {print_freq} iterations, '
         f'Starting from epoch {start_epoch}.'
     )
+
     best_acc1, best_epoch = run_training_loop(
         model=model,
         criterion=criterion,
@@ -317,34 +327,36 @@ def main_worker(
         device=device,
         start_epoch=start_epoch,
         tracker=tracker,
-        train_sampler=train_sampler,
         distributed=distributed,
+        train_sampler=train_sampler,
+        val_sampler=val_sampler,
         ngpus_per_node=ngpus_per_node,
+        # NOTE: the batch size is already overall and not per GPU
         batch_size=batch_size,
         verbose=verbose,
         print_freq=print_freq,
         arch=config["model"]["arch"],
         lr=config["training"]["lr"],
         optimizer_name=config["optimizer"]["name"],
-        amp_enabled=config["amp"].get("enabled", True),
+        amp_enabled=config["amp"]["enabled"],
         amp=amp,
         tb_log_dir=config["logging"].get("tb_log_dir", None),
         checkpoint_folder=config["training"].get("checkpoint_folder", None),
         debug_mode=debug_mode,
         world_size=world_size,
+        ckpt_save_interval=ckpt_save_interval,
     )
 
     # If evaluation is specified, execute the validation process and return
     if config["evaluation"]["evaluate"] and gpu == 0:
-        worker_logger.debug("\n" + "-" * 20)
-        worker_logger.debug(
-            msg=f"For validation, best acc1: {best_acc1:.3f} at epoch {best_epoch}"
+        worker_logger.info("\n" + "-" * 20)
+        worker_logger.info(
+            msg=f"For validation set during training, best acc1: {best_acc1:.3f} at epoch {best_epoch}"
         )
 
     top1 = None
     if gpu == 0:
         if len(test_loader) > 10:
-            worker_logger.debug(f"Final testing at NPU/GPU: {gpu}")
             tracker: ModelStatsTracker | None
             loss_metric: MetricTracker
             top1: MetricTracker
@@ -356,11 +368,12 @@ def main_worker(
                 train_logger=worker_logger,
                 current_epoch=best_epoch,
                 device=device,
-                gpu=gpu,
                 tracker=tracker,
+                prefix="Test",
             )
-            worker_logger.debug(
-                msg=f"Test results: \nLoss: {loss_metric.avg}, Top-1: {top1.avg}, Top-5: {top5.avg}"
+            worker_logger.info(f"Final testing at NPU/GPU: {gpu}")
+            worker_logger.info(
+                msg=f"For test set, test loss is: {loss_metric.avg}, test top1 is: {top1.avg}, test top5 is: {top5.avg}"
             )
             result[0] = best_acc1
             result[1] = best_epoch

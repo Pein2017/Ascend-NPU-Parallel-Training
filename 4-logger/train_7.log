@@ -1,0 +1,1323 @@
+2024-05-08 12:43:01,685 - INFO - Train:7 - Epoch 1/2000 completed in 47.43 seconds.
+2024-05-08 12:43:01,685 - INFO - Train:7 - Approximate time left: 26 hours, 20 minutes
+2024-05-08 12:43:14,700 - INFO - Train:7 - Epoch 2/2000 completed in 13.02 seconds.
+2024-05-08 12:43:14,701 - INFO - Train:7 - Approximate time left: 16 hours, 46 minutes
+2024-05-08 12:43:28,394 - INFO - Train:7 - Epoch 3/2000 completed in 13.69 seconds.
+2024-05-08 12:43:28,394 - INFO - Train:7 - Approximate time left: 13 hours, 42 minutes
+2024-05-08 12:43:42,067 - INFO - Train:7 - Epoch 4/2000 completed in 13.67 seconds.
+2024-05-08 12:43:42,067 - INFO - Train:7 - Approximate time left: 12 hours, 10 minutes
+2024-05-08 12:43:55,192 - INFO - Train:7 - Epoch 5/2000 completed in 13.12 seconds.
+2024-05-08 12:43:55,192 - INFO - Train:7 - Approximate time left: 11 hours, 11 minutes
+2024-05-08 12:44:07,944 - INFO - Train:7 - Epoch 6/2000 completed in 12.75 seconds.
+2024-05-08 12:44:07,944 - INFO - Train:7 - Approximate time left: 10 hours, 29 minutes
+2024-05-08 12:44:21,627 - INFO - Train:7 - Epoch 7/2000 completed in 13.68 seconds.
+2024-05-08 12:44:21,627 - INFO - Train:7 - Approximate time left: 10 hours, 4 minutes
+2024-05-08 12:44:35,213 - INFO - Train:7 - Epoch 8/2000 completed in 13.59 seconds.
+2024-05-08 12:44:35,214 - INFO - Train:7 - Approximate time left: 9 hours, 44 minutes
+2024-05-08 12:44:48,079 - INFO - Train:7 - Epoch 9/2000 completed in 12.87 seconds.
+2024-05-08 12:44:48,080 - INFO - Train:7 - Approximate time left: 9 hours, 27 minutes
+2024-05-08 12:45:01,098 - INFO - Train:7 - Epoch 10/2000 completed in 13.02 seconds.
+2024-05-08 12:45:01,099 - INFO - Train:7 - Approximate time left: 9 hours, 13 minutes
+2024-05-08 12:45:14,528 - INFO - Train:7 - Epoch 11/2000 completed in 13.43 seconds.
+2024-05-08 12:45:14,528 - INFO - Train:7 - Approximate time left: 9 hours, 3 minutes
+2024-05-08 12:45:27,124 - INFO - Train:7 - Epoch 12/2000 completed in 12.60 seconds.
+2024-05-08 12:45:27,124 - INFO - Train:7 - Approximate time left: 8 hours, 52 minutes
+2024-05-08 12:45:39,705 - INFO - Train:7 - Epoch 13/2000 completed in 12.58 seconds.
+2024-05-08 12:45:39,706 - INFO - Train:7 - Approximate time left: 8 hours, 43 minutes
+2024-05-08 12:45:51,901 - INFO - Train:7 - Epoch 14/2000 completed in 12.20 seconds.
+2024-05-08 12:45:51,901 - INFO - Train:7 - Approximate time left: 8 hours, 34 minutes
+2024-05-08 12:46:04,588 - INFO - Train:7 - Epoch 15/2000 completed in 12.69 seconds.
+2024-05-08 12:46:04,589 - INFO - Train:7 - Approximate time left: 8 hours, 27 minutes
+2024-05-08 12:46:17,060 - INFO - Train:7 - Epoch 16/2000 completed in 12.47 seconds.
+2024-05-08 12:46:17,060 - INFO - Train:7 - Approximate time left: 8 hours, 21 minutes
+2024-05-08 12:46:29,868 - INFO - Train:7 - Epoch 17/2000 completed in 12.81 seconds.
+2024-05-08 12:46:29,868 - INFO - Train:7 - Approximate time left: 8 hours, 16 minutes
+2024-05-08 12:46:42,336 - INFO - Train:7 - Epoch 18/2000 completed in 12.47 seconds.
+2024-05-08 12:46:42,336 - INFO - Train:7 - Approximate time left: 8 hours, 11 minutes
+2024-05-08 12:46:55,043 - INFO - Train:7 - Epoch 19/2000 completed in 12.71 seconds.
+2024-05-08 12:46:55,043 - INFO - Train:7 - Approximate time left: 8 hours, 7 minutes
+2024-05-08 12:47:07,888 - INFO - Train:7 - Epoch 20/2000 completed in 12.85 seconds.
+2024-05-08 12:47:07,889 - INFO - Train:7 - Approximate time left: 8 hours, 4 minutes
+2024-05-08 12:47:21,345 - INFO - Train:7 - Epoch 21/2000 completed in 13.46 seconds.
+2024-05-08 12:47:21,346 - INFO - Train:7 - Approximate time left: 8 hours, 2 minutes
+2024-05-08 12:47:34,646 - INFO - Train:7 - Epoch 22/2000 completed in 13.30 seconds.
+2024-05-08 12:47:34,647 - INFO - Train:7 - Approximate time left: 8 hours, 0 minutes
+2024-05-08 12:47:47,130 - INFO - Train:7 - Epoch 23/2000 completed in 12.48 seconds.
+2024-05-08 12:47:47,130 - INFO - Train:7 - Approximate time left: 7 hours, 56 minutes
+2024-05-08 12:47:59,429 - INFO - Train:7 - Epoch 24/2000 completed in 12.30 seconds.
+2024-05-08 12:47:59,430 - INFO - Train:7 - Approximate time left: 7 hours, 53 minutes
+2024-05-08 12:48:12,306 - INFO - Train:7 - Epoch 25/2000 completed in 12.88 seconds.
+2024-05-08 12:48:12,306 - INFO - Train:7 - Approximate time left: 7 hours, 51 minutes
+2024-05-08 12:48:25,032 - INFO - Train:7 - Epoch 26/2000 completed in 12.73 seconds.
+2024-05-08 12:48:25,033 - INFO - Train:7 - Approximate time left: 7 hours, 49 minutes
+2024-05-08 12:48:38,197 - INFO - Train:7 - Epoch 27/2000 completed in 13.16 seconds.
+2024-05-08 12:48:38,197 - INFO - Train:7 - Approximate time left: 7 hours, 47 minutes
+2024-05-08 12:48:50,578 - INFO - Train:7 - Epoch 28/2000 completed in 12.38 seconds.
+2024-05-08 12:48:50,578 - INFO - Train:7 - Approximate time left: 7 hours, 45 minutes
+2024-05-08 12:49:03,000 - INFO - Train:7 - Epoch 29/2000 completed in 12.42 seconds.
+2024-05-08 12:49:03,000 - INFO - Train:7 - Approximate time left: 7 hours, 42 minutes
+2024-05-08 12:49:15,249 - INFO - Train:7 - Epoch 30/2000 completed in 12.25 seconds.
+2024-05-08 12:49:15,249 - INFO - Train:7 - Approximate time left: 7 hours, 40 minutes
+2024-05-08 12:49:27,779 - INFO - Train:7 - Epoch 31/2000 completed in 12.53 seconds.
+2024-05-08 12:49:27,780 - INFO - Train:7 - Approximate time left: 7 hours, 38 minutes
+2024-05-08 12:49:40,290 - INFO - Train:7 - Epoch 32/2000 completed in 12.51 seconds.
+2024-05-08 12:49:40,291 - INFO - Train:7 - Approximate time left: 7 hours, 37 minutes
+2024-05-08 12:49:52,621 - INFO - Train:7 - Epoch 33/2000 completed in 12.33 seconds.
+2024-05-08 12:49:52,621 - INFO - Train:7 - Approximate time left: 7 hours, 35 minutes
+2024-05-08 12:50:04,971 - INFO - Train:7 - Epoch 34/2000 completed in 12.35 seconds.
+2024-05-08 12:50:04,971 - INFO - Train:7 - Approximate time left: 7 hours, 33 minutes
+2024-05-08 12:50:16,923 - INFO - Train:7 - Epoch 35/2000 completed in 11.95 seconds.
+2024-05-08 12:50:16,923 - INFO - Train:7 - Approximate time left: 7 hours, 31 minutes
+2024-05-08 12:50:30,006 - INFO - Train:7 - Epoch 36/2000 completed in 13.08 seconds.
+2024-05-08 12:50:30,006 - INFO - Train:7 - Approximate time left: 7 hours, 30 minutes
+2024-05-08 12:50:41,991 - INFO - Train:7 - Epoch 37/2000 completed in 11.98 seconds.
+2024-05-08 12:50:41,991 - INFO - Train:7 - Approximate time left: 7 hours, 28 minutes
+2024-05-08 12:50:54,106 - INFO - Train:7 - Epoch 38/2000 completed in 12.11 seconds.
+2024-05-08 12:50:54,106 - INFO - Train:7 - Approximate time left: 7 hours, 27 minutes
+2024-05-08 12:51:06,767 - INFO - Train:7 - Epoch 39/2000 completed in 12.66 seconds.
+2024-05-08 12:51:06,767 - INFO - Train:7 - Approximate time left: 7 hours, 26 minutes
+2024-05-08 12:51:19,291 - INFO - Train:7 - Epoch 40/2000 completed in 12.52 seconds.
+2024-05-08 12:51:19,291 - INFO - Train:7 - Approximate time left: 7 hours, 25 minutes
+2024-05-08 12:51:31,272 - INFO - Train:7 - Epoch 41/2000 completed in 11.98 seconds.
+2024-05-08 12:51:31,272 - INFO - Train:7 - Approximate time left: 7 hours, 23 minutes
+2024-05-08 12:51:43,386 - INFO - Train:7 - Epoch 42/2000 completed in 12.11 seconds.
+2024-05-08 12:51:43,387 - INFO - Train:7 - Approximate time left: 7 hours, 22 minutes
+2024-05-08 12:51:56,031 - INFO - Train:7 - Epoch 43/2000 completed in 12.64 seconds.
+2024-05-08 12:51:56,031 - INFO - Train:7 - Approximate time left: 7 hours, 21 minutes
+2024-05-08 12:52:08,075 - INFO - Train:7 - Epoch 44/2000 completed in 12.04 seconds.
+2024-05-08 12:52:08,075 - INFO - Train:7 - Approximate time left: 7 hours, 19 minutes
+2024-05-08 12:52:20,145 - INFO - Train:7 - Epoch 45/2000 completed in 12.07 seconds.
+2024-05-08 12:52:20,145 - INFO - Train:7 - Approximate time left: 7 hours, 18 minutes
+2024-05-08 12:52:33,493 - INFO - Train:7 - Epoch 46/2000 completed in 13.35 seconds.
+2024-05-08 12:52:33,493 - INFO - Train:7 - Approximate time left: 7 hours, 18 minutes
+2024-05-08 12:52:45,940 - INFO - Train:7 - Epoch 47/2000 completed in 12.45 seconds.
+2024-05-08 12:52:45,940 - INFO - Train:7 - Approximate time left: 7 hours, 17 minutes
+2024-05-08 12:52:58,344 - INFO - Train:7 - Epoch 48/2000 completed in 12.40 seconds.
+2024-05-08 12:52:58,344 - INFO - Train:7 - Approximate time left: 7 hours, 16 minutes
+2024-05-08 12:53:10,248 - INFO - Train:7 - Epoch 49/2000 completed in 11.90 seconds.
+2024-05-08 12:53:10,249 - INFO - Train:7 - Approximate time left: 7 hours, 15 minutes
+2024-05-08 12:53:22,428 - INFO - Train:7 - Epoch 50/2000 completed in 12.18 seconds.
+2024-05-08 12:53:22,428 - INFO - Train:7 - Approximate time left: 7 hours, 14 minutes
+2024-05-08 12:53:35,008 - INFO - Train:7 - Epoch 51/2000 completed in 12.58 seconds.
+2024-05-08 12:53:35,008 - INFO - Train:7 - Approximate time left: 7 hours, 13 minutes
+2024-05-08 12:53:47,331 - INFO - Train:7 - Epoch 52/2000 completed in 12.32 seconds.
+2024-05-08 12:53:47,332 - INFO - Train:7 - Approximate time left: 7 hours, 12 minutes
+2024-05-08 12:53:59,393 - INFO - Train:7 - Epoch 53/2000 completed in 12.06 seconds.
+2024-05-08 12:53:59,393 - INFO - Train:7 - Approximate time left: 7 hours, 11 minutes
+2024-05-08 12:54:11,426 - INFO - Train:7 - Epoch 54/2000 completed in 12.03 seconds.
+2024-05-08 12:54:11,426 - INFO - Train:7 - Approximate time left: 7 hours, 10 minutes
+2024-05-08 12:54:23,298 - INFO - Train:7 - Epoch 55/2000 completed in 11.87 seconds.
+2024-05-08 12:54:23,298 - INFO - Train:7 - Approximate time left: 7 hours, 9 minutes
+2024-05-08 12:54:35,421 - INFO - Train:7 - Epoch 56/2000 completed in 12.12 seconds.
+2024-05-08 12:54:35,421 - INFO - Train:7 - Approximate time left: 7 hours, 8 minutes
+2024-05-08 12:54:47,612 - INFO - Train:7 - Epoch 57/2000 completed in 12.19 seconds.
+2024-05-08 12:54:47,612 - INFO - Train:7 - Approximate time left: 7 hours, 7 minutes
+2024-05-08 12:54:59,898 - INFO - Train:7 - Epoch 58/2000 completed in 12.29 seconds.
+2024-05-08 12:54:59,898 - INFO - Train:7 - Approximate time left: 7 hours, 7 minutes
+2024-05-08 12:55:13,065 - INFO - Train:7 - Epoch 59/2000 completed in 13.17 seconds.
+2024-05-08 12:55:13,065 - INFO - Train:7 - Approximate time left: 7 hours, 7 minutes
+2024-05-08 12:55:25,668 - INFO - Train:7 - Epoch 60/2000 completed in 12.60 seconds.
+2024-05-08 12:55:25,668 - INFO - Train:7 - Approximate time left: 7 hours, 6 minutes
+2024-05-08 12:55:38,377 - INFO - Train:7 - Epoch 61/2000 completed in 12.71 seconds.
+2024-05-08 12:55:38,377 - INFO - Train:7 - Approximate time left: 7 hours, 5 minutes
+2024-05-08 12:55:50,352 - INFO - Train:7 - Epoch 62/2000 completed in 11.97 seconds.
+2024-05-08 12:55:50,352 - INFO - Train:7 - Approximate time left: 7 hours, 5 minutes
+2024-05-08 12:56:02,770 - INFO - Train:7 - Epoch 63/2000 completed in 12.42 seconds.
+2024-05-08 12:56:02,770 - INFO - Train:7 - Approximate time left: 7 hours, 4 minutes
+2024-05-08 12:56:15,129 - INFO - Train:7 - Epoch 64/2000 completed in 12.36 seconds.
+2024-05-08 12:56:15,130 - INFO - Train:7 - Approximate time left: 7 hours, 3 minutes
+2024-05-08 12:56:28,653 - INFO - Train:7 - Epoch 65/2000 completed in 13.52 seconds.
+2024-05-08 12:56:28,653 - INFO - Train:7 - Approximate time left: 7 hours, 3 minutes
+2024-05-08 12:56:40,643 - INFO - Train:7 - Epoch 66/2000 completed in 11.99 seconds.
+2024-05-08 12:56:40,644 - INFO - Train:7 - Approximate time left: 7 hours, 3 minutes
+2024-05-08 12:56:55,338 - INFO - Train:7 - Epoch 67/2000 completed in 14.69 seconds.
+2024-05-08 12:56:55,338 - INFO - Train:7 - Approximate time left: 7 hours, 3 minutes
+2024-05-08 12:57:07,344 - INFO - Train:7 - Epoch 68/2000 completed in 12.01 seconds.
+2024-05-08 12:57:07,345 - INFO - Train:7 - Approximate time left: 7 hours, 2 minutes
+2024-05-08 12:57:19,914 - INFO - Train:7 - Epoch 69/2000 completed in 12.57 seconds.
+2024-05-08 12:57:19,915 - INFO - Train:7 - Approximate time left: 7 hours, 2 minutes
+2024-05-08 12:57:32,253 - INFO - Train:7 - Epoch 70/2000 completed in 12.34 seconds.
+2024-05-08 12:57:32,254 - INFO - Train:7 - Approximate time left: 7 hours, 1 minutes
+2024-05-08 12:57:44,473 - INFO - Train:7 - Epoch 71/2000 completed in 12.22 seconds.
+2024-05-08 12:57:44,473 - INFO - Train:7 - Approximate time left: 7 hours, 1 minutes
+2024-05-08 12:57:56,561 - INFO - Train:7 - Epoch 72/2000 completed in 12.09 seconds.
+2024-05-08 12:57:56,561 - INFO - Train:7 - Approximate time left: 7 hours, 0 minutes
+2024-05-08 12:58:08,895 - INFO - Train:7 - Epoch 73/2000 completed in 12.33 seconds.
+2024-05-08 12:58:08,896 - INFO - Train:7 - Approximate time left: 6 hours, 59 minutes
+2024-05-08 12:58:21,368 - INFO - Train:7 - Epoch 74/2000 completed in 12.47 seconds.
+2024-05-08 12:58:21,369 - INFO - Train:7 - Approximate time left: 6 hours, 59 minutes
+2024-05-08 12:58:33,386 - INFO - Train:7 - Epoch 75/2000 completed in 12.02 seconds.
+2024-05-08 12:58:33,387 - INFO - Train:7 - Approximate time left: 6 hours, 58 minutes
+2024-05-08 12:58:45,633 - INFO - Train:7 - Epoch 76/2000 completed in 12.25 seconds.
+2024-05-08 12:58:45,633 - INFO - Train:7 - Approximate time left: 6 hours, 58 minutes
+2024-05-08 12:58:57,807 - INFO - Train:7 - Epoch 77/2000 completed in 12.17 seconds.
+2024-05-08 12:58:57,808 - INFO - Train:7 - Approximate time left: 6 hours, 57 minutes
+2024-05-08 12:59:09,925 - INFO - Train:7 - Epoch 78/2000 completed in 12.12 seconds.
+2024-05-08 12:59:09,925 - INFO - Train:7 - Approximate time left: 6 hours, 57 minutes
+2024-05-08 12:59:21,947 - INFO - Train:7 - Epoch 79/2000 completed in 12.02 seconds.
+2024-05-08 12:59:21,947 - INFO - Train:7 - Approximate time left: 6 hours, 56 minutes
+2024-05-08 12:59:34,343 - INFO - Train:7 - Epoch 80/2000 completed in 12.40 seconds.
+2024-05-08 12:59:34,343 - INFO - Train:7 - Approximate time left: 6 hours, 56 minutes
+2024-05-08 12:59:46,323 - INFO - Train:7 - Epoch 81/2000 completed in 11.98 seconds.
+2024-05-08 12:59:46,324 - INFO - Train:7 - Approximate time left: 6 hours, 55 minutes
+2024-05-08 12:59:58,141 - INFO - Train:7 - Epoch 82/2000 completed in 11.82 seconds.
+2024-05-08 12:59:58,141 - INFO - Train:7 - Approximate time left: 6 hours, 54 minutes
+2024-05-08 13:00:09,939 - INFO - Train:7 - Epoch 83/2000 completed in 11.80 seconds.
+2024-05-08 13:00:09,939 - INFO - Train:7 - Approximate time left: 6 hours, 54 minutes
+2024-05-08 13:00:22,413 - INFO - Train:7 - Epoch 84/2000 completed in 12.47 seconds.
+2024-05-08 13:00:22,414 - INFO - Train:7 - Approximate time left: 6 hours, 53 minutes
+2024-05-08 13:00:34,344 - INFO - Train:7 - Epoch 85/2000 completed in 11.93 seconds.
+2024-05-08 13:00:34,344 - INFO - Train:7 - Approximate time left: 6 hours, 53 minutes
+2024-05-08 13:00:46,390 - INFO - Train:7 - Epoch 86/2000 completed in 12.05 seconds.
+2024-05-08 13:00:46,391 - INFO - Train:7 - Approximate time left: 6 hours, 52 minutes
+2024-05-08 13:00:58,375 - INFO - Train:7 - Epoch 87/2000 completed in 11.98 seconds.
+2024-05-08 13:00:58,375 - INFO - Train:7 - Approximate time left: 6 hours, 51 minutes
+2024-05-08 13:01:10,379 - INFO - Train:7 - Epoch 88/2000 completed in 12.00 seconds.
+2024-05-08 13:01:10,380 - INFO - Train:7 - Approximate time left: 6 hours, 51 minutes
+2024-05-08 13:01:22,428 - INFO - Train:7 - Epoch 89/2000 completed in 12.05 seconds.
+2024-05-08 13:01:22,429 - INFO - Train:7 - Approximate time left: 6 hours, 50 minutes
+2024-05-08 13:01:34,885 - INFO - Train:7 - Epoch 90/2000 completed in 12.46 seconds.
+2024-05-08 13:01:34,885 - INFO - Train:7 - Approximate time left: 6 hours, 50 minutes
+2024-05-08 13:01:46,679 - INFO - Train:7 - Epoch 91/2000 completed in 11.79 seconds.
+2024-05-08 13:01:46,679 - INFO - Train:7 - Approximate time left: 6 hours, 49 minutes
+2024-05-08 13:01:58,483 - INFO - Train:7 - Epoch 92/2000 completed in 11.80 seconds.
+2024-05-08 13:01:58,484 - INFO - Train:7 - Approximate time left: 6 hours, 49 minutes
+2024-05-08 13:02:10,370 - INFO - Train:7 - Epoch 93/2000 completed in 11.89 seconds.
+2024-05-08 13:02:10,370 - INFO - Train:7 - Approximate time left: 6 hours, 48 minutes
+2024-05-08 13:02:22,444 - INFO - Train:7 - Epoch 94/2000 completed in 12.07 seconds.
+2024-05-08 13:02:22,444 - INFO - Train:7 - Approximate time left: 6 hours, 48 minutes
+2024-05-08 13:02:34,156 - INFO - Train:7 - Epoch 95/2000 completed in 11.71 seconds.
+2024-05-08 13:02:34,156 - INFO - Train:7 - Approximate time left: 6 hours, 47 minutes
+2024-05-08 13:02:46,950 - INFO - Train:7 - Epoch 96/2000 completed in 12.79 seconds.
+2024-05-08 13:02:46,950 - INFO - Train:7 - Approximate time left: 6 hours, 47 minutes
+2024-05-08 13:02:59,287 - INFO - Train:7 - Epoch 97/2000 completed in 12.34 seconds.
+2024-05-08 13:02:59,287 - INFO - Train:7 - Approximate time left: 6 hours, 47 minutes
+2024-05-08 13:03:11,184 - INFO - Train:7 - Epoch 98/2000 completed in 11.90 seconds.
+2024-05-08 13:03:11,185 - INFO - Train:7 - Approximate time left: 6 hours, 46 minutes
+2024-05-08 13:03:23,182 - INFO - Train:7 - Epoch 99/2000 completed in 12.00 seconds.
+2024-05-08 13:03:23,182 - INFO - Train:7 - Approximate time left: 6 hours, 46 minutes
+2024-05-08 13:03:35,374 - INFO - Train:7 - Epoch 100/2000 completed in 12.19 seconds.
+2024-05-08 13:03:35,374 - INFO - Train:7 - Approximate time left: 6 hours, 45 minutes
+2024-05-08 13:03:47,232 - INFO - Train:7 - Epoch 101/2000 completed in 11.86 seconds.
+2024-05-08 13:03:47,232 - INFO - Train:7 - Approximate time left: 6 hours, 45 minutes
+2024-05-08 13:03:58,876 - INFO - Train:7 - Epoch 102/2000 completed in 11.64 seconds.
+2024-05-08 13:03:58,876 - INFO - Train:7 - Approximate time left: 6 hours, 44 minutes
+2024-05-08 13:04:10,793 - INFO - Train:7 - Epoch 103/2000 completed in 11.92 seconds.
+2024-05-08 13:04:10,793 - INFO - Train:7 - Approximate time left: 6 hours, 44 minutes
+2024-05-08 13:04:22,722 - INFO - Train:7 - Epoch 104/2000 completed in 11.93 seconds.
+2024-05-08 13:04:22,722 - INFO - Train:7 - Approximate time left: 6 hours, 43 minutes
+2024-05-08 13:04:34,776 - INFO - Train:7 - Epoch 105/2000 completed in 12.05 seconds.
+2024-05-08 13:04:34,777 - INFO - Train:7 - Approximate time left: 6 hours, 43 minutes
+2024-05-08 13:04:46,850 - INFO - Train:7 - Epoch 106/2000 completed in 12.07 seconds.
+2024-05-08 13:04:46,850 - INFO - Train:7 - Approximate time left: 6 hours, 42 minutes
+2024-05-08 13:04:58,629 - INFO - Train:7 - Epoch 107/2000 completed in 11.78 seconds.
+2024-05-08 13:04:58,629 - INFO - Train:7 - Approximate time left: 6 hours, 42 minutes
+2024-05-08 13:05:10,752 - INFO - Train:7 - Epoch 108/2000 completed in 12.12 seconds.
+2024-05-08 13:05:10,752 - INFO - Train:7 - Approximate time left: 6 hours, 41 minutes
+2024-05-08 13:05:22,747 - INFO - Train:7 - Epoch 109/2000 completed in 12.00 seconds.
+2024-05-08 13:05:22,748 - INFO - Train:7 - Approximate time left: 6 hours, 41 minutes
+2024-05-08 13:05:34,891 - INFO - Train:7 - Epoch 110/2000 completed in 12.14 seconds.
+2024-05-08 13:05:34,892 - INFO - Train:7 - Approximate time left: 6 hours, 41 minutes
+2024-05-08 13:05:46,780 - INFO - Train:7 - Epoch 111/2000 completed in 11.89 seconds.
+2024-05-08 13:05:46,780 - INFO - Train:7 - Approximate time left: 6 hours, 40 minutes
+2024-05-08 13:05:58,704 - INFO - Train:7 - Epoch 112/2000 completed in 11.92 seconds.
+2024-05-08 13:05:58,704 - INFO - Train:7 - Approximate time left: 6 hours, 40 minutes
+2024-05-08 13:06:10,785 - INFO - Train:7 - Epoch 113/2000 completed in 12.08 seconds.
+2024-05-08 13:06:10,786 - INFO - Train:7 - Approximate time left: 6 hours, 39 minutes
+2024-05-08 13:06:23,104 - INFO - Train:7 - Epoch 114/2000 completed in 12.32 seconds.
+2024-05-08 13:06:23,104 - INFO - Train:7 - Approximate time left: 6 hours, 39 minutes
+2024-05-08 13:06:35,143 - INFO - Train:7 - Epoch 115/2000 completed in 12.04 seconds.
+2024-05-08 13:06:35,143 - INFO - Train:7 - Approximate time left: 6 hours, 39 minutes
+2024-05-08 13:06:47,180 - INFO - Train:7 - Epoch 116/2000 completed in 12.04 seconds.
+2024-05-08 13:06:47,180 - INFO - Train:7 - Approximate time left: 6 hours, 38 minutes
+2024-05-08 13:06:59,695 - INFO - Train:7 - Epoch 117/2000 completed in 12.51 seconds.
+2024-05-08 13:06:59,695 - INFO - Train:7 - Approximate time left: 6 hours, 38 minutes
+2024-05-08 13:07:12,879 - INFO - Train:7 - Epoch 118/2000 completed in 13.18 seconds.
+2024-05-08 13:07:12,879 - INFO - Train:7 - Approximate time left: 6 hours, 38 minutes
+2024-05-08 13:07:26,043 - INFO - Train:7 - Epoch 119/2000 completed in 13.16 seconds.
+2024-05-08 13:07:26,043 - INFO - Train:7 - Approximate time left: 6 hours, 38 minutes
+2024-05-08 13:07:38,542 - INFO - Train:7 - Epoch 120/2000 completed in 12.50 seconds.
+2024-05-08 13:07:38,542 - INFO - Train:7 - Approximate time left: 6 hours, 37 minutes
+2024-05-08 13:07:50,663 - INFO - Train:7 - Epoch 121/2000 completed in 12.12 seconds.
+2024-05-08 13:07:50,663 - INFO - Train:7 - Approximate time left: 6 hours, 37 minutes
+2024-05-08 13:08:02,836 - INFO - Train:7 - Epoch 122/2000 completed in 12.17 seconds.
+2024-05-08 13:08:02,837 - INFO - Train:7 - Approximate time left: 6 hours, 37 minutes
+2024-05-08 13:08:14,989 - INFO - Train:7 - Epoch 123/2000 completed in 12.15 seconds.
+2024-05-08 13:08:14,989 - INFO - Train:7 - Approximate time left: 6 hours, 36 minutes
+2024-05-08 13:08:26,959 - INFO - Train:7 - Epoch 124/2000 completed in 11.97 seconds.
+2024-05-08 13:08:26,959 - INFO - Train:7 - Approximate time left: 6 hours, 36 minutes
+2024-05-08 13:08:39,129 - INFO - Train:7 - Epoch 125/2000 completed in 12.17 seconds.
+2024-05-08 13:08:39,130 - INFO - Train:7 - Approximate time left: 6 hours, 36 minutes
+2024-05-08 13:08:51,438 - INFO - Train:7 - Epoch 126/2000 completed in 12.31 seconds.
+2024-05-08 13:08:51,438 - INFO - Train:7 - Approximate time left: 6 hours, 35 minutes
+2024-05-08 13:09:03,601 - INFO - Train:7 - Epoch 127/2000 completed in 12.16 seconds.
+2024-05-08 13:09:03,601 - INFO - Train:7 - Approximate time left: 6 hours, 35 minutes
+2024-05-08 13:09:16,108 - INFO - Train:7 - Epoch 128/2000 completed in 12.51 seconds.
+2024-05-08 13:09:16,109 - INFO - Train:7 - Approximate time left: 6 hours, 35 minutes
+2024-05-08 13:09:28,086 - INFO - Train:7 - Epoch 129/2000 completed in 11.98 seconds.
+2024-05-08 13:09:28,087 - INFO - Train:7 - Approximate time left: 6 hours, 34 minutes
+2024-05-08 13:09:40,334 - INFO - Train:7 - Epoch 130/2000 completed in 12.25 seconds.
+2024-05-08 13:09:40,335 - INFO - Train:7 - Approximate time left: 6 hours, 34 minutes
+2024-05-08 13:09:52,735 - INFO - Train:7 - Epoch 131/2000 completed in 12.40 seconds.
+2024-05-08 13:09:52,736 - INFO - Train:7 - Approximate time left: 6 hours, 34 minutes
+2024-05-08 13:10:04,646 - INFO - Train:7 - Epoch 132/2000 completed in 11.91 seconds.
+2024-05-08 13:10:04,647 - INFO - Train:7 - Approximate time left: 6 hours, 33 minutes
+2024-05-08 13:10:19,189 - INFO - Train:7 - Epoch 133/2000 completed in 14.54 seconds.
+2024-05-08 13:10:19,189 - INFO - Train:7 - Approximate time left: 6 hours, 34 minutes
+2024-05-08 13:10:31,890 - INFO - Train:7 - Epoch 134/2000 completed in 12.70 seconds.
+2024-05-08 13:10:31,890 - INFO - Train:7 - Approximate time left: 6 hours, 33 minutes
+2024-05-08 13:10:43,733 - INFO - Train:7 - Epoch 135/2000 completed in 11.84 seconds.
+2024-05-08 13:10:43,733 - INFO - Train:7 - Approximate time left: 6 hours, 33 minutes
+2024-05-08 13:10:55,966 - INFO - Train:7 - Epoch 136/2000 completed in 12.23 seconds.
+2024-05-08 13:10:55,967 - INFO - Train:7 - Approximate time left: 6 hours, 33 minutes
+2024-05-08 13:11:07,950 - INFO - Train:7 - Epoch 137/2000 completed in 11.98 seconds.
+2024-05-08 13:11:07,950 - INFO - Train:7 - Approximate time left: 6 hours, 32 minutes
+2024-05-08 13:11:19,728 - INFO - Train:7 - Epoch 138/2000 completed in 11.78 seconds.
+2024-05-08 13:11:19,728 - INFO - Train:7 - Approximate time left: 6 hours, 32 minutes
+2024-05-08 13:11:32,431 - INFO - Train:7 - Epoch 139/2000 completed in 12.70 seconds.
+2024-05-08 13:11:32,432 - INFO - Train:7 - Approximate time left: 6 hours, 32 minutes
+2024-05-08 13:11:44,955 - INFO - Train:7 - Epoch 140/2000 completed in 12.52 seconds.
+2024-05-08 13:11:44,955 - INFO - Train:7 - Approximate time left: 6 hours, 32 minutes
+2024-05-08 13:11:56,899 - INFO - Train:7 - Epoch 141/2000 completed in 11.94 seconds.
+2024-05-08 13:11:56,899 - INFO - Train:7 - Approximate time left: 6 hours, 31 minutes
+2024-05-08 13:12:08,692 - INFO - Train:7 - Epoch 142/2000 completed in 11.79 seconds.
+2024-05-08 13:12:08,693 - INFO - Train:7 - Approximate time left: 6 hours, 31 minutes
+2024-05-08 13:12:20,585 - INFO - Train:7 - Epoch 143/2000 completed in 11.89 seconds.
+2024-05-08 13:12:20,586 - INFO - Train:7 - Approximate time left: 6 hours, 30 minutes
+2024-05-08 13:12:32,907 - INFO - Train:7 - Epoch 144/2000 completed in 12.32 seconds.
+2024-05-08 13:12:32,907 - INFO - Train:7 - Approximate time left: 6 hours, 30 minutes
+2024-05-08 13:12:44,620 - INFO - Train:7 - Epoch 145/2000 completed in 11.71 seconds.
+2024-05-08 13:12:44,621 - INFO - Train:7 - Approximate time left: 6 hours, 30 minutes
+2024-05-08 13:12:56,142 - INFO - Train:7 - Epoch 146/2000 completed in 11.52 seconds.
+2024-05-08 13:12:56,142 - INFO - Train:7 - Approximate time left: 6 hours, 29 minutes
+2024-05-08 13:13:08,051 - INFO - Train:7 - Epoch 147/2000 completed in 11.91 seconds.
+2024-05-08 13:13:08,052 - INFO - Train:7 - Approximate time left: 6 hours, 29 minutes
+2024-05-08 13:13:19,771 - INFO - Train:7 - Epoch 148/2000 completed in 11.72 seconds.
+2024-05-08 13:13:19,771 - INFO - Train:7 - Approximate time left: 6 hours, 29 minutes
+2024-05-08 13:13:31,758 - INFO - Train:7 - Epoch 149/2000 completed in 11.99 seconds.
+2024-05-08 13:13:31,758 - INFO - Train:7 - Approximate time left: 6 hours, 28 minutes
+2024-05-08 13:13:43,777 - INFO - Train:7 - Epoch 150/2000 completed in 12.02 seconds.
+2024-05-08 13:13:43,778 - INFO - Train:7 - Approximate time left: 6 hours, 28 minutes
+2024-05-08 13:13:55,874 - INFO - Train:7 - Epoch 151/2000 completed in 12.10 seconds.
+2024-05-08 13:13:55,874 - INFO - Train:7 - Approximate time left: 6 hours, 28 minutes
+2024-05-08 13:14:07,758 - INFO - Train:7 - Epoch 152/2000 completed in 11.88 seconds.
+2024-05-08 13:14:07,759 - INFO - Train:7 - Approximate time left: 6 hours, 27 minutes
+2024-05-08 13:14:20,272 - INFO - Train:7 - Epoch 153/2000 completed in 12.51 seconds.
+2024-05-08 13:14:20,272 - INFO - Train:7 - Approximate time left: 6 hours, 27 minutes
+2024-05-08 13:14:32,397 - INFO - Train:7 - Epoch 154/2000 completed in 12.13 seconds.
+2024-05-08 13:14:32,398 - INFO - Train:7 - Approximate time left: 6 hours, 27 minutes
+2024-05-08 13:14:44,248 - INFO - Train:7 - Epoch 155/2000 completed in 11.85 seconds.
+2024-05-08 13:14:44,249 - INFO - Train:7 - Approximate time left: 6 hours, 26 minutes
+2024-05-08 13:14:56,268 - INFO - Train:7 - Epoch 156/2000 completed in 12.02 seconds.
+2024-05-08 13:14:56,268 - INFO - Train:7 - Approximate time left: 6 hours, 26 minutes
+2024-05-08 13:15:08,148 - INFO - Train:7 - Epoch 157/2000 completed in 11.88 seconds.
+2024-05-08 13:15:08,149 - INFO - Train:7 - Approximate time left: 6 hours, 26 minutes
+2024-05-08 13:15:20,420 - INFO - Train:7 - Epoch 158/2000 completed in 12.27 seconds.
+2024-05-08 13:15:20,420 - INFO - Train:7 - Approximate time left: 6 hours, 25 minutes
+2024-05-08 13:15:32,441 - INFO - Train:7 - Epoch 159/2000 completed in 12.02 seconds.
+2024-05-08 13:15:32,441 - INFO - Train:7 - Approximate time left: 6 hours, 25 minutes
+2024-05-08 13:15:44,275 - INFO - Train:7 - Epoch 160/2000 completed in 11.83 seconds.
+2024-05-08 13:15:44,276 - INFO - Train:7 - Approximate time left: 6 hours, 25 minutes
+2024-05-08 13:15:56,413 - INFO - Train:7 - Epoch 161/2000 completed in 12.14 seconds.
+2024-05-08 13:15:56,413 - INFO - Train:7 - Approximate time left: 6 hours, 24 minutes
+2024-05-08 13:16:08,314 - INFO - Train:7 - Epoch 162/2000 completed in 11.90 seconds.
+2024-05-08 13:16:08,315 - INFO - Train:7 - Approximate time left: 6 hours, 24 minutes
+2024-05-08 13:16:20,401 - INFO - Train:7 - Epoch 163/2000 completed in 12.09 seconds.
+2024-05-08 13:16:20,401 - INFO - Train:7 - Approximate time left: 6 hours, 24 minutes
+2024-05-08 13:16:32,433 - INFO - Train:7 - Epoch 164/2000 completed in 12.03 seconds.
+2024-05-08 13:16:32,434 - INFO - Train:7 - Approximate time left: 6 hours, 24 minutes
+2024-05-08 13:16:44,310 - INFO - Train:7 - Epoch 165/2000 completed in 11.88 seconds.
+2024-05-08 13:16:44,311 - INFO - Train:7 - Approximate time left: 6 hours, 23 minutes
+2024-05-08 13:16:56,156 - INFO - Train:7 - Epoch 166/2000 completed in 11.85 seconds.
+2024-05-08 13:16:56,156 - INFO - Train:7 - Approximate time left: 6 hours, 23 minutes
+2024-05-08 13:17:08,019 - INFO - Train:7 - Epoch 167/2000 completed in 11.86 seconds.
+2024-05-08 13:17:08,019 - INFO - Train:7 - Approximate time left: 6 hours, 23 minutes
+2024-05-08 13:17:20,126 - INFO - Train:7 - Epoch 168/2000 completed in 12.11 seconds.
+2024-05-08 13:17:20,127 - INFO - Train:7 - Approximate time left: 6 hours, 22 minutes
+2024-05-08 13:17:32,214 - INFO - Train:7 - Epoch 169/2000 completed in 12.09 seconds.
+2024-05-08 13:17:32,214 - INFO - Train:7 - Approximate time left: 6 hours, 22 minutes
+2024-05-08 13:17:44,379 - INFO - Train:7 - Epoch 170/2000 completed in 12.16 seconds.
+2024-05-08 13:17:44,379 - INFO - Train:7 - Approximate time left: 6 hours, 22 minutes
+2024-05-08 13:17:56,406 - INFO - Train:7 - Epoch 171/2000 completed in 12.03 seconds.
+2024-05-08 13:17:56,406 - INFO - Train:7 - Approximate time left: 6 hours, 21 minutes
+2024-05-08 13:18:09,271 - INFO - Train:7 - Epoch 172/2000 completed in 12.86 seconds.
+2024-05-08 13:18:09,271 - INFO - Train:7 - Approximate time left: 6 hours, 21 minutes
+2024-05-08 13:18:21,196 - INFO - Train:7 - Epoch 173/2000 completed in 11.92 seconds.
+2024-05-08 13:18:21,197 - INFO - Train:7 - Approximate time left: 6 hours, 21 minutes
+2024-05-08 13:18:33,077 - INFO - Train:7 - Epoch 174/2000 completed in 11.88 seconds.
+2024-05-08 13:18:33,077 - INFO - Train:7 - Approximate time left: 6 hours, 21 minutes
+2024-05-08 13:18:44,975 - INFO - Train:7 - Epoch 175/2000 completed in 11.90 seconds.
+2024-05-08 13:18:44,975 - INFO - Train:7 - Approximate time left: 6 hours, 20 minutes
+2024-05-08 13:18:56,815 - INFO - Train:7 - Epoch 176/2000 completed in 11.84 seconds.
+2024-05-08 13:18:56,815 - INFO - Train:7 - Approximate time left: 6 hours, 20 minutes
+2024-05-08 13:19:09,152 - INFO - Train:7 - Epoch 177/2000 completed in 12.34 seconds.
+2024-05-08 13:19:09,152 - INFO - Train:7 - Approximate time left: 6 hours, 20 minutes
+2024-05-08 13:19:21,662 - INFO - Train:7 - Epoch 178/2000 completed in 12.51 seconds.
+2024-05-08 13:19:21,662 - INFO - Train:7 - Approximate time left: 6 hours, 19 minutes
+2024-05-08 13:19:33,524 - INFO - Train:7 - Epoch 179/2000 completed in 11.86 seconds.
+2024-05-08 13:19:33,525 - INFO - Train:7 - Approximate time left: 6 hours, 19 minutes
+2024-05-08 13:19:45,469 - INFO - Train:7 - Epoch 180/2000 completed in 11.94 seconds.
+2024-05-08 13:19:45,469 - INFO - Train:7 - Approximate time left: 6 hours, 19 minutes
+2024-05-08 13:19:57,614 - INFO - Train:7 - Epoch 181/2000 completed in 12.14 seconds.
+2024-05-08 13:19:57,614 - INFO - Train:7 - Approximate time left: 6 hours, 19 minutes
+2024-05-08 13:20:09,667 - INFO - Train:7 - Epoch 182/2000 completed in 12.05 seconds.
+2024-05-08 13:20:09,667 - INFO - Train:7 - Approximate time left: 6 hours, 18 minutes
+2024-05-08 13:20:21,746 - INFO - Train:7 - Epoch 183/2000 completed in 12.08 seconds.
+2024-05-08 13:20:21,747 - INFO - Train:7 - Approximate time left: 6 hours, 18 minutes
+2024-05-08 13:20:34,093 - INFO - Train:7 - Epoch 184/2000 completed in 12.35 seconds.
+2024-05-08 13:20:34,093 - INFO - Train:7 - Approximate time left: 6 hours, 18 minutes
+2024-05-08 13:20:47,174 - INFO - Train:7 - Epoch 185/2000 completed in 13.08 seconds.
+2024-05-08 13:20:47,174 - INFO - Train:7 - Approximate time left: 6 hours, 18 minutes
+2024-05-08 13:20:59,832 - INFO - Train:7 - Epoch 186/2000 completed in 12.66 seconds.
+2024-05-08 13:20:59,832 - INFO - Train:7 - Approximate time left: 6 hours, 17 minutes
+2024-05-08 13:21:11,450 - INFO - Train:7 - Epoch 187/2000 completed in 11.62 seconds.
+2024-05-08 13:21:11,451 - INFO - Train:7 - Approximate time left: 6 hours, 17 minutes
+2024-05-08 13:21:22,984 - INFO - Train:7 - Epoch 188/2000 completed in 11.53 seconds.
+2024-05-08 13:21:22,984 - INFO - Train:7 - Approximate time left: 6 hours, 17 minutes
+2024-05-08 13:21:34,961 - INFO - Train:7 - Epoch 189/2000 completed in 11.98 seconds.
+2024-05-08 13:21:34,961 - INFO - Train:7 - Approximate time left: 6 hours, 16 minutes
+2024-05-08 13:21:46,836 - INFO - Train:7 - Epoch 190/2000 completed in 11.87 seconds.
+2024-05-08 13:21:46,837 - INFO - Train:7 - Approximate time left: 6 hours, 16 minutes
+2024-05-08 13:21:58,713 - INFO - Train:7 - Epoch 191/2000 completed in 11.88 seconds.
+2024-05-08 13:21:58,713 - INFO - Train:7 - Approximate time left: 6 hours, 16 minutes
+2024-05-08 13:22:10,378 - INFO - Train:7 - Epoch 192/2000 completed in 11.66 seconds.
+2024-05-08 13:22:10,379 - INFO - Train:7 - Approximate time left: 6 hours, 16 minutes
+2024-05-08 13:22:22,430 - INFO - Train:7 - Epoch 193/2000 completed in 12.05 seconds.
+2024-05-08 13:22:22,430 - INFO - Train:7 - Approximate time left: 6 hours, 15 minutes
+2024-05-08 13:22:34,264 - INFO - Train:7 - Epoch 194/2000 completed in 11.83 seconds.
+2024-05-08 13:22:34,264 - INFO - Train:7 - Approximate time left: 6 hours, 15 minutes
+2024-05-08 13:22:46,517 - INFO - Train:7 - Epoch 195/2000 completed in 12.25 seconds.
+2024-05-08 13:22:46,517 - INFO - Train:7 - Approximate time left: 6 hours, 15 minutes
+2024-05-08 13:22:59,031 - INFO - Train:7 - Epoch 196/2000 completed in 12.51 seconds.
+2024-05-08 13:22:59,032 - INFO - Train:7 - Approximate time left: 6 hours, 15 minutes
+2024-05-08 13:23:11,174 - INFO - Train:7 - Epoch 197/2000 completed in 12.14 seconds.
+2024-05-08 13:23:11,174 - INFO - Train:7 - Approximate time left: 6 hours, 14 minutes
+2024-05-08 13:23:23,562 - INFO - Train:7 - Epoch 198/2000 completed in 12.39 seconds.
+2024-05-08 13:23:23,562 - INFO - Train:7 - Approximate time left: 6 hours, 14 minutes
+2024-05-08 13:23:38,645 - INFO - Train:7 - Epoch 199/2000 completed in 15.08 seconds.
+2024-05-08 13:23:38,645 - INFO - Train:7 - Approximate time left: 6 hours, 14 minutes
+2024-05-08 13:23:50,858 - INFO - Train:7 - Epoch 200/2000 completed in 12.21 seconds.
+2024-05-08 13:23:50,858 - INFO - Train:7 - Approximate time left: 6 hours, 14 minutes
+2024-05-08 13:24:03,049 - INFO - Train:7 - Epoch 201/2000 completed in 12.19 seconds.
+2024-05-08 13:24:03,050 - INFO - Train:7 - Approximate time left: 6 hours, 14 minutes
+2024-05-08 13:24:15,579 - INFO - Train:7 - Epoch 202/2000 completed in 12.53 seconds.
+2024-05-08 13:24:15,579 - INFO - Train:7 - Approximate time left: 6 hours, 14 minutes
+2024-05-08 13:24:27,330 - INFO - Train:7 - Epoch 203/2000 completed in 11.75 seconds.
+2024-05-08 13:24:27,330 - INFO - Train:7 - Approximate time left: 6 hours, 13 minutes
+2024-05-08 13:24:39,072 - INFO - Train:7 - Epoch 204/2000 completed in 11.74 seconds.
+2024-05-08 13:24:39,072 - INFO - Train:7 - Approximate time left: 6 hours, 13 minutes
+2024-05-08 13:24:50,947 - INFO - Train:7 - Epoch 205/2000 completed in 11.87 seconds.
+2024-05-08 13:24:50,947 - INFO - Train:7 - Approximate time left: 6 hours, 13 minutes
+2024-05-08 13:25:02,697 - INFO - Train:7 - Epoch 206/2000 completed in 11.75 seconds.
+2024-05-08 13:25:02,697 - INFO - Train:7 - Approximate time left: 6 hours, 12 minutes
+2024-05-08 13:25:14,833 - INFO - Train:7 - Epoch 207/2000 completed in 12.14 seconds.
+2024-05-08 13:25:14,833 - INFO - Train:7 - Approximate time left: 6 hours, 12 minutes
+2024-05-08 13:25:26,452 - INFO - Train:7 - Epoch 208/2000 completed in 11.62 seconds.
+2024-05-08 13:25:26,452 - INFO - Train:7 - Approximate time left: 6 hours, 12 minutes
+2024-05-08 13:25:38,086 - INFO - Train:7 - Epoch 209/2000 completed in 11.63 seconds.
+2024-05-08 13:25:38,086 - INFO - Train:7 - Approximate time left: 6 hours, 11 minutes
+2024-05-08 13:25:50,654 - INFO - Train:7 - Epoch 210/2000 completed in 12.57 seconds.
+2024-05-08 13:25:50,654 - INFO - Train:7 - Approximate time left: 6 hours, 11 minutes
+2024-05-08 13:26:03,032 - INFO - Train:7 - Epoch 211/2000 completed in 12.38 seconds.
+2024-05-08 13:26:03,032 - INFO - Train:7 - Approximate time left: 6 hours, 11 minutes
+2024-05-08 13:26:15,685 - INFO - Train:7 - Epoch 212/2000 completed in 12.65 seconds.
+2024-05-08 13:26:15,685 - INFO - Train:7 - Approximate time left: 6 hours, 11 minutes
+2024-05-08 13:26:27,659 - INFO - Train:7 - Epoch 213/2000 completed in 11.97 seconds.
+2024-05-08 13:26:27,659 - INFO - Train:7 - Approximate time left: 6 hours, 11 minutes
+2024-05-08 13:26:39,243 - INFO - Train:7 - Epoch 214/2000 completed in 11.58 seconds.
+2024-05-08 13:26:39,244 - INFO - Train:7 - Approximate time left: 6 hours, 10 minutes
+2024-05-08 13:26:51,333 - INFO - Train:7 - Epoch 215/2000 completed in 12.09 seconds.
+2024-05-08 13:26:51,333 - INFO - Train:7 - Approximate time left: 6 hours, 10 minutes
+2024-05-08 13:27:03,211 - INFO - Train:7 - Epoch 216/2000 completed in 11.88 seconds.
+2024-05-08 13:27:03,211 - INFO - Train:7 - Approximate time left: 6 hours, 10 minutes
+2024-05-08 13:27:15,131 - INFO - Train:7 - Epoch 217/2000 completed in 11.92 seconds.
+2024-05-08 13:27:15,131 - INFO - Train:7 - Approximate time left: 6 hours, 9 minutes
+2024-05-08 13:27:27,164 - INFO - Train:7 - Epoch 218/2000 completed in 12.03 seconds.
+2024-05-08 13:27:27,164 - INFO - Train:7 - Approximate time left: 6 hours, 9 minutes
+2024-05-08 13:27:40,249 - INFO - Train:7 - Epoch 219/2000 completed in 13.08 seconds.
+2024-05-08 13:27:40,249 - INFO - Train:7 - Approximate time left: 6 hours, 9 minutes
+2024-05-08 13:27:53,172 - INFO - Train:7 - Epoch 220/2000 completed in 12.92 seconds.
+2024-05-08 13:27:53,172 - INFO - Train:7 - Approximate time left: 6 hours, 9 minutes
+2024-05-08 13:28:05,743 - INFO - Train:7 - Epoch 221/2000 completed in 12.57 seconds.
+2024-05-08 13:28:05,744 - INFO - Train:7 - Approximate time left: 6 hours, 9 minutes
+2024-05-08 13:28:17,956 - INFO - Train:7 - Epoch 222/2000 completed in 12.21 seconds.
+2024-05-08 13:28:17,957 - INFO - Train:7 - Approximate time left: 6 hours, 8 minutes
+2024-05-08 13:28:30,175 - INFO - Train:7 - Epoch 223/2000 completed in 12.22 seconds.
+2024-05-08 13:28:30,175 - INFO - Train:7 - Approximate time left: 6 hours, 8 minutes
+2024-05-08 13:28:41,948 - INFO - Train:7 - Epoch 224/2000 completed in 11.77 seconds.
+2024-05-08 13:28:41,948 - INFO - Train:7 - Approximate time left: 6 hours, 8 minutes
+2024-05-08 13:28:53,800 - INFO - Train:7 - Epoch 225/2000 completed in 11.85 seconds.
+2024-05-08 13:28:53,800 - INFO - Train:7 - Approximate time left: 6 hours, 8 minutes
+2024-05-08 13:29:05,689 - INFO - Train:7 - Epoch 226/2000 completed in 11.89 seconds.
+2024-05-08 13:29:05,690 - INFO - Train:7 - Approximate time left: 6 hours, 7 minutes
+2024-05-08 13:29:17,601 - INFO - Train:7 - Epoch 227/2000 completed in 11.91 seconds.
+2024-05-08 13:29:17,602 - INFO - Train:7 - Approximate time left: 6 hours, 7 minutes
+2024-05-08 13:29:30,244 - INFO - Train:7 - Epoch 228/2000 completed in 12.64 seconds.
+2024-05-08 13:29:30,244 - INFO - Train:7 - Approximate time left: 6 hours, 7 minutes
+2024-05-08 13:29:42,563 - INFO - Train:7 - Epoch 229/2000 completed in 12.32 seconds.
+2024-05-08 13:29:42,564 - INFO - Train:7 - Approximate time left: 6 hours, 7 minutes
+2024-05-08 13:29:55,506 - INFO - Train:7 - Epoch 230/2000 completed in 12.94 seconds.
+2024-05-08 13:29:55,506 - INFO - Train:7 - Approximate time left: 6 hours, 6 minutes
+2024-05-08 13:30:07,317 - INFO - Train:7 - Epoch 231/2000 completed in 11.81 seconds.
+2024-05-08 13:30:07,318 - INFO - Train:7 - Approximate time left: 6 hours, 6 minutes
+2024-05-08 13:30:19,185 - INFO - Train:7 - Epoch 232/2000 completed in 11.87 seconds.
+2024-05-08 13:30:19,186 - INFO - Train:7 - Approximate time left: 6 hours, 6 minutes
+2024-05-08 13:30:31,007 - INFO - Train:7 - Epoch 233/2000 completed in 11.82 seconds.
+2024-05-08 13:30:31,007 - INFO - Train:7 - Approximate time left: 6 hours, 6 minutes
+2024-05-08 13:30:43,598 - INFO - Train:7 - Epoch 234/2000 completed in 12.59 seconds.
+2024-05-08 13:30:43,598 - INFO - Train:7 - Approximate time left: 6 hours, 5 minutes
+2024-05-08 13:30:55,430 - INFO - Train:7 - Epoch 235/2000 completed in 11.83 seconds.
+2024-05-08 13:30:55,430 - INFO - Train:7 - Approximate time left: 6 hours, 5 minutes
+2024-05-08 13:31:07,364 - INFO - Train:7 - Epoch 236/2000 completed in 11.93 seconds.
+2024-05-08 13:31:07,364 - INFO - Train:7 - Approximate time left: 6 hours, 5 minutes
+2024-05-08 13:31:18,960 - INFO - Train:7 - Epoch 237/2000 completed in 11.60 seconds.
+2024-05-08 13:31:18,960 - INFO - Train:7 - Approximate time left: 6 hours, 5 minutes
+2024-05-08 13:31:30,704 - INFO - Train:7 - Epoch 238/2000 completed in 11.74 seconds.
+2024-05-08 13:31:30,705 - INFO - Train:7 - Approximate time left: 6 hours, 4 minutes
+2024-05-08 13:31:42,356 - INFO - Train:7 - Epoch 239/2000 completed in 11.65 seconds.
+2024-05-08 13:31:42,356 - INFO - Train:7 - Approximate time left: 6 hours, 4 minutes
+2024-05-08 13:31:53,942 - INFO - Train:7 - Epoch 240/2000 completed in 11.59 seconds.
+2024-05-08 13:31:53,943 - INFO - Train:7 - Approximate time left: 6 hours, 4 minutes
+2024-05-08 13:32:05,570 - INFO - Train:7 - Epoch 241/2000 completed in 11.63 seconds.
+2024-05-08 13:32:05,571 - INFO - Train:7 - Approximate time left: 6 hours, 3 minutes
+2024-05-08 13:32:17,255 - INFO - Train:7 - Epoch 242/2000 completed in 11.68 seconds.
+2024-05-08 13:32:17,255 - INFO - Train:7 - Approximate time left: 6 hours, 3 minutes
+2024-05-08 13:32:28,923 - INFO - Train:7 - Epoch 243/2000 completed in 11.67 seconds.
+2024-05-08 13:32:28,924 - INFO - Train:7 - Approximate time left: 6 hours, 3 minutes
+2024-05-08 13:32:40,791 - INFO - Train:7 - Epoch 244/2000 completed in 11.87 seconds.
+2024-05-08 13:32:40,792 - INFO - Train:7 - Approximate time left: 6 hours, 3 minutes
+2024-05-08 13:32:52,744 - INFO - Train:7 - Epoch 245/2000 completed in 11.95 seconds.
+2024-05-08 13:32:52,744 - INFO - Train:7 - Approximate time left: 6 hours, 2 minutes
+2024-05-08 13:33:04,618 - INFO - Train:7 - Epoch 246/2000 completed in 11.87 seconds.
+2024-05-08 13:33:04,619 - INFO - Train:7 - Approximate time left: 6 hours, 2 minutes
+2024-05-08 13:33:16,947 - INFO - Train:7 - Epoch 247/2000 completed in 12.33 seconds.
+2024-05-08 13:33:16,948 - INFO - Train:7 - Approximate time left: 6 hours, 2 minutes
+2024-05-08 13:33:29,845 - INFO - Train:7 - Epoch 248/2000 completed in 12.90 seconds.
+2024-05-08 13:33:29,845 - INFO - Train:7 - Approximate time left: 6 hours, 2 minutes
+2024-05-08 13:33:41,918 - INFO - Train:7 - Epoch 249/2000 completed in 12.07 seconds.
+2024-05-08 13:33:41,918 - INFO - Train:7 - Approximate time left: 6 hours, 1 minutes
+2024-05-08 13:33:53,861 - INFO - Train:7 - Epoch 250/2000 completed in 11.94 seconds.
+2024-05-08 13:33:53,861 - INFO - Train:7 - Approximate time left: 6 hours, 1 minutes
+2024-05-08 13:34:05,528 - INFO - Train:7 - Epoch 251/2000 completed in 11.67 seconds.
+2024-05-08 13:34:05,529 - INFO - Train:7 - Approximate time left: 6 hours, 1 minutes
+2024-05-08 13:34:17,826 - INFO - Train:7 - Epoch 252/2000 completed in 12.30 seconds.
+2024-05-08 13:34:17,826 - INFO - Train:7 - Approximate time left: 6 hours, 1 minutes
+2024-05-08 13:34:29,937 - INFO - Train:7 - Epoch 253/2000 completed in 12.11 seconds.
+2024-05-08 13:34:29,937 - INFO - Train:7 - Approximate time left: 6 hours, 0 minutes
+2024-05-08 13:34:42,101 - INFO - Train:7 - Epoch 254/2000 completed in 12.16 seconds.
+2024-05-08 13:34:42,101 - INFO - Train:7 - Approximate time left: 6 hours, 0 minutes
+2024-05-08 13:34:54,253 - INFO - Train:7 - Epoch 255/2000 completed in 12.15 seconds.
+2024-05-08 13:34:54,253 - INFO - Train:7 - Approximate time left: 6 hours, 0 minutes
+2024-05-08 13:35:06,397 - INFO - Train:7 - Epoch 256/2000 completed in 12.14 seconds.
+2024-05-08 13:35:06,397 - INFO - Train:7 - Approximate time left: 6 hours, 0 minutes
+2024-05-08 13:35:18,676 - INFO - Train:7 - Epoch 257/2000 completed in 12.28 seconds.
+2024-05-08 13:35:18,677 - INFO - Train:7 - Approximate time left: 5 hours, 59 minutes
+2024-05-08 13:35:30,704 - INFO - Train:7 - Epoch 258/2000 completed in 12.03 seconds.
+2024-05-08 13:35:30,704 - INFO - Train:7 - Approximate time left: 5 hours, 59 minutes
+2024-05-08 13:35:42,745 - INFO - Train:7 - Epoch 259/2000 completed in 12.04 seconds.
+2024-05-08 13:35:42,745 - INFO - Train:7 - Approximate time left: 5 hours, 59 minutes
+2024-05-08 13:35:55,147 - INFO - Train:7 - Epoch 260/2000 completed in 12.40 seconds.
+2024-05-08 13:35:55,148 - INFO - Train:7 - Approximate time left: 5 hours, 59 minutes
+2024-05-08 13:36:07,151 - INFO - Train:7 - Epoch 261/2000 completed in 12.00 seconds.
+2024-05-08 13:36:07,151 - INFO - Train:7 - Approximate time left: 5 hours, 58 minutes
+2024-05-08 13:36:19,716 - INFO - Train:7 - Epoch 262/2000 completed in 12.57 seconds.
+2024-05-08 13:36:19,717 - INFO - Train:7 - Approximate time left: 5 hours, 58 minutes
+2024-05-08 13:36:31,488 - INFO - Train:7 - Epoch 263/2000 completed in 11.77 seconds.
+2024-05-08 13:36:31,489 - INFO - Train:7 - Approximate time left: 5 hours, 58 minutes
+2024-05-08 13:36:43,779 - INFO - Train:7 - Epoch 264/2000 completed in 12.29 seconds.
+2024-05-08 13:36:43,780 - INFO - Train:7 - Approximate time left: 5 hours, 58 minutes
+2024-05-08 13:36:57,850 - INFO - Train:7 - Epoch 265/2000 completed in 14.07 seconds.
+2024-05-08 13:36:57,850 - INFO - Train:7 - Approximate time left: 5 hours, 58 minutes
+2024-05-08 13:37:09,646 - INFO - Train:7 - Epoch 266/2000 completed in 11.80 seconds.
+2024-05-08 13:37:09,646 - INFO - Train:7 - Approximate time left: 5 hours, 58 minutes
+2024-05-08 13:37:21,344 - INFO - Train:7 - Epoch 267/2000 completed in 11.70 seconds.
+2024-05-08 13:37:21,345 - INFO - Train:7 - Approximate time left: 5 hours, 57 minutes
+2024-05-08 13:37:33,319 - INFO - Train:7 - Epoch 268/2000 completed in 11.97 seconds.
+2024-05-08 13:37:33,319 - INFO - Train:7 - Approximate time left: 5 hours, 57 minutes
+2024-05-08 13:37:45,313 - INFO - Train:7 - Epoch 269/2000 completed in 11.99 seconds.
+2024-05-08 13:37:45,313 - INFO - Train:7 - Approximate time left: 5 hours, 57 minutes
+2024-05-08 13:37:57,506 - INFO - Train:7 - Epoch 270/2000 completed in 12.19 seconds.
+2024-05-08 13:37:57,506 - INFO - Train:7 - Approximate time left: 5 hours, 57 minutes
+2024-05-08 13:38:09,956 - INFO - Train:7 - Epoch 271/2000 completed in 12.45 seconds.
+2024-05-08 13:38:09,956 - INFO - Train:7 - Approximate time left: 5 hours, 56 minutes
+2024-05-08 13:38:22,794 - INFO - Train:7 - Epoch 272/2000 completed in 12.84 seconds.
+2024-05-08 13:38:22,794 - INFO - Train:7 - Approximate time left: 5 hours, 56 minutes
+2024-05-08 13:38:34,895 - INFO - Train:7 - Epoch 273/2000 completed in 12.10 seconds.
+2024-05-08 13:38:34,896 - INFO - Train:7 - Approximate time left: 5 hours, 56 minutes
+2024-05-08 13:38:46,974 - INFO - Train:7 - Epoch 274/2000 completed in 12.08 seconds.
+2024-05-08 13:38:46,974 - INFO - Train:7 - Approximate time left: 5 hours, 56 minutes
+2024-05-08 13:38:59,190 - INFO - Train:7 - Epoch 275/2000 completed in 12.22 seconds.
+2024-05-08 13:38:59,191 - INFO - Train:7 - Approximate time left: 5 hours, 55 minutes
+2024-05-08 13:39:11,288 - INFO - Train:7 - Epoch 276/2000 completed in 12.10 seconds.
+2024-05-08 13:39:11,288 - INFO - Train:7 - Approximate time left: 5 hours, 55 minutes
+2024-05-08 13:39:23,418 - INFO - Train:7 - Epoch 277/2000 completed in 12.13 seconds.
+2024-05-08 13:39:23,419 - INFO - Train:7 - Approximate time left: 5 hours, 55 minutes
+2024-05-08 13:39:35,677 - INFO - Train:7 - Epoch 278/2000 completed in 12.26 seconds.
+2024-05-08 13:39:35,677 - INFO - Train:7 - Approximate time left: 5 hours, 55 minutes
+2024-05-08 13:39:47,616 - INFO - Train:7 - Epoch 279/2000 completed in 11.94 seconds.
+2024-05-08 13:39:47,617 - INFO - Train:7 - Approximate time left: 5 hours, 55 minutes
+2024-05-08 13:39:59,704 - INFO - Train:7 - Epoch 280/2000 completed in 12.09 seconds.
+2024-05-08 13:39:59,704 - INFO - Train:7 - Approximate time left: 5 hours, 54 minutes
+2024-05-08 13:40:11,716 - INFO - Train:7 - Epoch 281/2000 completed in 12.01 seconds.
+2024-05-08 13:40:11,717 - INFO - Train:7 - Approximate time left: 5 hours, 54 minutes
+2024-05-08 13:40:24,167 - INFO - Train:7 - Epoch 282/2000 completed in 12.45 seconds.
+2024-05-08 13:40:24,167 - INFO - Train:7 - Approximate time left: 5 hours, 54 minutes
+2024-05-08 13:40:36,529 - INFO - Train:7 - Epoch 283/2000 completed in 12.36 seconds.
+2024-05-08 13:40:36,529 - INFO - Train:7 - Approximate time left: 5 hours, 54 minutes
+2024-05-08 13:40:48,731 - INFO - Train:7 - Epoch 284/2000 completed in 12.20 seconds.
+2024-05-08 13:40:48,731 - INFO - Train:7 - Approximate time left: 5 hours, 53 minutes
+2024-05-08 13:41:00,762 - INFO - Train:7 - Epoch 285/2000 completed in 12.03 seconds.
+2024-05-08 13:41:00,762 - INFO - Train:7 - Approximate time left: 5 hours, 53 minutes
+2024-05-08 13:41:12,860 - INFO - Train:7 - Epoch 286/2000 completed in 12.10 seconds.
+2024-05-08 13:41:12,860 - INFO - Train:7 - Approximate time left: 5 hours, 53 minutes
+2024-05-08 13:41:24,869 - INFO - Train:7 - Epoch 287/2000 completed in 12.01 seconds.
+2024-05-08 13:41:24,869 - INFO - Train:7 - Approximate time left: 5 hours, 53 minutes
+2024-05-08 13:41:36,570 - INFO - Train:7 - Epoch 288/2000 completed in 11.70 seconds.
+2024-05-08 13:41:36,571 - INFO - Train:7 - Approximate time left: 5 hours, 52 minutes
+2024-05-08 13:41:48,584 - INFO - Train:7 - Epoch 289/2000 completed in 12.01 seconds.
+2024-05-08 13:41:48,584 - INFO - Train:7 - Approximate time left: 5 hours, 52 minutes
+2024-05-08 13:42:00,599 - INFO - Train:7 - Epoch 290/2000 completed in 12.01 seconds.
+2024-05-08 13:42:00,599 - INFO - Train:7 - Approximate time left: 5 hours, 52 minutes
+2024-05-08 13:42:12,793 - INFO - Train:7 - Epoch 291/2000 completed in 12.19 seconds.
+2024-05-08 13:42:12,793 - INFO - Train:7 - Approximate time left: 5 hours, 52 minutes
+2024-05-08 13:42:24,679 - INFO - Train:7 - Epoch 292/2000 completed in 11.89 seconds.
+2024-05-08 13:42:24,680 - INFO - Train:7 - Approximate time left: 5 hours, 51 minutes
+2024-05-08 13:42:36,688 - INFO - Train:7 - Epoch 293/2000 completed in 12.01 seconds.
+2024-05-08 13:42:36,688 - INFO - Train:7 - Approximate time left: 5 hours, 51 minutes
+2024-05-08 13:42:49,211 - INFO - Train:7 - Epoch 294/2000 completed in 12.52 seconds.
+2024-05-08 13:42:49,212 - INFO - Train:7 - Approximate time left: 5 hours, 51 minutes
+2024-05-08 13:43:01,295 - INFO - Train:7 - Epoch 295/2000 completed in 12.08 seconds.
+2024-05-08 13:43:01,295 - INFO - Train:7 - Approximate time left: 5 hours, 51 minutes
+2024-05-08 13:43:13,635 - INFO - Train:7 - Epoch 296/2000 completed in 12.34 seconds.
+2024-05-08 13:43:13,636 - INFO - Train:7 - Approximate time left: 5 hours, 51 minutes
+2024-05-08 13:43:25,846 - INFO - Train:7 - Epoch 297/2000 completed in 12.21 seconds.
+2024-05-08 13:43:25,846 - INFO - Train:7 - Approximate time left: 5 hours, 50 minutes
+2024-05-08 13:43:37,824 - INFO - Train:7 - Epoch 298/2000 completed in 11.98 seconds.
+2024-05-08 13:43:37,825 - INFO - Train:7 - Approximate time left: 5 hours, 50 minutes
+2024-05-08 13:43:49,765 - INFO - Train:7 - Epoch 299/2000 completed in 11.94 seconds.
+2024-05-08 13:43:49,766 - INFO - Train:7 - Approximate time left: 5 hours, 50 minutes
+2024-05-08 13:44:01,513 - INFO - Train:7 - Epoch 300/2000 completed in 11.75 seconds.
+2024-05-08 13:44:01,513 - INFO - Train:7 - Approximate time left: 5 hours, 50 minutes
+2024-05-08 13:44:13,699 - INFO - Train:7 - Epoch 301/2000 completed in 12.19 seconds.
+2024-05-08 13:44:13,699 - INFO - Train:7 - Approximate time left: 5 hours, 49 minutes
+2024-05-08 13:44:25,832 - INFO - Train:7 - Epoch 302/2000 completed in 12.13 seconds.
+2024-05-08 13:44:25,832 - INFO - Train:7 - Approximate time left: 5 hours, 49 minutes
+2024-05-08 13:44:38,109 - INFO - Train:7 - Epoch 303/2000 completed in 12.28 seconds.
+2024-05-08 13:44:38,110 - INFO - Train:7 - Approximate time left: 5 hours, 49 minutes
+2024-05-08 13:44:50,440 - INFO - Train:7 - Epoch 304/2000 completed in 12.33 seconds.
+2024-05-08 13:44:50,440 - INFO - Train:7 - Approximate time left: 5 hours, 49 minutes
+2024-05-08 13:45:02,942 - INFO - Train:7 - Epoch 305/2000 completed in 12.50 seconds.
+2024-05-08 13:45:02,942 - INFO - Train:7 - Approximate time left: 5 hours, 49 minutes
+2024-05-08 13:45:14,889 - INFO - Train:7 - Epoch 306/2000 completed in 11.95 seconds.
+2024-05-08 13:45:14,890 - INFO - Train:7 - Approximate time left: 5 hours, 48 minutes
+2024-05-08 13:45:26,898 - INFO - Train:7 - Epoch 307/2000 completed in 12.01 seconds.
+2024-05-08 13:45:26,898 - INFO - Train:7 - Approximate time left: 5 hours, 48 minutes
+2024-05-08 13:45:38,800 - INFO - Train:7 - Epoch 308/2000 completed in 11.90 seconds.
+2024-05-08 13:45:38,800 - INFO - Train:7 - Approximate time left: 5 hours, 48 minutes
+2024-05-08 13:45:50,484 - INFO - Train:7 - Epoch 309/2000 completed in 11.68 seconds.
+2024-05-08 13:45:50,484 - INFO - Train:7 - Approximate time left: 5 hours, 48 minutes
+2024-05-08 13:46:02,442 - INFO - Train:7 - Epoch 310/2000 completed in 11.96 seconds.
+2024-05-08 13:46:02,442 - INFO - Train:7 - Approximate time left: 5 hours, 47 minutes
+2024-05-08 13:46:14,472 - INFO - Train:7 - Epoch 311/2000 completed in 12.03 seconds.
+2024-05-08 13:46:14,473 - INFO - Train:7 - Approximate time left: 5 hours, 47 minutes
+2024-05-08 13:46:27,082 - INFO - Train:7 - Epoch 312/2000 completed in 12.61 seconds.
+2024-05-08 13:46:27,083 - INFO - Train:7 - Approximate time left: 5 hours, 47 minutes
+2024-05-08 13:46:38,991 - INFO - Train:7 - Epoch 313/2000 completed in 11.91 seconds.
+2024-05-08 13:46:38,991 - INFO - Train:7 - Approximate time left: 5 hours, 47 minutes
+2024-05-08 13:46:50,850 - INFO - Train:7 - Epoch 314/2000 completed in 11.86 seconds.
+2024-05-08 13:46:50,850 - INFO - Train:7 - Approximate time left: 5 hours, 46 minutes
+2024-05-08 13:47:03,156 - INFO - Train:7 - Epoch 315/2000 completed in 12.31 seconds.
+2024-05-08 13:47:03,156 - INFO - Train:7 - Approximate time left: 5 hours, 46 minutes
+2024-05-08 13:47:14,751 - INFO - Train:7 - Epoch 316/2000 completed in 11.59 seconds.
+2024-05-08 13:47:14,751 - INFO - Train:7 - Approximate time left: 5 hours, 46 minutes
+2024-05-08 13:47:26,931 - INFO - Train:7 - Epoch 317/2000 completed in 12.18 seconds.
+2024-05-08 13:47:26,931 - INFO - Train:7 - Approximate time left: 5 hours, 46 minutes
+2024-05-08 13:47:38,875 - INFO - Train:7 - Epoch 318/2000 completed in 11.94 seconds.
+2024-05-08 13:47:38,875 - INFO - Train:7 - Approximate time left: 5 hours, 45 minutes
+2024-05-08 13:47:50,844 - INFO - Train:7 - Epoch 319/2000 completed in 11.97 seconds.
+2024-05-08 13:47:50,844 - INFO - Train:7 - Approximate time left: 5 hours, 45 minutes
+2024-05-08 13:48:02,893 - INFO - Train:7 - Epoch 320/2000 completed in 12.05 seconds.
+2024-05-08 13:48:02,893 - INFO - Train:7 - Approximate time left: 5 hours, 45 minutes
+2024-05-08 13:48:15,782 - INFO - Train:7 - Epoch 321/2000 completed in 12.89 seconds.
+2024-05-08 13:48:15,782 - INFO - Train:7 - Approximate time left: 5 hours, 45 minutes
+2024-05-08 13:48:28,100 - INFO - Train:7 - Epoch 322/2000 completed in 12.32 seconds.
+2024-05-08 13:48:28,100 - INFO - Train:7 - Approximate time left: 5 hours, 45 minutes
+2024-05-08 13:48:40,493 - INFO - Train:7 - Epoch 323/2000 completed in 12.39 seconds.
+2024-05-08 13:48:40,493 - INFO - Train:7 - Approximate time left: 5 hours, 44 minutes
+2024-05-08 13:48:52,648 - INFO - Train:7 - Epoch 324/2000 completed in 12.15 seconds.
+2024-05-08 13:48:52,649 - INFO - Train:7 - Approximate time left: 5 hours, 44 minutes
+2024-05-08 13:49:05,047 - INFO - Train:7 - Epoch 325/2000 completed in 12.40 seconds.
+2024-05-08 13:49:05,047 - INFO - Train:7 - Approximate time left: 5 hours, 44 minutes
+2024-05-08 13:49:17,428 - INFO - Train:7 - Epoch 326/2000 completed in 12.38 seconds.
+2024-05-08 13:49:17,428 - INFO - Train:7 - Approximate time left: 5 hours, 44 minutes
+2024-05-08 13:49:29,598 - INFO - Train:7 - Epoch 327/2000 completed in 12.17 seconds.
+2024-05-08 13:49:29,599 - INFO - Train:7 - Approximate time left: 5 hours, 44 minutes
+2024-05-08 13:49:41,339 - INFO - Train:7 - Epoch 328/2000 completed in 11.74 seconds.
+2024-05-08 13:49:41,339 - INFO - Train:7 - Approximate time left: 5 hours, 43 minutes
+2024-05-08 13:49:53,436 - INFO - Train:7 - Epoch 329/2000 completed in 12.10 seconds.
+2024-05-08 13:49:53,436 - INFO - Train:7 - Approximate time left: 5 hours, 43 minutes
+2024-05-08 13:50:05,389 - INFO - Train:7 - Epoch 330/2000 completed in 11.95 seconds.
+2024-05-08 13:50:05,390 - INFO - Train:7 - Approximate time left: 5 hours, 43 minutes
+2024-05-08 13:50:19,340 - INFO - Train:7 - Epoch 331/2000 completed in 13.95 seconds.
+2024-05-08 13:50:19,340 - INFO - Train:7 - Approximate time left: 5 hours, 43 minutes
+2024-05-08 13:50:31,450 - INFO - Train:7 - Epoch 332/2000 completed in 12.11 seconds.
+2024-05-08 13:50:31,450 - INFO - Train:7 - Approximate time left: 5 hours, 43 minutes
+2024-05-08 13:50:43,408 - INFO - Train:7 - Epoch 333/2000 completed in 11.96 seconds.
+2024-05-08 13:50:43,409 - INFO - Train:7 - Approximate time left: 5 hours, 42 minutes
+2024-05-08 13:50:55,225 - INFO - Train:7 - Epoch 334/2000 completed in 11.82 seconds.
+2024-05-08 13:50:55,226 - INFO - Train:7 - Approximate time left: 5 hours, 42 minutes
+2024-05-08 13:51:07,326 - INFO - Train:7 - Epoch 335/2000 completed in 12.10 seconds.
+2024-05-08 13:51:07,326 - INFO - Train:7 - Approximate time left: 5 hours, 42 minutes
+2024-05-08 13:51:19,530 - INFO - Train:7 - Epoch 336/2000 completed in 12.20 seconds.
+2024-05-08 13:51:19,530 - INFO - Train:7 - Approximate time left: 5 hours, 42 minutes
+2024-05-08 13:51:31,521 - INFO - Train:7 - Epoch 337/2000 completed in 11.99 seconds.
+2024-05-08 13:51:31,522 - INFO - Train:7 - Approximate time left: 5 hours, 41 minutes
+2024-05-08 13:51:43,595 - INFO - Train:7 - Epoch 338/2000 completed in 12.07 seconds.
+2024-05-08 13:51:43,595 - INFO - Train:7 - Approximate time left: 5 hours, 41 minutes
+2024-05-08 13:51:56,289 - INFO - Train:7 - Epoch 339/2000 completed in 12.69 seconds.
+2024-05-08 13:51:56,289 - INFO - Train:7 - Approximate time left: 5 hours, 41 minutes
+2024-05-08 13:52:08,172 - INFO - Train:7 - Epoch 340/2000 completed in 11.88 seconds.
+2024-05-08 13:52:08,172 - INFO - Train:7 - Approximate time left: 5 hours, 41 minutes
+2024-05-08 13:52:20,608 - INFO - Train:7 - Epoch 341/2000 completed in 12.44 seconds.
+2024-05-08 13:52:20,608 - INFO - Train:7 - Approximate time left: 5 hours, 41 minutes
+2024-05-08 13:52:33,012 - INFO - Train:7 - Epoch 342/2000 completed in 12.40 seconds.
+2024-05-08 13:52:33,012 - INFO - Train:7 - Approximate time left: 5 hours, 40 minutes
+2024-05-08 13:52:45,084 - INFO - Train:7 - Epoch 343/2000 completed in 12.07 seconds.
+2024-05-08 13:52:45,084 - INFO - Train:7 - Approximate time left: 5 hours, 40 minutes
+2024-05-08 13:52:56,958 - INFO - Train:7 - Epoch 344/2000 completed in 11.87 seconds.
+2024-05-08 13:52:56,958 - INFO - Train:7 - Approximate time left: 5 hours, 40 minutes
+2024-05-08 13:53:09,067 - INFO - Train:7 - Epoch 345/2000 completed in 12.11 seconds.
+2024-05-08 13:53:09,067 - INFO - Train:7 - Approximate time left: 5 hours, 40 minutes
+2024-05-08 13:53:21,500 - INFO - Train:7 - Epoch 346/2000 completed in 12.43 seconds.
+2024-05-08 13:53:21,500 - INFO - Train:7 - Approximate time left: 5 hours, 39 minutes
+2024-05-08 13:53:33,514 - INFO - Train:7 - Epoch 347/2000 completed in 12.01 seconds.
+2024-05-08 13:53:33,514 - INFO - Train:7 - Approximate time left: 5 hours, 39 minutes
+2024-05-08 13:53:45,319 - INFO - Train:7 - Epoch 348/2000 completed in 11.81 seconds.
+2024-05-08 13:53:45,320 - INFO - Train:7 - Approximate time left: 5 hours, 39 minutes
+2024-05-08 13:53:57,350 - INFO - Train:7 - Epoch 349/2000 completed in 12.03 seconds.
+2024-05-08 13:53:57,351 - INFO - Train:7 - Approximate time left: 5 hours, 39 minutes
+2024-05-08 13:54:09,757 - INFO - Train:7 - Epoch 350/2000 completed in 12.41 seconds.
+2024-05-08 13:54:09,758 - INFO - Train:7 - Approximate time left: 5 hours, 39 minutes
+2024-05-08 13:54:21,815 - INFO - Train:7 - Epoch 351/2000 completed in 12.06 seconds.
+2024-05-08 13:54:21,815 - INFO - Train:7 - Approximate time left: 5 hours, 38 minutes
+2024-05-08 13:54:34,664 - INFO - Train:7 - Epoch 352/2000 completed in 12.85 seconds.
+2024-05-08 13:54:34,664 - INFO - Train:7 - Approximate time left: 5 hours, 38 minutes
+2024-05-08 13:54:47,704 - INFO - Train:7 - Epoch 353/2000 completed in 13.04 seconds.
+2024-05-08 13:54:47,705 - INFO - Train:7 - Approximate time left: 5 hours, 38 minutes
+2024-05-08 13:55:00,435 - INFO - Train:7 - Epoch 354/2000 completed in 12.73 seconds.
+2024-05-08 13:55:00,436 - INFO - Train:7 - Approximate time left: 5 hours, 38 minutes
+2024-05-08 13:55:13,076 - INFO - Train:7 - Epoch 355/2000 completed in 12.64 seconds.
+2024-05-08 13:55:13,076 - INFO - Train:7 - Approximate time left: 5 hours, 38 minutes
+2024-05-08 13:55:26,140 - INFO - Train:7 - Epoch 356/2000 completed in 13.06 seconds.
+2024-05-08 13:55:26,140 - INFO - Train:7 - Approximate time left: 5 hours, 38 minutes
+2024-05-08 13:55:38,310 - INFO - Train:7 - Epoch 357/2000 completed in 12.17 seconds.
+2024-05-08 13:55:38,310 - INFO - Train:7 - Approximate time left: 5 hours, 37 minutes
+2024-05-08 13:55:50,299 - INFO - Train:7 - Epoch 358/2000 completed in 11.99 seconds.
+2024-05-08 13:55:50,300 - INFO - Train:7 - Approximate time left: 5 hours, 37 minutes
+2024-05-08 13:56:02,263 - INFO - Train:7 - Epoch 359/2000 completed in 11.96 seconds.
+2024-05-08 13:56:02,263 - INFO - Train:7 - Approximate time left: 5 hours, 37 minutes
+2024-05-08 13:56:14,203 - INFO - Train:7 - Epoch 360/2000 completed in 11.94 seconds.
+2024-05-08 13:56:14,203 - INFO - Train:7 - Approximate time left: 5 hours, 37 minutes
+2024-05-08 13:56:26,766 - INFO - Train:7 - Epoch 361/2000 completed in 12.56 seconds.
+2024-05-08 13:56:26,766 - INFO - Train:7 - Approximate time left: 5 hours, 36 minutes
+2024-05-08 13:56:38,760 - INFO - Train:7 - Epoch 362/2000 completed in 11.99 seconds.
+2024-05-08 13:56:38,760 - INFO - Train:7 - Approximate time left: 5 hours, 36 minutes
+2024-05-08 13:56:51,470 - INFO - Train:7 - Epoch 363/2000 completed in 12.71 seconds.
+2024-05-08 13:56:51,470 - INFO - Train:7 - Approximate time left: 5 hours, 36 minutes
+2024-05-08 13:57:03,963 - INFO - Train:7 - Epoch 364/2000 completed in 12.49 seconds.
+2024-05-08 13:57:03,963 - INFO - Train:7 - Approximate time left: 5 hours, 36 minutes
+2024-05-08 13:57:16,088 - INFO - Train:7 - Epoch 365/2000 completed in 12.12 seconds.
+2024-05-08 13:57:16,088 - INFO - Train:7 - Approximate time left: 5 hours, 36 minutes
+2024-05-08 13:57:27,896 - INFO - Train:7 - Epoch 366/2000 completed in 11.81 seconds.
+2024-05-08 13:57:27,896 - INFO - Train:7 - Approximate time left: 5 hours, 35 minutes
+2024-05-08 13:57:39,613 - INFO - Train:7 - Epoch 367/2000 completed in 11.72 seconds.
+2024-05-08 13:57:39,613 - INFO - Train:7 - Approximate time left: 5 hours, 35 minutes
+2024-05-08 13:57:51,491 - INFO - Train:7 - Epoch 368/2000 completed in 11.88 seconds.
+2024-05-08 13:57:51,491 - INFO - Train:7 - Approximate time left: 5 hours, 35 minutes
+2024-05-08 13:58:03,599 - INFO - Train:7 - Epoch 369/2000 completed in 12.11 seconds.
+2024-05-08 13:58:03,600 - INFO - Train:7 - Approximate time left: 5 hours, 35 minutes
+2024-05-08 13:58:15,496 - INFO - Train:7 - Epoch 370/2000 completed in 11.90 seconds.
+2024-05-08 13:58:15,496 - INFO - Train:7 - Approximate time left: 5 hours, 34 minutes
+2024-05-08 13:58:27,505 - INFO - Train:7 - Epoch 371/2000 completed in 12.01 seconds.
+2024-05-08 13:58:27,505 - INFO - Train:7 - Approximate time left: 5 hours, 34 minutes
+2024-05-08 13:58:39,522 - INFO - Train:7 - Epoch 372/2000 completed in 12.02 seconds.
+2024-05-08 13:58:39,523 - INFO - Train:7 - Approximate time left: 5 hours, 34 minutes
+2024-05-08 13:58:52,099 - INFO - Train:7 - Epoch 373/2000 completed in 12.58 seconds.
+2024-05-08 13:58:52,099 - INFO - Train:7 - Approximate time left: 5 hours, 34 minutes
+2024-05-08 13:59:04,422 - INFO - Train:7 - Epoch 374/2000 completed in 12.32 seconds.
+2024-05-08 13:59:04,422 - INFO - Train:7 - Approximate time left: 5 hours, 34 minutes
+2024-05-08 13:59:16,271 - INFO - Train:7 - Epoch 375/2000 completed in 11.85 seconds.
+2024-05-08 13:59:16,272 - INFO - Train:7 - Approximate time left: 5 hours, 33 minutes
+2024-05-08 13:59:28,364 - INFO - Train:7 - Epoch 376/2000 completed in 12.09 seconds.
+2024-05-08 13:59:28,365 - INFO - Train:7 - Approximate time left: 5 hours, 33 minutes
+2024-05-08 13:59:41,219 - INFO - Train:7 - Epoch 377/2000 completed in 12.85 seconds.
+2024-05-08 13:59:41,219 - INFO - Train:7 - Approximate time left: 5 hours, 33 minutes
+2024-05-08 13:59:53,599 - INFO - Train:7 - Epoch 378/2000 completed in 12.38 seconds.
+2024-05-08 13:59:53,599 - INFO - Train:7 - Approximate time left: 5 hours, 33 minutes
+2024-05-08 14:00:06,239 - INFO - Train:7 - Epoch 379/2000 completed in 12.64 seconds.
+2024-05-08 14:00:06,239 - INFO - Train:7 - Approximate time left: 5 hours, 33 minutes
+2024-05-08 14:00:18,622 - INFO - Train:7 - Epoch 380/2000 completed in 12.38 seconds.
+2024-05-08 14:00:18,623 - INFO - Train:7 - Approximate time left: 5 hours, 32 minutes
+2024-05-08 14:00:30,942 - INFO - Train:7 - Epoch 381/2000 completed in 12.32 seconds.
+2024-05-08 14:00:30,942 - INFO - Train:7 - Approximate time left: 5 hours, 32 minutes
+2024-05-08 14:00:42,994 - INFO - Train:7 - Epoch 382/2000 completed in 12.05 seconds.
+2024-05-08 14:00:42,994 - INFO - Train:7 - Approximate time left: 5 hours, 32 minutes
+2024-05-08 14:00:55,229 - INFO - Train:7 - Epoch 383/2000 completed in 12.23 seconds.
+2024-05-08 14:00:55,229 - INFO - Train:7 - Approximate time left: 5 hours, 32 minutes
+2024-05-08 14:01:07,329 - INFO - Train:7 - Epoch 384/2000 completed in 12.10 seconds.
+2024-05-08 14:01:07,329 - INFO - Train:7 - Approximate time left: 5 hours, 31 minutes
+2024-05-08 14:01:19,957 - INFO - Train:7 - Epoch 385/2000 completed in 12.63 seconds.
+2024-05-08 14:01:19,958 - INFO - Train:7 - Approximate time left: 5 hours, 31 minutes
+2024-05-08 14:01:31,964 - INFO - Train:7 - Epoch 386/2000 completed in 12.01 seconds.
+2024-05-08 14:01:31,964 - INFO - Train:7 - Approximate time left: 5 hours, 31 minutes
+2024-05-08 14:01:43,678 - INFO - Train:7 - Epoch 387/2000 completed in 11.71 seconds.
+2024-05-08 14:01:43,678 - INFO - Train:7 - Approximate time left: 5 hours, 31 minutes
+2024-05-08 14:01:55,739 - INFO - Train:7 - Epoch 388/2000 completed in 12.06 seconds.
+2024-05-08 14:01:55,739 - INFO - Train:7 - Approximate time left: 5 hours, 31 minutes
+2024-05-08 14:02:08,193 - INFO - Train:7 - Epoch 389/2000 completed in 12.45 seconds.
+2024-05-08 14:02:08,194 - INFO - Train:7 - Approximate time left: 5 hours, 30 minutes
+2024-05-08 14:02:20,763 - INFO - Train:7 - Epoch 390/2000 completed in 12.57 seconds.
+2024-05-08 14:02:20,763 - INFO - Train:7 - Approximate time left: 5 hours, 30 minutes
+2024-05-08 14:02:33,131 - INFO - Train:7 - Epoch 391/2000 completed in 12.37 seconds.
+2024-05-08 14:02:33,131 - INFO - Train:7 - Approximate time left: 5 hours, 30 minutes
+2024-05-08 14:02:45,178 - INFO - Train:7 - Epoch 392/2000 completed in 12.05 seconds.
+2024-05-08 14:02:45,178 - INFO - Train:7 - Approximate time left: 5 hours, 30 minutes
+2024-05-08 14:02:57,096 - INFO - Train:7 - Epoch 393/2000 completed in 11.92 seconds.
+2024-05-08 14:02:57,097 - INFO - Train:7 - Approximate time left: 5 hours, 30 minutes
+2024-05-08 14:03:09,027 - INFO - Train:7 - Epoch 394/2000 completed in 11.93 seconds.
+2024-05-08 14:03:09,027 - INFO - Train:7 - Approximate time left: 5 hours, 29 minutes
+2024-05-08 14:03:21,467 - INFO - Train:7 - Epoch 395/2000 completed in 12.44 seconds.
+2024-05-08 14:03:21,468 - INFO - Train:7 - Approximate time left: 5 hours, 29 minutes
+2024-05-08 14:03:33,350 - INFO - Train:7 - Epoch 396/2000 completed in 11.88 seconds.
+2024-05-08 14:03:33,350 - INFO - Train:7 - Approximate time left: 5 hours, 29 minutes
+2024-05-08 14:03:47,199 - INFO - Train:7 - Epoch 397/2000 completed in 13.85 seconds.
+2024-05-08 14:03:47,200 - INFO - Train:7 - Approximate time left: 5 hours, 29 minutes
+2024-05-08 14:03:59,168 - INFO - Train:7 - Epoch 398/2000 completed in 11.97 seconds.
+2024-05-08 14:03:59,168 - INFO - Train:7 - Approximate time left: 5 hours, 29 minutes
+2024-05-08 14:04:11,563 - INFO - Train:7 - Epoch 399/2000 completed in 12.39 seconds.
+2024-05-08 14:04:11,563 - INFO - Train:7 - Approximate time left: 5 hours, 28 minutes
+2024-05-08 14:04:23,413 - INFO - Train:7 - Epoch 400/2000 completed in 11.85 seconds.
+2024-05-08 14:04:23,413 - INFO - Train:7 - Approximate time left: 5 hours, 28 minutes
+2024-05-08 14:04:35,495 - INFO - Train:7 - Epoch 401/2000 completed in 12.08 seconds.
+2024-05-08 14:04:35,496 - INFO - Train:7 - Approximate time left: 5 hours, 28 minutes
+2024-05-08 14:04:47,736 - INFO - Train:7 - Epoch 402/2000 completed in 12.24 seconds.
+2024-05-08 14:04:47,736 - INFO - Train:7 - Approximate time left: 5 hours, 28 minutes
+2024-05-08 14:04:59,930 - INFO - Train:7 - Epoch 403/2000 completed in 12.19 seconds.
+2024-05-08 14:04:59,930 - INFO - Train:7 - Approximate time left: 5 hours, 27 minutes
+2024-05-08 14:05:12,258 - INFO - Train:7 - Epoch 404/2000 completed in 12.33 seconds.
+2024-05-08 14:05:12,258 - INFO - Train:7 - Approximate time left: 5 hours, 27 minutes
+2024-05-08 14:05:25,001 - INFO - Train:7 - Epoch 405/2000 completed in 12.74 seconds.
+2024-05-08 14:05:25,001 - INFO - Train:7 - Approximate time left: 5 hours, 27 minutes
+2024-05-08 14:05:37,012 - INFO - Train:7 - Epoch 406/2000 completed in 12.01 seconds.
+2024-05-08 14:05:37,012 - INFO - Train:7 - Approximate time left: 5 hours, 27 minutes
+2024-05-08 14:05:49,063 - INFO - Train:7 - Epoch 407/2000 completed in 12.05 seconds.
+2024-05-08 14:05:49,064 - INFO - Train:7 - Approximate time left: 5 hours, 27 minutes
+2024-05-08 14:06:01,759 - INFO - Train:7 - Epoch 408/2000 completed in 12.70 seconds.
+2024-05-08 14:06:01,759 - INFO - Train:7 - Approximate time left: 5 hours, 26 minutes
+2024-05-08 14:06:14,641 - INFO - Train:7 - Epoch 409/2000 completed in 12.88 seconds.
+2024-05-08 14:06:14,641 - INFO - Train:7 - Approximate time left: 5 hours, 26 minutes
+2024-05-08 14:06:26,692 - INFO - Train:7 - Epoch 410/2000 completed in 12.05 seconds.
+2024-05-08 14:06:26,692 - INFO - Train:7 - Approximate time left: 5 hours, 26 minutes
+2024-05-08 14:06:38,443 - INFO - Train:7 - Epoch 411/2000 completed in 11.75 seconds.
+2024-05-08 14:06:38,443 - INFO - Train:7 - Approximate time left: 5 hours, 26 minutes
+2024-05-08 14:06:50,267 - INFO - Train:7 - Epoch 412/2000 completed in 11.82 seconds.
+2024-05-08 14:06:50,267 - INFO - Train:7 - Approximate time left: 5 hours, 26 minutes
+2024-05-08 14:07:02,040 - INFO - Train:7 - Epoch 413/2000 completed in 11.77 seconds.
+2024-05-08 14:07:02,040 - INFO - Train:7 - Approximate time left: 5 hours, 25 minutes
+2024-05-08 14:07:14,420 - INFO - Train:7 - Epoch 414/2000 completed in 12.38 seconds.
+2024-05-08 14:07:14,421 - INFO - Train:7 - Approximate time left: 5 hours, 25 minutes
+2024-05-08 14:07:26,724 - INFO - Train:7 - Epoch 415/2000 completed in 12.30 seconds.
+2024-05-08 14:07:26,724 - INFO - Train:7 - Approximate time left: 5 hours, 25 minutes
+2024-05-08 14:07:38,480 - INFO - Train:7 - Epoch 416/2000 completed in 11.76 seconds.
+2024-05-08 14:07:38,480 - INFO - Train:7 - Approximate time left: 5 hours, 25 minutes
+2024-05-08 14:07:51,081 - INFO - Train:7 - Epoch 417/2000 completed in 12.60 seconds.
+2024-05-08 14:07:51,082 - INFO - Train:7 - Approximate time left: 5 hours, 24 minutes
+2024-05-08 14:08:03,011 - INFO - Train:7 - Epoch 418/2000 completed in 11.93 seconds.
+2024-05-08 14:08:03,011 - INFO - Train:7 - Approximate time left: 5 hours, 24 minutes
+2024-05-08 14:08:15,190 - INFO - Train:7 - Epoch 419/2000 completed in 12.18 seconds.
+2024-05-08 14:08:15,191 - INFO - Train:7 - Approximate time left: 5 hours, 24 minutes
+2024-05-08 14:08:27,674 - INFO - Train:7 - Epoch 420/2000 completed in 12.48 seconds.
+2024-05-08 14:08:27,674 - INFO - Train:7 - Approximate time left: 5 hours, 24 minutes
+2024-05-08 14:08:39,724 - INFO - Train:7 - Epoch 421/2000 completed in 12.05 seconds.
+2024-05-08 14:08:39,724 - INFO - Train:7 - Approximate time left: 5 hours, 24 minutes
+2024-05-08 14:08:52,164 - INFO - Train:7 - Epoch 422/2000 completed in 12.44 seconds.
+2024-05-08 14:08:52,165 - INFO - Train:7 - Approximate time left: 5 hours, 23 minutes
+2024-05-08 14:09:04,310 - INFO - Train:7 - Epoch 423/2000 completed in 12.15 seconds.
+2024-05-08 14:09:04,311 - INFO - Train:7 - Approximate time left: 5 hours, 23 minutes
+2024-05-08 14:09:17,233 - INFO - Train:7 - Epoch 424/2000 completed in 12.92 seconds.
+2024-05-08 14:09:17,234 - INFO - Train:7 - Approximate time left: 5 hours, 23 minutes
+2024-05-08 14:09:29,282 - INFO - Train:7 - Epoch 425/2000 completed in 12.05 seconds.
+2024-05-08 14:09:29,282 - INFO - Train:7 - Approximate time left: 5 hours, 23 minutes
+2024-05-08 14:09:41,340 - INFO - Train:7 - Epoch 426/2000 completed in 12.06 seconds.
+2024-05-08 14:09:41,340 - INFO - Train:7 - Approximate time left: 5 hours, 23 minutes
+2024-05-08 14:09:53,547 - INFO - Train:7 - Epoch 427/2000 completed in 12.21 seconds.
+2024-05-08 14:09:53,548 - INFO - Train:7 - Approximate time left: 5 hours, 22 minutes
+2024-05-08 14:10:05,602 - INFO - Train:7 - Epoch 428/2000 completed in 12.05 seconds.
+2024-05-08 14:10:05,603 - INFO - Train:7 - Approximate time left: 5 hours, 22 minutes
+2024-05-08 14:10:17,374 - INFO - Train:7 - Epoch 429/2000 completed in 11.77 seconds.
+2024-05-08 14:10:17,374 - INFO - Train:7 - Approximate time left: 5 hours, 22 minutes
+2024-05-08 14:10:29,102 - INFO - Train:7 - Epoch 430/2000 completed in 11.73 seconds.
+2024-05-08 14:10:29,102 - INFO - Train:7 - Approximate time left: 5 hours, 22 minutes
+2024-05-08 14:10:40,861 - INFO - Train:7 - Epoch 431/2000 completed in 11.76 seconds.
+2024-05-08 14:10:40,861 - INFO - Train:7 - Approximate time left: 5 hours, 21 minutes
+2024-05-08 14:10:52,443 - INFO - Train:7 - Epoch 432/2000 completed in 11.58 seconds.
+2024-05-08 14:10:52,443 - INFO - Train:7 - Approximate time left: 5 hours, 21 minutes
+2024-05-08 14:11:04,181 - INFO - Train:7 - Epoch 433/2000 completed in 11.74 seconds.
+2024-05-08 14:11:04,181 - INFO - Train:7 - Approximate time left: 5 hours, 21 minutes
+2024-05-08 14:11:15,948 - INFO - Train:7 - Epoch 434/2000 completed in 11.77 seconds.
+2024-05-08 14:11:15,948 - INFO - Train:7 - Approximate time left: 5 hours, 21 minutes
+2024-05-08 14:11:28,004 - INFO - Train:7 - Epoch 435/2000 completed in 12.06 seconds.
+2024-05-08 14:11:28,005 - INFO - Train:7 - Approximate time left: 5 hours, 21 minutes
+2024-05-08 14:11:39,839 - INFO - Train:7 - Epoch 436/2000 completed in 11.83 seconds.
+2024-05-08 14:11:39,839 - INFO - Train:7 - Approximate time left: 5 hours, 20 minutes
+2024-05-08 14:11:51,559 - INFO - Train:7 - Epoch 437/2000 completed in 11.72 seconds.
+2024-05-08 14:11:51,559 - INFO - Train:7 - Approximate time left: 5 hours, 20 minutes
+2024-05-08 14:12:03,363 - INFO - Train:7 - Epoch 438/2000 completed in 11.80 seconds.
+2024-05-08 14:12:03,363 - INFO - Train:7 - Approximate time left: 5 hours, 20 minutes
+2024-05-08 14:12:15,402 - INFO - Train:7 - Epoch 439/2000 completed in 12.04 seconds.
+2024-05-08 14:12:15,402 - INFO - Train:7 - Approximate time left: 5 hours, 20 minutes
+2024-05-08 14:12:27,401 - INFO - Train:7 - Epoch 440/2000 completed in 12.00 seconds.
+2024-05-08 14:12:27,402 - INFO - Train:7 - Approximate time left: 5 hours, 19 minutes
+2024-05-08 14:12:39,259 - INFO - Train:7 - Epoch 441/2000 completed in 11.86 seconds.
+2024-05-08 14:12:39,259 - INFO - Train:7 - Approximate time left: 5 hours, 19 minutes
+2024-05-08 14:12:51,147 - INFO - Train:7 - Epoch 442/2000 completed in 11.89 seconds.
+2024-05-08 14:12:51,148 - INFO - Train:7 - Approximate time left: 5 hours, 19 minutes
+2024-05-08 14:13:02,938 - INFO - Train:7 - Epoch 443/2000 completed in 11.79 seconds.
+2024-05-08 14:13:02,938 - INFO - Train:7 - Approximate time left: 5 hours, 19 minutes
+2024-05-08 14:13:15,700 - INFO - Train:7 - Epoch 444/2000 completed in 12.76 seconds.
+2024-05-08 14:13:15,700 - INFO - Train:7 - Approximate time left: 5 hours, 18 minutes
+2024-05-08 14:13:28,894 - INFO - Train:7 - Epoch 445/2000 completed in 13.19 seconds.
+2024-05-08 14:13:28,894 - INFO - Train:7 - Approximate time left: 5 hours, 18 minutes
+2024-05-08 14:13:41,213 - INFO - Train:7 - Epoch 446/2000 completed in 12.32 seconds.
+2024-05-08 14:13:41,214 - INFO - Train:7 - Approximate time left: 5 hours, 18 minutes
+2024-05-08 14:13:53,498 - INFO - Train:7 - Epoch 447/2000 completed in 12.28 seconds.
+2024-05-08 14:13:53,499 - INFO - Train:7 - Approximate time left: 5 hours, 18 minutes
+2024-05-08 14:14:05,564 - INFO - Train:7 - Epoch 448/2000 completed in 12.07 seconds.
+2024-05-08 14:14:05,565 - INFO - Train:7 - Approximate time left: 5 hours, 18 minutes
+2024-05-08 14:14:17,569 - INFO - Train:7 - Epoch 449/2000 completed in 12.00 seconds.
+2024-05-08 14:14:17,569 - INFO - Train:7 - Approximate time left: 5 hours, 17 minutes
+2024-05-08 14:14:29,996 - INFO - Train:7 - Epoch 450/2000 completed in 12.43 seconds.
+2024-05-08 14:14:29,997 - INFO - Train:7 - Approximate time left: 5 hours, 17 minutes
+2024-05-08 14:14:42,371 - INFO - Train:7 - Epoch 451/2000 completed in 12.37 seconds.
+2024-05-08 14:14:42,371 - INFO - Train:7 - Approximate time left: 5 hours, 17 minutes
+2024-05-08 14:14:54,682 - INFO - Train:7 - Epoch 452/2000 completed in 12.31 seconds.
+2024-05-08 14:14:54,682 - INFO - Train:7 - Approximate time left: 5 hours, 17 minutes
+2024-05-08 14:15:06,798 - INFO - Train:7 - Epoch 453/2000 completed in 12.12 seconds.
+2024-05-08 14:15:06,798 - INFO - Train:7 - Approximate time left: 5 hours, 17 minutes
+2024-05-08 14:15:18,680 - INFO - Train:7 - Epoch 454/2000 completed in 11.88 seconds.
+2024-05-08 14:15:18,680 - INFO - Train:7 - Approximate time left: 5 hours, 16 minutes
+2024-05-08 14:15:30,861 - INFO - Train:7 - Epoch 455/2000 completed in 12.18 seconds.
+2024-05-08 14:15:30,862 - INFO - Train:7 - Approximate time left: 5 hours, 16 minutes
+2024-05-08 14:15:42,972 - INFO - Train:7 - Epoch 456/2000 completed in 12.11 seconds.
+2024-05-08 14:15:42,973 - INFO - Train:7 - Approximate time left: 5 hours, 16 minutes
+2024-05-08 14:15:55,010 - INFO - Train:7 - Epoch 457/2000 completed in 12.04 seconds.
+2024-05-08 14:15:55,010 - INFO - Train:7 - Approximate time left: 5 hours, 16 minutes
+2024-05-08 14:16:07,283 - INFO - Train:7 - Epoch 458/2000 completed in 12.27 seconds.
+2024-05-08 14:16:07,284 - INFO - Train:7 - Approximate time left: 5 hours, 16 minutes
+2024-05-08 14:16:19,223 - INFO - Train:7 - Epoch 459/2000 completed in 11.94 seconds.
+2024-05-08 14:16:19,223 - INFO - Train:7 - Approximate time left: 5 hours, 15 minutes
+2024-05-08 14:16:31,282 - INFO - Train:7 - Epoch 460/2000 completed in 12.06 seconds.
+2024-05-08 14:16:31,282 - INFO - Train:7 - Approximate time left: 5 hours, 15 minutes
+2024-05-08 14:16:43,211 - INFO - Train:7 - Epoch 461/2000 completed in 11.93 seconds.
+2024-05-08 14:16:43,211 - INFO - Train:7 - Approximate time left: 5 hours, 15 minutes
+2024-05-08 14:16:55,150 - INFO - Train:7 - Epoch 462/2000 completed in 11.94 seconds.
+2024-05-08 14:16:55,150 - INFO - Train:7 - Approximate time left: 5 hours, 15 minutes
+2024-05-08 14:17:09,380 - INFO - Train:7 - Epoch 463/2000 completed in 14.23 seconds.
+2024-05-08 14:17:09,380 - INFO - Train:7 - Approximate time left: 5 hours, 15 minutes
+2024-05-08 14:17:21,611 - INFO - Train:7 - Epoch 464/2000 completed in 12.23 seconds.
+2024-05-08 14:17:21,612 - INFO - Train:7 - Approximate time left: 5 hours, 14 minutes
+2024-05-08 14:17:33,832 - INFO - Train:7 - Epoch 465/2000 completed in 12.22 seconds.
+2024-05-08 14:17:33,832 - INFO - Train:7 - Approximate time left: 5 hours, 14 minutes
+2024-05-08 14:17:45,840 - INFO - Train:7 - Epoch 466/2000 completed in 12.01 seconds.
+2024-05-08 14:17:45,841 - INFO - Train:7 - Approximate time left: 5 hours, 14 minutes
+2024-05-08 14:17:57,679 - INFO - Train:7 - Epoch 467/2000 completed in 11.84 seconds.
+2024-05-08 14:17:57,680 - INFO - Train:7 - Approximate time left: 5 hours, 14 minutes
+2024-05-08 14:18:09,776 - INFO - Train:7 - Epoch 468/2000 completed in 12.10 seconds.
+2024-05-08 14:18:09,776 - INFO - Train:7 - Approximate time left: 5 hours, 13 minutes
+2024-05-08 14:18:21,814 - INFO - Train:7 - Epoch 469/2000 completed in 12.04 seconds.
+2024-05-08 14:18:21,814 - INFO - Train:7 - Approximate time left: 5 hours, 13 minutes
+2024-05-08 14:18:34,401 - INFO - Train:7 - Epoch 470/2000 completed in 12.59 seconds.
+2024-05-08 14:18:34,402 - INFO - Train:7 - Approximate time left: 5 hours, 13 minutes
+2024-05-08 14:18:46,608 - INFO - Train:7 - Epoch 471/2000 completed in 12.21 seconds.
+2024-05-08 14:18:46,608 - INFO - Train:7 - Approximate time left: 5 hours, 13 minutes
+2024-05-08 14:18:58,617 - INFO - Train:7 - Epoch 472/2000 completed in 12.01 seconds.
+2024-05-08 14:18:58,617 - INFO - Train:7 - Approximate time left: 5 hours, 13 minutes
+2024-05-08 14:19:10,630 - INFO - Train:7 - Epoch 473/2000 completed in 12.01 seconds.
+2024-05-08 14:19:10,630 - INFO - Train:7 - Approximate time left: 5 hours, 12 minutes
+2024-05-08 14:19:22,384 - INFO - Train:7 - Epoch 474/2000 completed in 11.75 seconds.
+2024-05-08 14:19:22,385 - INFO - Train:7 - Approximate time left: 5 hours, 12 minutes
+2024-05-08 14:19:34,831 - INFO - Train:7 - Epoch 475/2000 completed in 12.45 seconds.
+2024-05-08 14:19:34,832 - INFO - Train:7 - Approximate time left: 5 hours, 12 minutes
+2024-05-08 14:19:47,395 - INFO - Train:7 - Epoch 476/2000 completed in 12.56 seconds.
+2024-05-08 14:19:47,396 - INFO - Train:7 - Approximate time left: 5 hours, 12 minutes
+2024-05-08 14:19:59,645 - INFO - Train:7 - Epoch 477/2000 completed in 12.25 seconds.
+2024-05-08 14:19:59,645 - INFO - Train:7 - Approximate time left: 5 hours, 12 minutes
+2024-05-08 14:20:12,307 - INFO - Train:7 - Epoch 478/2000 completed in 12.66 seconds.
+2024-05-08 14:20:12,308 - INFO - Train:7 - Approximate time left: 5 hours, 11 minutes
+2024-05-08 14:20:24,549 - INFO - Train:7 - Epoch 479/2000 completed in 12.24 seconds.
+2024-05-08 14:20:24,549 - INFO - Train:7 - Approximate time left: 5 hours, 11 minutes
+2024-05-08 14:20:36,609 - INFO - Train:7 - Epoch 480/2000 completed in 12.06 seconds.
+2024-05-08 14:20:36,610 - INFO - Train:7 - Approximate time left: 5 hours, 11 minutes
+2024-05-08 14:20:48,873 - INFO - Train:7 - Epoch 481/2000 completed in 12.26 seconds.
+2024-05-08 14:20:48,874 - INFO - Train:7 - Approximate time left: 5 hours, 11 minutes
+2024-05-08 14:21:01,377 - INFO - Train:7 - Epoch 482/2000 completed in 12.50 seconds.
+2024-05-08 14:21:01,377 - INFO - Train:7 - Approximate time left: 5 hours, 11 minutes
+2024-05-08 14:21:14,454 - INFO - Train:7 - Epoch 483/2000 completed in 13.08 seconds.
+2024-05-08 14:21:14,454 - INFO - Train:7 - Approximate time left: 5 hours, 10 minutes
+2024-05-08 14:21:26,634 - INFO - Train:7 - Epoch 484/2000 completed in 12.18 seconds.
+2024-05-08 14:21:26,634 - INFO - Train:7 - Approximate time left: 5 hours, 10 minutes
+2024-05-08 14:21:38,638 - INFO - Train:7 - Epoch 485/2000 completed in 12.00 seconds.
+2024-05-08 14:21:38,638 - INFO - Train:7 - Approximate time left: 5 hours, 10 minutes
+2024-05-08 14:21:50,518 - INFO - Train:7 - Epoch 486/2000 completed in 11.88 seconds.
+2024-05-08 14:21:50,518 - INFO - Train:7 - Approximate time left: 5 hours, 10 minutes
+2024-05-08 14:22:03,293 - INFO - Train:7 - Epoch 487/2000 completed in 12.78 seconds.
+2024-05-08 14:22:03,294 - INFO - Train:7 - Approximate time left: 5 hours, 10 minutes
+2024-05-08 14:22:15,247 - INFO - Train:7 - Epoch 488/2000 completed in 11.95 seconds.
+2024-05-08 14:22:15,247 - INFO - Train:7 - Approximate time left: 5 hours, 9 minutes
+2024-05-08 14:22:27,199 - INFO - Train:7 - Epoch 489/2000 completed in 11.95 seconds.
+2024-05-08 14:22:27,200 - INFO - Train:7 - Approximate time left: 5 hours, 9 minutes
+2024-05-08 14:22:39,433 - INFO - Train:7 - Epoch 490/2000 completed in 12.23 seconds.
+2024-05-08 14:22:39,433 - INFO - Train:7 - Approximate time left: 5 hours, 9 minutes
+2024-05-08 14:22:51,279 - INFO - Train:7 - Epoch 491/2000 completed in 11.85 seconds.
+2024-05-08 14:22:51,279 - INFO - Train:7 - Approximate time left: 5 hours, 9 minutes
+2024-05-08 14:23:03,355 - INFO - Train:7 - Epoch 492/2000 completed in 12.08 seconds.
+2024-05-08 14:23:03,356 - INFO - Train:7 - Approximate time left: 5 hours, 9 minutes
+2024-05-08 14:23:15,455 - INFO - Train:7 - Epoch 493/2000 completed in 12.10 seconds.
+2024-05-08 14:23:15,455 - INFO - Train:7 - Approximate time left: 5 hours, 8 minutes
+2024-05-08 14:23:28,093 - INFO - Train:7 - Epoch 494/2000 completed in 12.64 seconds.
+2024-05-08 14:23:28,093 - INFO - Train:7 - Approximate time left: 5 hours, 8 minutes
+2024-05-08 14:23:40,474 - INFO - Train:7 - Epoch 495/2000 completed in 12.38 seconds.
+2024-05-08 14:23:40,474 - INFO - Train:7 - Approximate time left: 5 hours, 8 minutes
+2024-05-08 14:23:52,864 - INFO - Train:7 - Epoch 496/2000 completed in 12.39 seconds.
+2024-05-08 14:23:52,864 - INFO - Train:7 - Approximate time left: 5 hours, 8 minutes
+2024-05-08 14:24:05,257 - INFO - Train:7 - Epoch 497/2000 completed in 12.39 seconds.
+2024-05-08 14:24:05,257 - INFO - Train:7 - Approximate time left: 5 hours, 7 minutes
+2024-05-08 14:24:17,518 - INFO - Train:7 - Epoch 498/2000 completed in 12.26 seconds.
+2024-05-08 14:24:17,518 - INFO - Train:7 - Approximate time left: 5 hours, 7 minutes
+2024-05-08 14:24:30,081 - INFO - Train:7 - Epoch 499/2000 completed in 12.56 seconds.
+2024-05-08 14:24:30,082 - INFO - Train:7 - Approximate time left: 5 hours, 7 minutes
+2024-05-08 14:24:42,368 - INFO - Train:7 - Epoch 500/2000 completed in 12.29 seconds.
+2024-05-08 14:24:42,369 - INFO - Train:7 - Approximate time left: 5 hours, 7 minutes
+2024-05-08 14:24:54,268 - INFO - Train:7 - Epoch 501/2000 completed in 11.90 seconds.
+2024-05-08 14:24:54,269 - INFO - Train:7 - Approximate time left: 5 hours, 7 minutes
+2024-05-08 14:25:06,292 - INFO - Train:7 - Epoch 502/2000 completed in 12.02 seconds.
+2024-05-08 14:25:06,293 - INFO - Train:7 - Approximate time left: 5 hours, 6 minutes
+2024-05-08 14:25:18,492 - INFO - Train:7 - Epoch 503/2000 completed in 12.20 seconds.
+2024-05-08 14:25:18,492 - INFO - Train:7 - Approximate time left: 5 hours, 6 minutes
+2024-05-08 14:25:30,702 - INFO - Train:7 - Epoch 504/2000 completed in 12.21 seconds.
+2024-05-08 14:25:30,702 - INFO - Train:7 - Approximate time left: 5 hours, 6 minutes
+2024-05-08 14:25:43,142 - INFO - Train:7 - Epoch 505/2000 completed in 12.44 seconds.
+2024-05-08 14:25:43,142 - INFO - Train:7 - Approximate time left: 5 hours, 6 minutes
+2024-05-08 14:25:55,086 - INFO - Train:7 - Epoch 506/2000 completed in 11.94 seconds.
+2024-05-08 14:25:55,086 - INFO - Train:7 - Approximate time left: 5 hours, 6 minutes
+2024-05-08 14:26:07,454 - INFO - Train:7 - Epoch 507/2000 completed in 12.37 seconds.
+2024-05-08 14:26:07,454 - INFO - Train:7 - Approximate time left: 5 hours, 5 minutes
+2024-05-08 14:26:19,812 - INFO - Train:7 - Epoch 508/2000 completed in 12.36 seconds.
+2024-05-08 14:26:19,812 - INFO - Train:7 - Approximate time left: 5 hours, 5 minutes
+2024-05-08 14:26:32,041 - INFO - Train:7 - Epoch 509/2000 completed in 12.23 seconds.
+2024-05-08 14:26:32,041 - INFO - Train:7 - Approximate time left: 5 hours, 5 minutes
+2024-05-08 14:26:44,511 - INFO - Train:7 - Epoch 510/2000 completed in 12.47 seconds.
+2024-05-08 14:26:44,511 - INFO - Train:7 - Approximate time left: 5 hours, 5 minutes
+2024-05-08 14:26:57,133 - INFO - Train:7 - Epoch 511/2000 completed in 12.62 seconds.
+2024-05-08 14:26:57,134 - INFO - Train:7 - Approximate time left: 5 hours, 5 minutes
+2024-05-08 14:27:09,304 - INFO - Train:7 - Epoch 512/2000 completed in 12.17 seconds.
+2024-05-08 14:27:09,304 - INFO - Train:7 - Approximate time left: 5 hours, 4 minutes
+2024-05-08 14:27:21,495 - INFO - Train:7 - Epoch 513/2000 completed in 12.19 seconds.
+2024-05-08 14:27:21,496 - INFO - Train:7 - Approximate time left: 5 hours, 4 minutes
+2024-05-08 14:27:33,873 - INFO - Train:7 - Epoch 514/2000 completed in 12.38 seconds.
+2024-05-08 14:27:33,873 - INFO - Train:7 - Approximate time left: 5 hours, 4 minutes
+2024-05-08 14:27:45,520 - INFO - Train:7 - Epoch 515/2000 completed in 11.65 seconds.
+2024-05-08 14:27:45,521 - INFO - Train:7 - Approximate time left: 5 hours, 4 minutes
+2024-05-08 14:27:57,639 - INFO - Train:7 - Epoch 516/2000 completed in 12.12 seconds.
+2024-05-08 14:27:57,640 - INFO - Train:7 - Approximate time left: 5 hours, 4 minutes
+2024-05-08 14:28:10,811 - INFO - Train:7 - Epoch 517/2000 completed in 13.17 seconds.
+2024-05-08 14:28:10,811 - INFO - Train:7 - Approximate time left: 5 hours, 3 minutes
+2024-05-08 14:28:22,484 - INFO - Train:7 - Epoch 518/2000 completed in 11.67 seconds.
+2024-05-08 14:28:22,484 - INFO - Train:7 - Approximate time left: 5 hours, 3 minutes
+2024-05-08 14:28:34,378 - INFO - Train:7 - Epoch 519/2000 completed in 11.89 seconds.
+2024-05-08 14:28:34,378 - INFO - Train:7 - Approximate time left: 5 hours, 3 minutes
+2024-05-08 14:28:45,966 - INFO - Train:7 - Epoch 520/2000 completed in 11.59 seconds.
+2024-05-08 14:28:45,966 - INFO - Train:7 - Approximate time left: 5 hours, 3 minutes
+2024-05-08 14:28:57,997 - INFO - Train:7 - Epoch 521/2000 completed in 12.03 seconds.
+2024-05-08 14:28:57,997 - INFO - Train:7 - Approximate time left: 5 hours, 2 minutes
+2024-05-08 14:29:10,660 - INFO - Train:7 - Epoch 522/2000 completed in 12.66 seconds.
+2024-05-08 14:29:10,660 - INFO - Train:7 - Approximate time left: 5 hours, 2 minutes
+2024-05-08 14:29:22,564 - INFO - Train:7 - Epoch 523/2000 completed in 11.90 seconds.
+2024-05-08 14:29:22,565 - INFO - Train:7 - Approximate time left: 5 hours, 2 minutes
+2024-05-08 14:29:34,849 - INFO - Train:7 - Epoch 524/2000 completed in 12.28 seconds.
+2024-05-08 14:29:34,849 - INFO - Train:7 - Approximate time left: 5 hours, 2 minutes
+2024-05-08 14:29:47,262 - INFO - Train:7 - Epoch 525/2000 completed in 12.41 seconds.
+2024-05-08 14:29:47,263 - INFO - Train:7 - Approximate time left: 5 hours, 2 minutes
+2024-05-08 14:29:59,747 - INFO - Train:7 - Epoch 526/2000 completed in 12.48 seconds.
+2024-05-08 14:29:59,748 - INFO - Train:7 - Approximate time left: 5 hours, 1 minutes
+2024-05-08 14:30:12,028 - INFO - Train:7 - Epoch 527/2000 completed in 12.28 seconds.
+2024-05-08 14:30:12,028 - INFO - Train:7 - Approximate time left: 5 hours, 1 minutes
+2024-05-08 14:30:24,498 - INFO - Train:7 - Epoch 528/2000 completed in 12.47 seconds.
+2024-05-08 14:30:24,499 - INFO - Train:7 - Approximate time left: 5 hours, 1 minutes
+2024-05-08 14:30:39,257 - INFO - Train:7 - Epoch 529/2000 completed in 14.76 seconds.
+2024-05-08 14:30:39,258 - INFO - Train:7 - Approximate time left: 5 hours, 1 minutes
+2024-05-08 14:30:52,063 - INFO - Train:7 - Epoch 530/2000 completed in 12.81 seconds.
+2024-05-08 14:30:52,063 - INFO - Train:7 - Approximate time left: 5 hours, 1 minutes
+2024-05-08 14:31:03,850 - INFO - Train:7 - Epoch 531/2000 completed in 11.79 seconds.
+2024-05-08 14:31:03,850 - INFO - Train:7 - Approximate time left: 5 hours, 1 minutes
+2024-05-08 14:31:16,011 - INFO - Train:7 - Epoch 532/2000 completed in 12.16 seconds.
+2024-05-08 14:31:16,011 - INFO - Train:7 - Approximate time left: 5 hours, 0 minutes
+2024-05-08 14:31:28,352 - INFO - Train:7 - Epoch 533/2000 completed in 12.34 seconds.
+2024-05-08 14:31:28,352 - INFO - Train:7 - Approximate time left: 5 hours, 0 minutes
+2024-05-08 14:31:40,645 - INFO - Train:7 - Epoch 534/2000 completed in 12.29 seconds.
+2024-05-08 14:31:40,645 - INFO - Train:7 - Approximate time left: 5 hours, 0 minutes
+2024-05-08 14:31:52,566 - INFO - Train:7 - Epoch 535/2000 completed in 11.92 seconds.
+2024-05-08 14:31:52,566 - INFO - Train:7 - Approximate time left: 5 hours, 0 minutes
+2024-05-08 14:32:04,519 - INFO - Train:7 - Epoch 536/2000 completed in 11.95 seconds.
+2024-05-08 14:32:04,519 - INFO - Train:7 - Approximate time left: 4 hours, 59 minutes
+2024-05-08 14:32:16,499 - INFO - Train:7 - Epoch 537/2000 completed in 11.98 seconds.
+2024-05-08 14:32:16,499 - INFO - Train:7 - Approximate time left: 4 hours, 59 minutes
+2024-05-08 14:32:28,992 - INFO - Train:7 - Epoch 538/2000 completed in 12.49 seconds.
+2024-05-08 14:32:28,992 - INFO - Train:7 - Approximate time left: 4 hours, 59 minutes
+2024-05-08 14:32:40,635 - INFO - Train:7 - Epoch 539/2000 completed in 11.64 seconds.
+2024-05-08 14:32:40,635 - INFO - Train:7 - Approximate time left: 4 hours, 59 minutes
+2024-05-08 14:32:52,454 - INFO - Train:7 - Epoch 540/2000 completed in 11.82 seconds.
+2024-05-08 14:32:52,454 - INFO - Train:7 - Approximate time left: 4 hours, 59 minutes
+2024-05-08 14:33:04,574 - INFO - Train:7 - Epoch 541/2000 completed in 12.12 seconds.
+2024-05-08 14:33:04,574 - INFO - Train:7 - Approximate time left: 4 hours, 58 minutes
+2024-05-08 14:33:16,460 - INFO - Train:7 - Epoch 542/2000 completed in 11.89 seconds.
+2024-05-08 14:33:16,460 - INFO - Train:7 - Approximate time left: 4 hours, 58 minutes
+2024-05-08 14:33:28,375 - INFO - Train:7 - Epoch 543/2000 completed in 11.91 seconds.
+2024-05-08 14:33:28,375 - INFO - Train:7 - Approximate time left: 4 hours, 58 minutes
+2024-05-08 14:33:40,336 - INFO - Train:7 - Epoch 544/2000 completed in 11.96 seconds.
+2024-05-08 14:33:40,336 - INFO - Train:7 - Approximate time left: 4 hours, 58 minutes
+2024-05-08 14:33:52,541 - INFO - Train:7 - Epoch 545/2000 completed in 12.20 seconds.
+2024-05-08 14:33:52,541 - INFO - Train:7 - Approximate time left: 4 hours, 58 minutes
+2024-05-08 14:34:04,875 - INFO - Train:7 - Epoch 546/2000 completed in 12.33 seconds.
+2024-05-08 14:34:04,876 - INFO - Train:7 - Approximate time left: 4 hours, 57 minutes
+2024-05-08 14:34:16,872 - INFO - Train:7 - Epoch 547/2000 completed in 12.00 seconds.
+2024-05-08 14:34:16,872 - INFO - Train:7 - Approximate time left: 4 hours, 57 minutes
+2024-05-08 14:34:28,603 - INFO - Train:7 - Epoch 548/2000 completed in 11.73 seconds.
+2024-05-08 14:34:28,604 - INFO - Train:7 - Approximate time left: 4 hours, 57 minutes
+2024-05-08 14:34:40,500 - INFO - Train:7 - Epoch 549/2000 completed in 11.90 seconds.
+2024-05-08 14:34:40,500 - INFO - Train:7 - Approximate time left: 4 hours, 57 minutes
+2024-05-08 14:34:52,210 - INFO - Train:7 - Epoch 550/2000 completed in 11.71 seconds.
+2024-05-08 14:34:52,210 - INFO - Train:7 - Approximate time left: 4 hours, 56 minutes
+2024-05-08 14:35:03,786 - INFO - Train:7 - Epoch 551/2000 completed in 11.58 seconds.
+2024-05-08 14:35:03,786 - INFO - Train:7 - Approximate time left: 4 hours, 56 minutes
+2024-05-08 14:35:15,469 - INFO - Train:7 - Epoch 552/2000 completed in 11.68 seconds.
+2024-05-08 14:35:15,469 - INFO - Train:7 - Approximate time left: 4 hours, 56 minutes
+2024-05-08 14:35:27,338 - INFO - Train:7 - Epoch 553/2000 completed in 11.87 seconds.
+2024-05-08 14:35:27,338 - INFO - Train:7 - Approximate time left: 4 hours, 56 minutes
+2024-05-08 14:35:39,079 - INFO - Train:7 - Epoch 554/2000 completed in 11.74 seconds.
+2024-05-08 14:35:39,079 - INFO - Train:7 - Approximate time left: 4 hours, 56 minutes
+2024-05-08 14:35:51,261 - INFO - Train:7 - Epoch 555/2000 completed in 12.18 seconds.
+2024-05-08 14:35:51,261 - INFO - Train:7 - Approximate time left: 4 hours, 55 minutes
+2024-05-08 14:36:03,886 - INFO - Train:7 - Epoch 556/2000 completed in 12.62 seconds.
+2024-05-08 14:36:03,886 - INFO - Train:7 - Approximate time left: 4 hours, 55 minutes
+2024-05-08 14:36:16,614 - INFO - Train:7 - Epoch 557/2000 completed in 12.73 seconds.
+2024-05-08 14:36:16,614 - INFO - Train:7 - Approximate time left: 4 hours, 55 minutes
+2024-05-08 14:36:28,403 - INFO - Train:7 - Epoch 558/2000 completed in 11.79 seconds.
+2024-05-08 14:36:28,403 - INFO - Train:7 - Approximate time left: 4 hours, 55 minutes
+2024-05-08 14:36:40,172 - INFO - Train:7 - Epoch 559/2000 completed in 11.77 seconds.
+2024-05-08 14:36:40,172 - INFO - Train:7 - Approximate time left: 4 hours, 54 minutes
+2024-05-08 14:36:52,068 - INFO - Train:7 - Epoch 560/2000 completed in 11.90 seconds.
+2024-05-08 14:36:52,068 - INFO - Train:7 - Approximate time left: 4 hours, 54 minutes
+2024-05-08 14:37:04,347 - INFO - Train:7 - Epoch 561/2000 completed in 12.28 seconds.
+2024-05-08 14:37:04,348 - INFO - Train:7 - Approximate time left: 4 hours, 54 minutes
+2024-05-08 14:37:16,185 - INFO - Train:7 - Epoch 562/2000 completed in 11.84 seconds.
+2024-05-08 14:37:16,185 - INFO - Train:7 - Approximate time left: 4 hours, 54 minutes
+2024-05-08 14:37:27,983 - INFO - Train:7 - Epoch 563/2000 completed in 11.80 seconds.
+2024-05-08 14:37:27,983 - INFO - Train:7 - Approximate time left: 4 hours, 54 minutes
+2024-05-08 14:37:39,892 - INFO - Train:7 - Epoch 564/2000 completed in 11.91 seconds.
+2024-05-08 14:37:39,892 - INFO - Train:7 - Approximate time left: 4 hours, 53 minutes
+2024-05-08 14:37:52,016 - INFO - Train:7 - Epoch 565/2000 completed in 12.12 seconds.
+2024-05-08 14:37:52,016 - INFO - Train:7 - Approximate time left: 4 hours, 53 minutes
+2024-05-08 14:38:04,088 - INFO - Train:7 - Epoch 566/2000 completed in 12.07 seconds.
+2024-05-08 14:38:04,088 - INFO - Train:7 - Approximate time left: 4 hours, 53 minutes
+2024-05-08 14:38:16,084 - INFO - Train:7 - Epoch 567/2000 completed in 12.00 seconds.
+2024-05-08 14:38:16,085 - INFO - Train:7 - Approximate time left: 4 hours, 53 minutes
+2024-05-08 14:38:28,034 - INFO - Train:7 - Epoch 568/2000 completed in 11.95 seconds.
+2024-05-08 14:38:28,034 - INFO - Train:7 - Approximate time left: 4 hours, 53 minutes
+2024-05-08 14:38:39,983 - INFO - Train:7 - Epoch 569/2000 completed in 11.95 seconds.
+2024-05-08 14:38:39,983 - INFO - Train:7 - Approximate time left: 4 hours, 52 minutes
+2024-05-08 14:38:52,114 - INFO - Train:7 - Epoch 570/2000 completed in 12.13 seconds.
+2024-05-08 14:38:52,114 - INFO - Train:7 - Approximate time left: 4 hours, 52 minutes
+2024-05-08 14:39:04,260 - INFO - Train:7 - Epoch 571/2000 completed in 12.15 seconds.
+2024-05-08 14:39:04,260 - INFO - Train:7 - Approximate time left: 4 hours, 52 minutes
+2024-05-08 14:39:16,539 - INFO - Train:7 - Epoch 572/2000 completed in 12.28 seconds.
+2024-05-08 14:39:16,539 - INFO - Train:7 - Approximate time left: 4 hours, 52 minutes
+2024-05-08 14:39:28,620 - INFO - Train:7 - Epoch 573/2000 completed in 12.08 seconds.
+2024-05-08 14:39:28,620 - INFO - Train:7 - Approximate time left: 4 hours, 51 minutes
+2024-05-08 14:39:40,278 - INFO - Train:7 - Epoch 574/2000 completed in 11.66 seconds.
+2024-05-08 14:39:40,278 - INFO - Train:7 - Approximate time left: 4 hours, 51 minutes
+2024-05-08 14:39:51,929 - INFO - Train:7 - Epoch 575/2000 completed in 11.65 seconds.
+2024-05-08 14:39:51,929 - INFO - Train:7 - Approximate time left: 4 hours, 51 minutes
+2024-05-08 14:40:03,541 - INFO - Train:7 - Epoch 576/2000 completed in 11.61 seconds.
+2024-05-08 14:40:03,541 - INFO - Train:7 - Approximate time left: 4 hours, 51 minutes
+2024-05-08 14:40:15,287 - INFO - Train:7 - Epoch 577/2000 completed in 11.75 seconds.
+2024-05-08 14:40:15,288 - INFO - Train:7 - Approximate time left: 4 hours, 51 minutes
+2024-05-08 14:40:27,017 - INFO - Train:7 - Epoch 578/2000 completed in 11.73 seconds.
+2024-05-08 14:40:27,017 - INFO - Train:7 - Approximate time left: 4 hours, 50 minutes
+2024-05-08 14:40:38,721 - INFO - Train:7 - Epoch 579/2000 completed in 11.70 seconds.
+2024-05-08 14:40:38,721 - INFO - Train:7 - Approximate time left: 4 hours, 50 minutes
+2024-05-08 14:40:50,729 - INFO - Train:7 - Epoch 580/2000 completed in 12.01 seconds.
+2024-05-08 14:40:50,730 - INFO - Train:7 - Approximate time left: 4 hours, 50 minutes
+2024-05-08 14:41:02,544 - INFO - Train:7 - Epoch 581/2000 completed in 11.81 seconds.
+2024-05-08 14:41:02,545 - INFO - Train:7 - Approximate time left: 4 hours, 50 minutes
+2024-05-08 14:41:14,327 - INFO - Train:7 - Epoch 582/2000 completed in 11.78 seconds.
+2024-05-08 14:41:14,327 - INFO - Train:7 - Approximate time left: 4 hours, 49 minutes
+2024-05-08 14:41:26,767 - INFO - Train:7 - Epoch 583/2000 completed in 12.44 seconds.
+2024-05-08 14:41:26,767 - INFO - Train:7 - Approximate time left: 4 hours, 49 minutes
+2024-05-08 14:41:39,259 - INFO - Train:7 - Epoch 584/2000 completed in 12.49 seconds.
+2024-05-08 14:41:39,259 - INFO - Train:7 - Approximate time left: 4 hours, 49 minutes
+2024-05-08 14:41:51,698 - INFO - Train:7 - Epoch 585/2000 completed in 12.44 seconds.
+2024-05-08 14:41:51,698 - INFO - Train:7 - Approximate time left: 4 hours, 49 minutes
+2024-05-08 14:42:04,416 - INFO - Train:7 - Epoch 586/2000 completed in 12.72 seconds.
+2024-05-08 14:42:04,417 - INFO - Train:7 - Approximate time left: 4 hours, 49 minutes
+2024-05-08 14:42:16,060 - INFO - Train:7 - Epoch 587/2000 completed in 11.64 seconds.
+2024-05-08 14:42:16,061 - INFO - Train:7 - Approximate time left: 4 hours, 48 minutes
+2024-05-08 14:42:27,965 - INFO - Train:7 - Epoch 588/2000 completed in 11.90 seconds.
+2024-05-08 14:42:27,966 - INFO - Train:7 - Approximate time left: 4 hours, 48 minutes
+2024-05-08 14:42:40,007 - INFO - Train:7 - Epoch 589/2000 completed in 12.04 seconds.
+2024-05-08 14:42:40,008 - INFO - Train:7 - Approximate time left: 4 hours, 48 minutes
+2024-05-08 14:42:51,737 - INFO - Train:7 - Epoch 590/2000 completed in 11.73 seconds.
+2024-05-08 14:42:51,737 - INFO - Train:7 - Approximate time left: 4 hours, 48 minutes
+2024-05-08 14:43:03,794 - INFO - Train:7 - Epoch 591/2000 completed in 12.06 seconds.
+2024-05-08 14:43:03,794 - INFO - Train:7 - Approximate time left: 4 hours, 48 minutes
+2024-05-08 14:43:15,695 - INFO - Train:7 - Epoch 592/2000 completed in 11.90 seconds.
+2024-05-08 14:43:15,696 - INFO - Train:7 - Approximate time left: 4 hours, 47 minutes
+2024-05-08 14:43:27,816 - INFO - Train:7 - Epoch 593/2000 completed in 12.12 seconds.
+2024-05-08 14:43:27,816 - INFO - Train:7 - Approximate time left: 4 hours, 47 minutes
+2024-05-08 14:43:39,720 - INFO - Train:7 - Epoch 594/2000 completed in 11.90 seconds.
+2024-05-08 14:43:39,720 - INFO - Train:7 - Approximate time left: 4 hours, 47 minutes
+2024-05-08 14:43:54,054 - INFO - Train:7 - Epoch 595/2000 completed in 14.33 seconds.
+2024-05-08 14:43:54,055 - INFO - Train:7 - Approximate time left: 4 hours, 47 minutes
+2024-05-08 14:44:05,738 - INFO - Train:7 - Epoch 596/2000 completed in 11.68 seconds.
+2024-05-08 14:44:05,738 - INFO - Train:7 - Approximate time left: 4 hours, 47 minutes
+2024-05-08 14:44:17,339 - INFO - Train:7 - Epoch 597/2000 completed in 11.60 seconds.
+2024-05-08 14:44:17,339 - INFO - Train:7 - Approximate time left: 4 hours, 46 minutes
+2024-05-08 14:44:29,115 - INFO - Train:7 - Epoch 598/2000 completed in 11.78 seconds.
+2024-05-08 14:44:29,115 - INFO - Train:7 - Approximate time left: 4 hours, 46 minutes
+2024-05-08 14:44:40,857 - INFO - Train:7 - Epoch 599/2000 completed in 11.74 seconds.
+2024-05-08 14:44:40,857 - INFO - Train:7 - Approximate time left: 4 hours, 46 minutes
+2024-05-08 14:44:52,684 - INFO - Train:7 - Epoch 600/2000 completed in 11.83 seconds.
+2024-05-08 14:44:52,684 - INFO - Train:7 - Approximate time left: 4 hours, 46 minutes
+2024-05-08 14:45:05,195 - INFO - Train:7 - Epoch 601/2000 completed in 12.51 seconds.
+2024-05-08 14:45:05,196 - INFO - Train:7 - Approximate time left: 4 hours, 45 minutes
+2024-05-08 14:45:16,959 - INFO - Train:7 - Epoch 602/2000 completed in 11.76 seconds.
+2024-05-08 14:45:16,959 - INFO - Train:7 - Approximate time left: 4 hours, 45 minutes
+2024-05-08 14:45:29,630 - INFO - Train:7 - Epoch 603/2000 completed in 12.67 seconds.
+2024-05-08 14:45:29,631 - INFO - Train:7 - Approximate time left: 4 hours, 45 minutes
+2024-05-08 14:45:41,908 - INFO - Train:7 - Epoch 604/2000 completed in 12.28 seconds.
+2024-05-08 14:45:41,909 - INFO - Train:7 - Approximate time left: 4 hours, 45 minutes
+2024-05-08 14:45:54,130 - INFO - Train:7 - Epoch 605/2000 completed in 12.22 seconds.
+2024-05-08 14:45:54,130 - INFO - Train:7 - Approximate time left: 4 hours, 45 minutes
+2024-05-08 14:46:06,472 - INFO - Train:7 - Epoch 606/2000 completed in 12.34 seconds.
+2024-05-08 14:46:06,473 - INFO - Train:7 - Approximate time left: 4 hours, 44 minutes
+2024-05-08 14:46:18,338 - INFO - Train:7 - Epoch 607/2000 completed in 11.87 seconds.
+2024-05-08 14:46:18,338 - INFO - Train:7 - Approximate time left: 4 hours, 44 minutes
+2024-05-08 14:46:30,465 - INFO - Train:7 - Epoch 608/2000 completed in 12.13 seconds.
+2024-05-08 14:46:30,465 - INFO - Train:7 - Approximate time left: 4 hours, 44 minutes
+2024-05-08 14:46:42,684 - INFO - Train:7 - Epoch 609/2000 completed in 12.22 seconds.
+2024-05-08 14:46:42,685 - INFO - Train:7 - Approximate time left: 4 hours, 44 minutes
+2024-05-08 14:46:53,903 - INFO - Train:7 - Epoch 610/2000 completed in 11.22 seconds.
+2024-05-08 14:46:53,904 - INFO - Train:7 - Approximate time left: 4 hours, 44 minutes
+2024-05-08 14:47:05,741 - INFO - Train:7 - Epoch 611/2000 completed in 11.84 seconds.
+2024-05-08 14:47:05,742 - INFO - Train:7 - Approximate time left: 4 hours, 43 minutes
+2024-05-08 14:47:18,283 - INFO - Train:7 - Epoch 612/2000 completed in 12.54 seconds.
+2024-05-08 14:47:18,283 - INFO - Train:7 - Approximate time left: 4 hours, 43 minutes
+2024-05-08 14:47:30,295 - INFO - Train:7 - Epoch 613/2000 completed in 12.01 seconds.
+2024-05-08 14:47:30,295 - INFO - Train:7 - Approximate time left: 4 hours, 43 minutes
+2024-05-08 14:47:42,427 - INFO - Train:7 - Epoch 614/2000 completed in 12.13 seconds.
+2024-05-08 14:47:42,427 - INFO - Train:7 - Approximate time left: 4 hours, 43 minutes
+2024-05-08 14:47:54,392 - INFO - Train:7 - Epoch 615/2000 completed in 11.96 seconds.
+2024-05-08 14:47:54,392 - INFO - Train:7 - Approximate time left: 4 hours, 42 minutes
+2024-05-08 14:48:06,308 - INFO - Train:7 - Epoch 616/2000 completed in 11.92 seconds.
+2024-05-08 14:48:06,308 - INFO - Train:7 - Approximate time left: 4 hours, 42 minutes
+2024-05-08 14:48:18,175 - INFO - Train:7 - Epoch 617/2000 completed in 11.87 seconds.
+2024-05-08 14:48:18,175 - INFO - Train:7 - Approximate time left: 4 hours, 42 minutes
+2024-05-08 14:48:31,120 - INFO - Train:7 - Epoch 618/2000 completed in 12.94 seconds.
+2024-05-08 14:48:31,120 - INFO - Train:7 - Approximate time left: 4 hours, 42 minutes
+2024-05-08 14:48:43,033 - INFO - Train:7 - Epoch 619/2000 completed in 11.91 seconds.
+2024-05-08 14:48:43,033 - INFO - Train:7 - Approximate time left: 4 hours, 42 minutes
+2024-05-08 14:48:55,019 - INFO - Train:7 - Epoch 620/2000 completed in 11.99 seconds.
+2024-05-08 14:48:55,020 - INFO - Train:7 - Approximate time left: 4 hours, 41 minutes
+2024-05-08 14:49:07,239 - INFO - Train:7 - Epoch 621/2000 completed in 12.22 seconds.
+2024-05-08 14:49:07,239 - INFO - Train:7 - Approximate time left: 4 hours, 41 minutes
+2024-05-08 14:49:19,249 - INFO - Train:7 - Epoch 622/2000 completed in 12.01 seconds.
+2024-05-08 14:49:19,249 - INFO - Train:7 - Approximate time left: 4 hours, 41 minutes
+2024-05-08 14:49:31,565 - INFO - Train:7 - Epoch 623/2000 completed in 12.32 seconds.
+2024-05-08 14:49:31,565 - INFO - Train:7 - Approximate time left: 4 hours, 41 minutes
+2024-05-08 14:49:43,942 - INFO - Train:7 - Epoch 624/2000 completed in 12.38 seconds.
+2024-05-08 14:49:43,943 - INFO - Train:7 - Approximate time left: 4 hours, 41 minutes
+2024-05-08 14:49:56,088 - INFO - Train:7 - Epoch 625/2000 completed in 12.14 seconds.
+2024-05-08 14:49:56,088 - INFO - Train:7 - Approximate time left: 4 hours, 40 minutes
+2024-05-08 14:50:08,471 - INFO - Train:7 - Epoch 626/2000 completed in 12.38 seconds.
+2024-05-08 14:50:08,471 - INFO - Train:7 - Approximate time left: 4 hours, 40 minutes
+2024-05-08 14:50:20,739 - INFO - Train:7 - Epoch 627/2000 completed in 12.27 seconds.
+2024-05-08 14:50:20,739 - INFO - Train:7 - Approximate time left: 4 hours, 40 minutes
+2024-05-08 14:50:33,217 - INFO - Train:7 - Epoch 628/2000 completed in 12.48 seconds.
+2024-05-08 14:50:33,218 - INFO - Train:7 - Approximate time left: 4 hours, 40 minutes
+2024-05-08 14:50:45,822 - INFO - Train:7 - Epoch 629/2000 completed in 12.60 seconds.
+2024-05-08 14:50:45,823 - INFO - Train:7 - Approximate time left: 4 hours, 40 minutes
+2024-05-08 14:50:58,279 - INFO - Train:7 - Epoch 630/2000 completed in 12.46 seconds.
+2024-05-08 14:50:58,279 - INFO - Train:7 - Approximate time left: 4 hours, 39 minutes
+2024-05-08 14:51:11,072 - INFO - Train:7 - Epoch 631/2000 completed in 12.79 seconds.
+2024-05-08 14:51:11,072 - INFO - Train:7 - Approximate time left: 4 hours, 39 minutes
+2024-05-08 14:51:23,073 - INFO - Train:7 - Epoch 632/2000 completed in 12.00 seconds.
+2024-05-08 14:51:23,073 - INFO - Train:7 - Approximate time left: 4 hours, 39 minutes
+2024-05-08 14:51:35,181 - INFO - Train:7 - Epoch 633/2000 completed in 12.11 seconds.
+2024-05-08 14:51:35,182 - INFO - Train:7 - Approximate time left: 4 hours, 39 minutes
+2024-05-08 14:51:47,430 - INFO - Train:7 - Epoch 634/2000 completed in 12.25 seconds.
+2024-05-08 14:51:47,430 - INFO - Train:7 - Approximate time left: 4 hours, 39 minutes
+2024-05-08 14:51:58,996 - INFO - Train:7 - Epoch 635/2000 completed in 11.57 seconds.
+2024-05-08 14:51:58,996 - INFO - Train:7 - Approximate time left: 4 hours, 38 minutes
+2024-05-08 14:52:11,272 - INFO - Train:7 - Epoch 636/2000 completed in 12.28 seconds.
+2024-05-08 14:52:11,272 - INFO - Train:7 - Approximate time left: 4 hours, 38 minutes
+2024-05-08 14:52:23,290 - INFO - Train:7 - Epoch 637/2000 completed in 12.02 seconds.
+2024-05-08 14:52:23,290 - INFO - Train:7 - Approximate time left: 4 hours, 38 minutes
+2024-05-08 14:52:35,442 - INFO - Train:7 - Epoch 638/2000 completed in 12.15 seconds.
+2024-05-08 14:52:35,442 - INFO - Train:7 - Approximate time left: 4 hours, 38 minutes
+2024-05-08 14:52:47,123 - INFO - Train:7 - Epoch 639/2000 completed in 11.68 seconds.
+2024-05-08 14:52:47,123 - INFO - Train:7 - Approximate time left: 4 hours, 38 minutes
+2024-05-08 14:52:59,036 - INFO - Train:7 - Epoch 640/2000 completed in 11.91 seconds.
+2024-05-08 14:52:59,037 - INFO - Train:7 - Approximate time left: 4 hours, 37 minutes
+2024-05-08 14:53:12,204 - INFO - Train:7 - Epoch 641/2000 completed in 13.17 seconds.
+2024-05-08 14:53:12,204 - INFO - Train:7 - Approximate time left: 4 hours, 37 minutes
+2024-05-08 14:53:24,855 - INFO - Train:7 - Epoch 642/2000 completed in 12.65 seconds.
+2024-05-08 14:53:24,855 - INFO - Train:7 - Approximate time left: 4 hours, 37 minutes
+2024-05-08 14:53:37,501 - INFO - Train:7 - Epoch 643/2000 completed in 12.65 seconds.
+2024-05-08 14:53:37,501 - INFO - Train:7 - Approximate time left: 4 hours, 37 minutes
+2024-05-08 14:53:49,432 - INFO - Train:7 - Epoch 644/2000 completed in 11.93 seconds.
+2024-05-08 14:53:49,433 - INFO - Train:7 - Approximate time left: 4 hours, 37 minutes
+2024-05-08 14:54:01,989 - INFO - Train:7 - Epoch 645/2000 completed in 12.56 seconds.
+2024-05-08 14:54:01,989 - INFO - Train:7 - Approximate time left: 4 hours, 36 minutes
+2024-05-08 14:54:14,560 - INFO - Train:7 - Epoch 646/2000 completed in 12.57 seconds.
+2024-05-08 14:54:14,560 - INFO - Train:7 - Approximate time left: 4 hours, 36 minutes
+2024-05-08 14:54:26,459 - INFO - Train:7 - Epoch 647/2000 completed in 11.90 seconds.
+2024-05-08 14:54:26,459 - INFO - Train:7 - Approximate time left: 4 hours, 36 minutes
+2024-05-08 14:54:38,590 - INFO - Train:7 - Epoch 648/2000 completed in 12.13 seconds.
+2024-05-08 14:54:38,590 - INFO - Train:7 - Approximate time left: 4 hours, 36 minutes
+2024-05-08 14:54:50,694 - INFO - Train:7 - Epoch 649/2000 completed in 12.10 seconds.
+2024-05-08 14:54:50,694 - INFO - Train:7 - Approximate time left: 4 hours, 36 minutes
+2024-05-08 14:55:02,789 - INFO - Train:7 - Epoch 650/2000 completed in 12.09 seconds.
+2024-05-08 14:55:02,789 - INFO - Train:7 - Approximate time left: 4 hours, 35 minutes
+2024-05-08 14:55:15,835 - INFO - Train:7 - Epoch 651/2000 completed in 13.05 seconds.
+2024-05-08 14:55:15,835 - INFO - Train:7 - Approximate time left: 4 hours, 35 minutes
+2024-05-08 14:55:27,813 - INFO - Train:7 - Epoch 652/2000 completed in 11.98 seconds.
+2024-05-08 14:55:27,813 - INFO - Train:7 - Approximate time left: 4 hours, 35 minutes
+2024-05-08 14:55:40,043 - INFO - Train:7 - Epoch 653/2000 completed in 12.23 seconds.
+2024-05-08 14:55:40,043 - INFO - Train:7 - Approximate time left: 4 hours, 35 minutes
+2024-05-08 14:55:51,712 - INFO - Train:7 - Epoch 654/2000 completed in 11.67 seconds.
+2024-05-08 14:55:51,712 - INFO - Train:7 - Approximate time left: 4 hours, 35 minutes
+2024-05-08 14:56:03,816 - INFO - Train:7 - Epoch 655/2000 completed in 12.10 seconds.
+2024-05-08 14:56:03,816 - INFO - Train:7 - Approximate time left: 4 hours, 34 minutes
+2024-05-08 14:56:16,285 - INFO - Train:7 - Epoch 656/2000 completed in 12.47 seconds.
+2024-05-08 14:56:16,285 - INFO - Train:7 - Approximate time left: 4 hours, 34 minutes
+2024-05-08 14:56:28,628 - INFO - Train:7 - Epoch 657/2000 completed in 12.34 seconds.
+2024-05-08 14:56:28,628 - INFO - Train:7 - Approximate time left: 4 hours, 34 minutes
+2024-05-08 14:56:40,974 - INFO - Train:7 - Epoch 658/2000 completed in 12.35 seconds.
+2024-05-08 14:56:40,974 - INFO - Train:7 - Approximate time left: 4 hours, 34 minutes
+2024-05-08 14:56:53,463 - INFO - Train:7 - Epoch 659/2000 completed in 12.49 seconds.
+2024-05-08 14:56:53,463 - INFO - Train:7 - Approximate time left: 4 hours, 33 minutes
+2024-05-08 14:57:05,344 - INFO - Train:7 - Epoch 660/2000 completed in 11.88 seconds.
+2024-05-08 14:57:05,344 - INFO - Train:7 - Approximate time left: 4 hours, 33 minutes
+2024-05-08 14:57:19,598 - INFO - Train:7 - Epoch 661/2000 completed in 14.25 seconds.
+2024-05-08 14:57:19,598 - INFO - Train:7 - Approximate time left: 4 hours, 33 minutes
+2024-05-08 14:57:31,461 - INFO - Train:7 - Early stopping triggered at 661 across all processes.

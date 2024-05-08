@@ -1,10 +1,12 @@
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 import torch
 import torch.distributed as dist
 from metric_utilis import MetricTracker, MetricType, ProgressMeter, get_topk_acc
-from torch import Tensor, nn
+from torch import Tensor
 from torch import device as TorchDevice
+from torch import nn
+from torch.utils.tensorboard import SummaryWriter
 
 
 def create_meters(
@@ -137,3 +139,20 @@ def broadcast_early_stop(early_stop_decision, device):
         raise RuntimeError(
             "Distributed environment is not initialized, cannot broadcast early stop decision."
         )
+
+
+def record_metrics(
+    writer: SummaryWriter, metrics_dict: Dict, global_step: int, prefix: str = ""
+) -> None:
+    """
+    Record metrics to TensorBoard.
+
+    Args:
+        writer (SummaryWriter): The TensorBoard writer.
+        metrics_dict (dict): Dictionary containing metric names and their values.
+        global_step (int): The global step value to associate with the scalar.
+        prefix (str): Prefix for the metric tags (helps differentiate training and validation).
+    """
+    for key, value in metrics_dict.items():
+        tag: str = f"{prefix}{key}"
+        writer.add_scalar(tag=tag, scalar_value=value, global_step=global_step)

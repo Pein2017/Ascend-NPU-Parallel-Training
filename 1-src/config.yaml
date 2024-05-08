@@ -1,19 +1,19 @@
 training:
-  lr: 1e-1
+  lr: 2e-3
   batch_size: 256
   verbose: false
   seed: 17
-  hist_record_num: 15
+  hist_record_num: 30
   train_ratio: 0.9
-  test_ratio: 0.05
   print_freq: 300
   workers: 0
   start_epoch: 0
-  epochs: 3000
+  epochs: 2000
   debug_mode: false
   tracker: false
   checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
   checkpoint_path:
+  ckpt_save_interval: 300
 
 model:
   arch: resnet34
@@ -29,13 +29,13 @@ optimizer:
 scheduler:
   type: ReduceLROnPlateau
   mode: min
-  factor: 0.2 # for lr reduction
-  patience: 100
+  factor: 0.5 # for lr reduction
+  patience: 60
   warmup_iters: 0
 
 early_stopping:
   delta: 1e-4
-  patience: 200
+  patience: 150
 
 data:
   path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data

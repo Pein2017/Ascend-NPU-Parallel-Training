@@ -10,7 +10,7 @@ from setup_utilis import setup_logger
 
 utilis_worker: logging.Logger = setup_logger(
     name="UtilisProcess",
-    log_file_name="utilisProcess.log",
+    log_file_name="utilis_process.log",
     level=logging.DEBUG,
     console=False,
 )
@@ -158,6 +158,7 @@ def init_distributed_training(
         )
 
 
+# TODO Fix the logic here
 def save_checkpoint(
     state: Dict,
     is_best: bool,
@@ -165,7 +166,7 @@ def save_checkpoint(
     arch: str,
     current_epoch: int,
     check_point_suffix: str,
-    ckpt_save_interval: int = 100,
+    ckpt_save_interval: int = 200,
 ) -> None:
     """
     Save the model checkpoint during training. If the current checkpoint is the best model,
@@ -200,4 +201,4 @@ def save_checkpoint(
             utilis_worker.debug(f"Checkpoint saved at {file_path}")
 
     except Exception as e:
-        utilis_worker.debug(f"Error saving checkpoint: {e}", exc_info=True)
+        utilis_worker.error(f"Error saving checkpoint: {e}", exc_info=True)

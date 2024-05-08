@@ -122,10 +122,10 @@ def log_commit_data(commit_file_path: str, commit_data: dict) -> None:
 
     Args:
         commit_file_path (str): The path to the CSV file where commit logs are saved.
-        commit_data (dict): Dictionary containing 'Architecture', 'Configuration', 'Event File Path', and 'Commit' information.
+        commit_data (dict): Dictionary containing 'Architecture', 'Configuration', 'Event File Dir', and 'Commit' information.
     """
     # Specify column order and create the DataFrame with a single row of commit_data
-    column_order = ["Architecture", "Configuration", "Event File Path", "Commit"]
+    column_order = ["Architecture", "Configuration", "Event File Dir", "Commit"]
     df = pd.DataFrame([commit_data], columns=column_order)
 
     # Check if the CSV file exists, prepend the new data, and save it
@@ -148,7 +148,6 @@ def log_commit_data(commit_file_path: str, commit_data: dict) -> None:
 def setup_tensorboard_and_commit(
     train_logger: logging.Logger,
     gpu: int,
-    world_size: int,
     batch_size: int,
     arch: str,
     lr: float,
@@ -164,7 +163,7 @@ def setup_tensorboard_and_commit(
     Args:
         train_logger (logging.Logger): Logger for setup progress and events.
         gpu (int): GPU index, used to determine whether the setup should proceed.
-        world_size (int): Total number of GPUs involved in the computation.
+        # NOTE: the batch size is already overall and not per GPU
         batch_size (int): Batch size per GPU, influencing the overall workload.
         arch (str): Model architecture designation.
         lr (float): Learning rate used in the optimizer.
@@ -181,8 +180,7 @@ def setup_tensorboard_and_commit(
     custom_suffix = None
 
     if gpu == 0:
-        batch_size_total = world_size * batch_size
-        configuration_suffix = f"batch-{batch_size_total}-lr-{lr}-{optimizer_name}"
+        configuration_suffix = f"batch-{batch_size}-lr-{lr}-{optimizer_name}"
         if debug_mode:
             configuration_suffix = f"debug-{configuration_suffix}"
         custom_suffix = configuration_suffix
@@ -207,3 +205,90 @@ def setup_tensorboard_and_commit(
         log_commit_data(commit_file_path=commit_file_path, commit_data=commit_data)
 
     return writer, custom_suffix
+
+
+class TrainingSetupManager:
+    def __init__(
+        self,
+        train_logger: logging.Logger,
+        gpu: int,
+        tb_log_dir: str,
+        commit_file_path: str,
+        debug_mode: bool = False,
+        commit_message: str = "Setup completed",
+    ) -> None:
+        self.train_logger = train_logger
+        self.gpu = gpu
+        self.tb_log_dir = tb_log_dir
+        self.commit_file_path = commit_file_path
+        self.debug_mode = debug_mode
+        self.commit_message = commit_message
+
+        self.event_timestamp = None
+
+    def setup_tensorboard_and_commit(
+        self,
+        batch_size: int,
+        arch: str,
+        lr: float,
+        optimizer_name: str,
+        commit_message: str,
+    ) -> Tuple[SummaryWriter | None | str | str]:
+        """
+        Set up TensorBoard and log the configuration details to a CSV file.
+        """
+        writer = None
+        custom_suffix = None
+
+        if self.gpu == 0:
+            configuration_suffix = f"batch-{batch_size}-lr-{lr}-{optimizer_name}"
+            if self.debug_mode:
+                configuration_suffix = f"debug-{configuration_suffix}"
+            custom_suffix = configuration_suffix
+
+            save_event_path = os.path.join(
+                self.tb_log_dir, "events", arch, configuration_suffix
+            )
+            os.makedirs(save_event_path, exist_ok=True)
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.event_timestamp = timestamp
+            full_event_dir = os.path.join(save_event_path, timestamp)
+            writer = SummaryWriter(
+                log_dir=full_event_dir, filename_suffix=custom_suffix
+            )
+            self.train_logger.debug(f"TensorBoard set up at {full_event_dir}")
+
+            # Prepare and log commit data
+            commit_data = {
+                "Architecture": arch,
+                "Configuration": custom_suffix,
+                "Event File Dir": writer.log_dir,
+                "Commit": self.commit_message,
+            }
+            self.log_commit_data(commit_data)
+
+        return writer, custom_suffix, timestamp
+
+    def log_commit_data(self, commit_data: dict) -> None:
+        """Log setup details to a CSV file for record-keeping using a dictionary of commit data."""
+
+        if self.gpu != 0:
+            return
+
+        # Specify the column order and create a DataFrame with a single row of commit data
+        column_order = ["Architecture", "Configuration", "Event File Dir", "Commit"]
+        df = pd.DataFrame([commit_data], columns=column_order)
+
+        if os.path.exists(self.commit_file_path):
+            # Load existing data
+            existing_df = pd.read_csv(self.commit_file_path, index_col="Index")
+
+            # Concatenate the new DataFrame at the top of the existing DataFrame
+            combined_df = pd.concat([df, existing_df]).reset_index(drop=True)
+
+            # Reindex to keep a continuous index and save to CSV
+            combined_df.index.name = "Index"
+            combined_df.to_csv(self.commit_file_path)
+        else:
+            df.index.name = "Index"
+            df.to_csv(self.commit_file_path)

@@ -34,23 +34,20 @@ class TBLogExporter:
         self.custom_suffix = custom_suffix
         self.tb_logger = tb_logger
         self.event_prefix = event_prefix
-        self.arch = os.path.basename(os.path.dirname(event_folder_path))
-
+        self.arch = os.path.basename(
+            os.path.dirname(os.path.dirname(event_folder_path))
+        )
         if not fig_exported_dir:
             self.fig_exported_dir = os.path.dirname(
                 os.path.dirname(
                     os.path.dirname(os.path.dirname(self.event_folder_path))
                 )
             )
-            print(f"before: {self.fig_exported_dir}")
             self.fig_exported_dir = os.path.join(self.fig_exported_dir, "figs")
         else:
             # recommended format {dir_path/figs}
             pass
         self.event_file_name, self.experiment_number = self.find_latest_log_event()
-        print("************")
-        print(self.event_file_name, self.experiment_number)
-        print("************")
 
     def find_latest_log_event(self):
         """
@@ -206,9 +203,9 @@ if __name__ == "__main__":
     )
 
     # Define the directory and custom suffix for the TensorBoard logs
-    custom_suffix = "debug-batch-1024-lr-1e-1-SGD"
-    fig_name = "metrics.png"
-    event_folder_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet18/debug-batch-1024-lr-1e-1-SGD/2024-05-06 11:17:38"
+    custom_suffix = "batch-256-lr-5e-2-SGD"
+    fig_name = f"metrics-{custom_suffix}.png"
+    event_folder_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-5e-2-SGD/2024-05-06 18:18:43"
 
     # Ensure the log directory exists
     if not os.path.exists(event_folder_path):

@@ -1,9 +1,17 @@
-2024-05-06 14:11:45,128 - DEBUG - Worker:0 - Initialized logger for npu0.
-2024-05-06 14:11:47,677 - DEBUG - Worker:0 - Model resnet34 loaded with pretrained=False and moved to npu:0.
-2024-05-06 14:11:47,677 - DEBUG - Worker:0 - Adjusted batch size to 32 and worker count to 0.
-2024-05-06 14:11:48,638 - INFO - Worker:0 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:48,638 - DEBUG - Worker:0 - train_ratio is 0.9, test_ratio is 0.05
-2024-05-06 14:12:54,469 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and batch size 32.
-2024-05-06 14:12:54,470 - DEBUG - Worker:0 - Training size is 175, val size is 9, test size is 79
-2024-05-06 14:12:54,475 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau set with parameters: {'mode': 'min', 'factor': 0.2, 'patience': 100}
-2024-05-06 14:12:54,476 - DEBUG - Worker:0 - Training debug mode is disabled, Verbose mode is off, Printing frequency set to every 300 iterations, Starting from epoch 0.
+2024-05-08 12:41:51,406 - DEBUG - Worker:0 - Initialized logger for npu0.
+2024-05-08 12:41:53,932 - DEBUG - Worker:0 - Model resnet34 loaded with pretrained=False and moved to npu:0.
+2024-05-08 12:41:53,932 - DEBUG - Worker:0 - Adjusted batch size to 32 and worker count to 0.
+2024-05-08 12:41:54,732 - INFO - Worker:0 - Distributed training initialized for 8 nodes.
+2024-05-08 12:42:13,569 - DEBUG - Worker:0 - In function get_dataloaders: 
+ Train size: 45000, Validation size: 5000
+2024-05-08 12:42:13,571 - DEBUG - Worker:0 - Train sampler: <torch.utils.data.distributed.DistributedSampler object at 0xffff7882c820> initilized.
+2024-05-08 12:42:13,571 - DEBUG - Worker:0 - Validation sampler: <torch.utils.data.distributed.DistributedSampler object at 0xffff7882c6d0> initilized.
+2024-05-08 12:42:14,470 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and batch size 256.
+2024-05-08 12:42:14,471 - DEBUG - Worker:0 - Training size is 45000, val size is 5000, test size is 10000
+2024-05-08 12:42:14,474 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau set with parameters: {'mode': 'min', 'factor': 0.5, 'patience': 60}
+2024-05-08 12:42:14,475 - DEBUG - Worker:0 - Training debug mode is disabled, Verbose mode is off, Printing frequency set to every 300 iterations, Starting from epoch 0.
+2024-05-08 14:57:36,000 - INFO - Worker:0 - 
+--------------------
+2024-05-08 14:57:36,001 - INFO - Worker:0 - For validation set during training, best acc1: 70.559 at epoch 582
+2024-05-08 14:57:49,778 - INFO - Worker:0 - Final testing at NPU/GPU: 0
+2024-05-08 14:57:49,779 - INFO - Worker:0 - For test set, test loss is: 1.2771685892105102, test top1 is: 71.12, test top5 is: 90.83

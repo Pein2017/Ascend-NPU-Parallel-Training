@@ -4,64 +4,156 @@ Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_6.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_0.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_1.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_2.log
-Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/optimizerProcess.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_0.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_6.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/utilis_process.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_4.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/model_process.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_7.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/optimizer_process.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_4.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_7.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_2.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_5.log
-Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/utilisProcess.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/worker_3.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_1.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/setup_process.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_5.log
 Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/train_3.log
-2024-05-06 14:11:24,383 - INFO - MainProcess - Dataset cifar100 already exists at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data'. No download needed.
-2024-05-06 14:11:24,383 - DEBUG - MainProcess - Loading model...
+2024-05-08 12:41:31,142 - INFO - MainProcess - Logger initialized.
+2024-05-08 12:41:31,144 - INFO - MainProcess - Dataset cifar100 already exists at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data'. No download needed.
+2024-05-08 12:41:31,144 - DEBUG - MainProcess - Loading model...
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
   warnings.warn(
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
   warnings.warn(msg)
-2024-05-06 14:11:25,219 - DEBUG - MainProcess - Model resnet34 downloaded.
-2024-05-06 14:11:25,231 - DEBUG - MainProcess - Worker processes spawned successfully. Waiting for results...
+2024-05-08 12:41:31,941 - DEBUG - MainProcess - Model resnet34 downloaded.
+2024-05-08 12:41:31,949 - DEBUG - MainProcess - Worker processes spawned successfully. Waiting for results...
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
+2024-05-08 12:41:36,849 - INFO - MainProcess - Logger initialized.
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
+2024-05-08 12:41:36,908 - INFO - MainProcess - Logger initialized.
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
+2024-05-08 12:41:37,021 - INFO - MainProcess - Logger initialized.
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
+2024-05-08 12:41:37,034 - INFO - MainProcess - Logger initialized.
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
+2024-05-08 12:41:37,113 - INFO - MainProcess - Logger initialized.
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
+2024-05-08 12:41:37,132 - INFO - MainProcess - Logger initialized.
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
+2024-05-08 12:41:37,215 - INFO - MainProcess - Logger initialized.
 /root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
   warnings.warn(
-2024-05-06 14:11:45,128 - DEBUG - Worker:0 - Initialized logger for npu0.
-2024-05-06 14:11:45,938 - DEBUG - ModelProcess - All layers are unfrozen for training
-2024-05-06 14:11:47,677 - DEBUG - Worker:0 - Model resnet34 loaded with pretrained=False and moved to npu:0.
-2024-05-06 14:11:47,677 - DEBUG - Worker:0 - Adjusted batch size to 32 and worker count to 0.
-2024-05-06 14:11:47,726 - INFO - Worker:2 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:47,828 - INFO - Worker:6 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:47,928 - INFO - Worker:5 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:48,126 - INFO - Worker:4 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:48,387 - INFO - Worker:1 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:48,606 - INFO - Worker:3 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:48,636 - INFO - Worker:7 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:48,638 - INFO - Worker:0 - Distributed training initialized for 8 nodes.
-2024-05-06 14:11:48,638 - DEBUG - Worker:0 - train_ratio is 0.9, test_ratio is 0.05
-----\\\\--2024-05-06 14:12:54,469 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and batch size 32.
-2024-05-06 14:12:54,470 - DEBUG - Worker:0 - Training size is 175, val size is 9, test size is 79
-2024-05-06 14:12:54,475 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau set with parameters: {'mode': 'min', 'factor': 0.2, 'patience': 100}
-2024-05-06 14:12:54,476 - DEBUG - Worker:0 - Training debug mode is disabled, Verbose mode is off, Printing frequency set to every 300 iterations, Starting from epoch 0.
--Warning: Device do not support double dtype now, dtype cast repalce with float.
+2024-05-08 12:41:37,223 - INFO - MainProcess - Logger initialized.
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/utilis_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/model_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/optimizer_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/setup_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,444 - INFO - MainProcess - Logger initialized.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,514 - INFO - MainProcess - Logger initialized.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,668 - INFO - MainProcess - Logger initialized.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,707 - INFO - MainProcess - Logger initialized.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,725 - INFO - MainProcess - Logger initialized.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,837 - INFO - MainProcess - Logger initialized.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,898 - INFO - MainProcess - Logger initialized.
+/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+2024-05-08 12:41:44,912 - INFO - MainProcess - Logger initialized.
+2024-05-08 12:41:51,406 - DEBUG - Worker:0 - Initialized logger for npu0.
+2024-05-08 12:41:52,243 - DEBUG - ModelProcess - All layers are unfrozen for training
+2024-05-08 12:41:53,932 - DEBUG - Worker:0 - Model resnet34 loaded with pretrained=False and moved to npu:0.
+2024-05-08 12:41:53,932 - DEBUG - Worker:0 - Adjusted batch size to 32 and worker count to 0.
+2024-05-08 12:41:53,957 - INFO - Worker:7 - Distributed training initialized for 8 nodes.
+2024-05-08 12:41:54,214 - INFO - Worker:4 - Distributed training initialized for 8 nodes.
+2024-05-08 12:41:54,258 - INFO - Worker:3 - Distributed training initialized for 8 nodes.
+2024-05-08 12:41:54,302 - INFO - Worker:6 - Distributed training initialized for 8 nodes.
+2024-05-08 12:41:54,517 - INFO - Worker:1 - Distributed training initialized for 8 nodes.
+2024-05-08 12:41:54,590 - INFO - Worker:2 - Distributed training initialized for 8 nodes.
+2024-05-08 12:41:54,722 - INFO - Worker:5 - Distributed training initialized for 8 nodes.
+2024-05-08 12:41:54,732 - INFO - Worker:0 - Distributed training initialized for 8 nodes.
+-2024-05-08 12:42:13,569 - DEBUG - Worker:0 - In function get_dataloaders: 
+ Train size: 45000, Validation size: 5000
+2024-05-08 12:42:13,571 - DEBUG - Worker:0 - Train sampler: <torch.utils.data.distributed.DistributedSampler object at 0xffff7882c820> initilized.
+2024-05-08 12:42:13,571 - DEBUG - Worker:0 - Validation sampler: <torch.utils.data.distributed.DistributedSampler object at 0xffff7882c6d0> initilized.
+---2024-05-08 12:42:14,470 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and batch size 256.
+2024-05-08 12:42:14,471 - DEBUG - Worker:0 - Training size is 45000, val size is 5000, test size is 10000
+2024-05-08 12:42:14,474 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau set with parameters: {'mode': 'min', 'factor': 0.5, 'patience': 60}
+2024-05-08 12:42:14,475 - DEBUG - Worker:0 - Training debug mode is disabled, Verbose mode is off, Printing frequency set to every 300 iterations, Starting from epoch 0.
+----Warning: Device do not support double dtype now, dtype cast repalce with float.
 [W IscloseKernelNpu.cpp:32] Warning: Device do not support double dtype of rtol and atol now, dtype cast repalce with float. (function operator())
--||\||\\\||||/
+\\\\\\\\||||||||/Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/utilis_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/model_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/optimizer_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/setup_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+2024-05-08 14:57:36,000 - INFO - Worker:0 - 
+--------------------
+2024-05-08 14:57:36,001 - INFO - Worker:0 - For validation set during training, best acc1: 70.559 at epoch 582
+-\2024-05-08 14:57:49,778 - INFO - Worker:0 - Final testing at NPU/GPU: 0
+2024-05-08 14:57:49,779 - INFO - Worker:0 - For test set, test loss is: 1.2771685892105102, test top1 is: 71.12, test top5 is: 90.83
+Removing /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/main_process.log
+Files already downloaded and verified
+Files already downloaded and verified
+Files already downloaded and verified
+2024-05-08 14:57:54,633 - DEBUG - MainProcess - Results received. <multiprocessing.sharedctypes.c_double_Array_3 object at 0xfffd0eb1bb40>
+2024-05-08 14:57:54,633 - INFO - MainProcess - Finished! Best validation accuracy: 70.5592105263158 at epoch 582. Test top1 accuracy: 71.12
+2024-05-08 14:57:54,634 - INFO - MainProcess - Total time cost: 02h:16mins:23s
+2024-05-08 14:57:54,634 - INFO - MainProcess - lr: 2e-3 , batch_size: 256
