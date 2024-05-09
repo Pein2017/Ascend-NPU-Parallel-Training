@@ -19,27 +19,23 @@ from setup_utilis import setup_environment, setup_logger
 from utilis import device_id_to_process_device_map
 from worker import main_worker
 
-#! Clean up all the previs logs
-logs_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/"
-if os.path.exists(logs_path):
-    # List all files in the directory
-    files = os.listdir(logs_path)
-    # Filter for files that end with .log
-    log_files = [file for file in files if file.endswith(".log")]
-    # Remove each found log file
-    for log_file in log_files:
-        file_path = os.path.join(logs_path, log_file)
-        os.remove(file_path)
-        print(f"Removing {file_path}")
-
-
+# Declare the logger as a global variable
 main_logger: logging.Logger = setup_logger(
     name="MainProcess",
     log_file_name="main_process.log",
     level=logging.DEBUG,
     console=True,
 )
-main_logger.info(msg="Logger initialized.")
+main_logger.debug(msg="Logger initialized.")
+
+
+#! Clean up all the previous logs
+def clean_logs(directory):
+    if os.path.exists(directory):
+        files = [file for file in os.listdir(directory) if file.endswith(".log")]
+        for log_file in files:
+            os.remove(os.path.join(directory, log_file))
+            print(f"Removed {log_file}")
 
 
 def start_worker(config: Dict) -> Tuple[float, int, float]:
@@ -54,6 +50,8 @@ def start_worker(config: Dict) -> Tuple[float, int, float]:
         Tuple[float, int, float]: Tuple containing the best accuracy, corresponding epoch,
         and top-1 accuracy average.
     """
+    # global main_logger
+
     dist_training: Dict = config["distributed_training"]
     dist_url: str = dist_training["master_addr"]
     world_size: int = dist_training["world_size"]
@@ -113,6 +111,8 @@ def start_worker(config: Dict) -> Tuple[float, int, float]:
 def main(config: Dict) -> None:
     """Run the main application workflow."""
 
+    # global main_logger if not assigning new value to it, can be omitted
+
     master_addr: str = config["distributed_training"]["master_addr"]
     master_port: int = config["distributed_training"]["master_port"]
     seed: int = config["training"].get("seed", None)
@@ -137,6 +137,8 @@ def main(config: Dict) -> None:
 
 
 if __name__ == "__main__":
+    logs_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/"
+    clean_logs(logs_path)
     start_time: float = time.time()
     main(config=config)
     end_time: float = time.time()

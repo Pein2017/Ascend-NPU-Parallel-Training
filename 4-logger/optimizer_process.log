@@ -1,0 +1,190 @@
+2024-05-09 12:49:17,564 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 12:55:23,865 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 13:00:24,344 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 13:06:19,006 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 13:09:23,834 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 13:09:38,068 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 13:10:48,739 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:12:28,392 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 13:15:46,190 - INFO - OptimizerProcess - Learning Rate updated from 0.005 to 0.0025
+2024-05-09 13:16:27,371 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:20:29,270 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:25:06,853 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:29:49,555 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:31:00,236 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:31:56,706 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:32:39,139 - INFO - OptimizerProcess - Learning Rate updated from 0.00125 to 0.000625
+2024-05-09 13:36:11,208 - INFO - OptimizerProcess - Learning Rate updated from 0.0025 to 0.00125
+2024-05-09 13:37:19,641 - INFO - OptimizerProcess - Learning Rate updated from 0.00125 to 0.000625
+2024-05-09 13:37:46,250 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:38:00,157 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:38:14,069 - INFO - OptimizerProcess - Learning Rate updated from 0.00125 to 0.000625
+2024-05-09 13:38:14,072 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:38:28,154 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:38:42,223 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:38:56,345 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:39:10,479 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:39:24,602 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:39:38,846 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:39:53,100 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:40:06,307 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:40:19,839 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:40:33,120 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:40:47,481 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:41:01,723 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:41:16,062 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:41:30,360 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:41:44,586 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:41:58,363 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:42:12,005 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:42:25,673 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:42:25,692 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:42:39,567 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:42:39,580 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:42:53,198 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:42:53,209 - INFO - OptimizerProcess - Learning Rate updated from 0.00125 to 0.000625
+2024-05-09 13:42:53,212 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:06,885 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:06,893 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:20,657 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:20,685 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:34,713 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:34,747 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:48,799 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:43:48,843 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:02,845 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:02,848 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:16,833 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:16,860 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:30,486 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:30,488 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:44,120 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:44,133 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:58,516 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:44:58,577 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:12,509 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:12,563 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:26,702 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:26,766 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:40,809 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:40,822 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:54,662 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:45:54,700 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:08,840 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:08,857 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:22,634 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:22,658 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:36,418 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:36,452 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:49,789 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:46:49,829 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:03,318 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:03,341 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:03,382 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:17,396 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:17,431 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:17,436 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:31,487 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:31,525 - INFO - OptimizerProcess - Learning Rate updated from 0.00125 to 0.000625
+2024-05-09 13:47:31,527 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:31,537 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:45,379 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:45,423 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:45,440 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:59,550 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:59,597 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:47:59,599 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:13,547 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:13,562 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:13,563 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:13,587 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:27,837 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:27,841 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:27,865 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:27,887 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:41,781 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:41,791 - INFO - OptimizerProcess - Learning Rate updated from 0.00125 to 0.000625
+2024-05-09 13:48:41,794 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:41,801 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:41,819 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:56,256 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:56,281 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:56,288 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:48:56,290 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:10,639 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:10,679 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:10,692 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:10,693 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:24,930 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:24,936 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:24,943 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:24,947 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:39,212 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:39,234 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:39,239 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:39,240 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:53,293 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:53,310 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:53,319 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:49:53,337 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:07,546 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:07,560 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:07,581 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:07,590 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:21,805 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:21,858 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:21,863 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:21,885 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:35,704 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:35,745 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:35,755 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:35,771 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:49,745 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:49,808 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:49,812 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:50:49,813 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:03,943 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:03,970 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:03,982 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:04,008 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:17,976 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:17,978 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:17,988 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:18,032 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:31,707 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:31,733 - INFO - OptimizerProcess - Learning Rate updated from 0.000625 to 0.0003125
+2024-05-09 13:51:31,739 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:31,741 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:31,743 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:45,723 - INFO - OptimizerProcess - Learning Rate updated from 0.00125 to 0.000625
+2024-05-09 13:51:45,727 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:45,750 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:45,754 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:51:45,765 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:00,626 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:00,626 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:00,650 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:00,651 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:14,804 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:14,817 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:14,832 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:14,835 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:29,063 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:29,092 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:29,095 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:29,117 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:43,331 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:43,341 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:43,349 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:43,368 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:57,526 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:57,557 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:57,561 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:52:57,583 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:53:12,011 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:53:12,013 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:53:12,033 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:53:25,991 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:53:25,991 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:53:26,001 - INFO - OptimizerProcess - Early stopping triggered.
+2024-05-09 13:53:28,110 - INFO - OptimizerProcess - Early stopping triggered.

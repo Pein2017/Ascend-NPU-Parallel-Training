@@ -24,7 +24,7 @@ def train(
     optimizer_manager: OptimizerManager,
     current_epoch: int,
     device: torch.device,
-    tracker: Optional[ModelStatsTracker],
+    model_stats_tracker: Optional[ModelStatsTracker],
     gpu: int,
     verbose: bool = False,
     print_freq: int = 100,
@@ -39,12 +39,12 @@ def train(
     :param optimizer_manager: Manages the optimizer.
     :param current_epoch: The current epoch number for training.
     :param device: The device tensors are located on.
-    :param tracker: ModelStatsTracker object, for tracking the model's statistics.
+    :param model_stats_tracker: ModelStatsTracker object, for tracking the model's statistics.
     :param gpu: GPU index if using multiple GPUs.
     :param verbose: If true, print detailed logging information.
     :param print_freq: Frequency of logging within the epoch.
 
-    :return: A tuple containing the updated tracker, losses_meter, top1 get_topk_acc meter,
+    :return: A tuple containing the updated model_stats_tracker, losses_meter, top1 get_topk_acc meter,
              and top5 get_topk_acc meter.
     """
 
@@ -95,7 +95,7 @@ def train(
         if verbose:
             train_logger.debug(progress.display_summary())
 
-    return tracker, losses_meter, top1, top5
+    return model_stats_tracker, losses_meter, top1, top5
 
 
 def validate(
@@ -105,7 +105,7 @@ def validate(
     train_logger: logging.Logger,
     current_epoch: int,
     device: torch.device,
-    tracker: Optional[ModelStatsTracker],
+    model_stats_tracker: Optional[ModelStatsTracker],
     prefix: str = "Test",
     verbose: bool = False,
     print_freq: int = 100,
@@ -119,11 +119,11 @@ def validate(
     :param train_logger: Logger for validation related logging.
     :param current_epoch: Current epoch of training for context.
     :param device: The device computations will be performed on.
-    :param tracker: ModelStatsTracker object, for tracking the model's statistics.
+    :param model_stats_tracker: ModelStatsTracker object, for tracking the model's statistics.
     :param prefix: Prefix to add to the progress bar.
     :param verbose: Flag to print detailed information during validation.
     :param print_freq: Frequency of printing detailed information.
-    :return: Tuple containing the tracker, losses_meter, top1 get_topk_acc meter, and top5 get_topk_acc meter.
+    :return: Tuple containing the model_stats_tracker, losses_meter, top1 get_topk_acc meter, and top5 get_topk_acc meter.
     """
 
     meters, progress = create_meters(batch_size=len(val_loader), prefix=f"{prefix}:")
@@ -158,7 +158,7 @@ def validate(
     if verbose:
         train_logger.debug(msg=progress.display_summary())
 
-    return tracker, losses_meter, top1, top5
+    return model_stats_tracker, losses_meter, top1, top5
 
 
 def run_training_loop(
@@ -186,7 +186,7 @@ def run_training_loop(
     tb_log_dir: Optional[str] = None,
     checkpoint_folder: str = "./checkpoints",
     debug_mode: bool = False,
-    tracker: Optional[ModelStatsTracker] = None,
+    model_stats_tracker: Optional[ModelStatsTracker] = None,
     train_sampler: Optional[Sampler] = None,
     val_sampler: Optional[Sampler] = None,
     ckpt_save_interval: int = 300,
@@ -197,8 +197,8 @@ def run_training_loop(
     gpu = device.index
     log_level: int = logging.DEBUG if gpu == 0 else logging.INFO
     train_logger: logging.Logger = setup_logger(
-        name=f"Train:{gpu}",
-        log_file_name=f"train_{gpu}.log",
+        name=f"Trainer:{gpu}",
+        log_file_name=f"trainer_{gpu}.log",
         level=log_level,
         console=False,
     )
@@ -238,7 +238,7 @@ def run_training_loop(
             train_logger.error("Distributed training is not enabled.")
             raise ValueError("Distributed training is not enabled.")
 
-        tracker, train_losses_meter, train_top1, train_top5 = train(
+        model_stats_tracker, train_losses_meter, train_top1, train_top5 = train(
             train_loader=train_loader,
             model=model,
             criterion=criterion,
@@ -246,7 +246,7 @@ def run_training_loop(
             optimizer_manager=optimizer_manager,
             current_epoch=current_epoch,
             device=device,
-            tracker=tracker,
+            model_stats_tracker=model_stats_tracker,
             gpu=gpu,
             verbose=verbose,
             print_freq=print_freq,
@@ -274,7 +274,7 @@ def run_training_loop(
                 train_logger=train_logger,
                 current_epoch=current_epoch,
                 device=device,
-                tracker=tracker,
+                model_stats_tracker=model_stats_tracker,
                 prefix="Val:",
                 verbose=verbose,
                 print_freq=print_freq,

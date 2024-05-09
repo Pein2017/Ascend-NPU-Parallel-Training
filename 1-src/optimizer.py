@@ -5,12 +5,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from setup_utilis import setup_logger
-from torch.optim.lr_scheduler import (
-    CosineAnnealingLR,
-    ReduceLROnPlateau,
-    StepLR,
-    _LRScheduler,
-)
+from torch.optim.lr_scheduler import CosineAnnealingLR, ReduceLROnPlateau, StepLR, _LRScheduler
 
 optimizer_logger = setup_logger(
     name="OptimizerProcess",
@@ -150,7 +145,7 @@ class OptimizerManager:
         self.optimizer.zero_grad()
         optimizer_logger.debug("Cleared gradients of all optimized parameters.")
 
-    def check_early_stopping(self, val_loss: float) -> None:
+    def check_early_stopping(self, val_loss: float) -> bool:
         """
         Check if early stopping criteria are met based on validation loss.
 
@@ -170,6 +165,8 @@ class OptimizerManager:
         if self.early_stop_counter >= self.patience:
             self.early_stop = True
             optimizer_logger.info("Early stopping triggered.")
+
+        return self.early_stop
 
 
 class WarmUpLR(_LRScheduler):

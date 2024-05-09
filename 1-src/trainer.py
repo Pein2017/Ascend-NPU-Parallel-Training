@@ -25,15 +25,17 @@ class Trainer:
         scheduler_manager: SchedulerManager,
         train_loader: DataLoader,
         val_loader: DataLoader,
-        test_loader: DataLoader,
+        test_loader: Optional[DataLoader],
         device: torch.device,
         epochs: int,
         start_epoch: int,
+        print_freq: int,
         arch: str,
         batch_size: int,
         lr: float,
         optimizer_name: str,
-        is_evaluation_enabled: bool,
+        verbose: bool,
+        is_validation_enabled: bool,
         is_distributed: bool,
         is_amp_enabled: bool,
         amp: Optional[Any],
@@ -44,9 +46,10 @@ class Trainer:
         val_sampler: Optional[Sampler] = None,
         tb_log_dir: Optional[str] = None,
         debug_mode: bool = False,
-        checkpoint_folder: str = "./checkpoints",
         ckpt_save_interval: int = 300,
-        commit_message: str = "No commit message",
+        checkpoint_folder: Optional[str] = "./checkpoints",
+        commit_message: Optional[str] = "No commit message",
+        commit_file_path: Optional[str] = "./commit.csv",
     ) -> None:
         self.model = model
         self.criterion = criterion
@@ -58,11 +61,14 @@ class Trainer:
         self.device = device
         self.epochs = epochs
         self.start_epoch = start_epoch
+        self.print_freq = print_freq
         self.arch = arch
         self.batch_size = batch_size
         self.lr = lr
         self.optimizer_name = optimizer_name
-        self.is_evaluation_enabled = is_evaluation_enabled
+
+        self.verbose = verbose
+        self.is_validation_enabled = is_validation_enabled
         self.is_distributed = is_distributed
         self.is_amp_enabled = is_amp_enabled
         self.amp = amp
@@ -74,14 +80,27 @@ class Trainer:
         self.val_sampler = val_sampler
         self.tb_log_dir = tb_log_dir
         self.debug_mode = debug_mode
-        self.checkpoint_folder = checkpoint_folder
         self.ckpt_save_interval = ckpt_save_interval
         self.gpu = self.device.index
-        self.commit_message = commit_message
+
+        self.checkpoint_folder = (
+            "./checkpoints" if checkpoint_folder is None else checkpoint_folder
+        )
+        self.commit_message = (
+            "No commit message" if commit_message is None else commit_message
+        )
+        self.commit_file_path = (
+            "./commit.csv" if commit_file_path is None else commit_file_path
+        )
 
         self.event_timestamp = None
         self.times = []
         self.trainer_setup()
+        self.histogram_record_interval: int = max(
+            1,
+            self.epochs
+            // max(self.hist_record_num, self.epochs),  # avoid division by zero
+        )
 
     def trainer_setup(self) -> None:
         """
@@ -115,13 +134,18 @@ class Trainer:
         """
         self.writer, self.custom_suffix, self.event_timestamp = (
             self.training_setup_manager.setup_tensorboard_and_commit(
-                self.batch_size, self.arch, self.lr, self.optimizer_name
+                self.batch_size,
+                self.arch,
+                self.lr,
+                self.optimizer_name,
+                commit_message=self.commit_message,
             )
         )  # NOTE: if gpu !=0, writer and custom_suffix will be None
 
     def train_one_epoch(
         self,
         current_epoch: int,
+        data_loader: DataLoader,
         prefix: str = "Training Epoch",
         verbose: bool = False,
         print_freq: int = 100,
@@ -130,19 +154,31 @@ class Trainer:
     ]:
         """
         Train model for one epoch and handle all associated metrics and logging.
+
+        Args:
+            current_epoch (int): The current epoch number for logging purposes.
+            data_loader (DataLoader): The data loader used for training.
+            prefix (str): A string prefix for logging, identifying this as a training epoch.
+            verbose (bool): If True, provides detailed logging information.
+            print_freq (int): How frequently to log progress within the epoch.
+
+        Returns:
+            Tuple[Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker]:
+            ModelStatsTracker and metrics trackers for loss, top1, and top5 accuracy.
         """
-        # Start of the epoch setup
+        # Initialize progress meters with the given prefix and data loader size
         meters, progress = create_meters(
-            batch_size=len(self.train_loader),
+            batch_size=len(data_loader),
             prefix=f"{prefix}:[{current_epoch}]",
         )
-        # Extract meters based on your needs
         losses_meter, top1, top5, batch_processing_time, data_loading_time = meters
 
+        # Set the model to training mode
         self.model.train()
-
         end = time.time()
-        for i, batch in enumerate(self.train_loader):
+
+        # Training loop using the provided data loader
+        for i, batch in enumerate(data_loader):
             data_loading_time.update(time.time() - end)
             loss, acc1, acc5 = process_batch(
                 batch=batch,
@@ -151,6 +187,8 @@ class Trainer:
                 device=self.device,
                 is_training=True,
             )
+
+            # Update the meters
             update_meters(
                 meters=[losses_meter, top1, top5],
                 loss=loss,
@@ -159,6 +197,7 @@ class Trainer:
                 batch_size=batch[0].size(0),
             )
 
+            # Zero gradients, backward pass, and optimizer step
             self.optimizer_manager.zero_grad()
             loss.backward()
             self.optimizer_manager.step()
@@ -166,30 +205,30 @@ class Trainer:
             batch_processing_time.update(time.time() - end)
             end = time.time()
 
-            # Detailed logging per specified frequency
+            # Verbose logging per specified print frequency
             if self.gpu == 0 and verbose and i % print_freq == 0:
                 self.train_logger.debug(progress.display(i + 1))
                 self.train_logger.debug("\n")
 
-        # Synchronize and finalize metrics
+        # Synchronize the metrics across all GPUs if using distributed training
         losses_meter.all_reduce()
         top1.all_reduce()
         top5.all_reduce()
 
-        # Logging summary of the epoch
+        # Summary logging of the epoch progress
         if self.gpu == 0 and verbose:
             self.train_logger.debug(progress.display_summary())
 
-        # Update model stats tracker if available
-        if self.gpu == 0:
-            if self.model_stats_tracker is not None:
-                pass
+        # Optional tracking of model statistics
+        if self.gpu == 0 and self.model_stats_tracker is not None:
+            pass
 
         return self.model_stats_tracker, losses_meter, top1, top5
 
-    def validate_one_epoch(
+    def evaluate_one_epoch(
         self,
         current_epoch: int,
+        data_loader: DataLoader,
         prefix: str = "Val",
         verbose: bool = False,
         print_freq: int = 100,
@@ -197,17 +236,30 @@ class Trainer:
         Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker
     ]:
         """
-        Perform validation on the validation dataset to evaluate the performance of the model.
+        Perform validation or testing on the specified dataset to evaluate the performance of the model.
+
+        Args:
+            current_epoch (int): The current epoch number, used for logging.
+            data_loader (DataLoade): DataLoader to use for validation or testing.
+            prefix (str): A prefix for identifying the purpose of the validation (e.g., "Val" or "Test").
+            verbose (bool): If True, provides detailed logging information.
+            print_freq (int): How frequently to log progress within the epoch.
+
+        Returns:
+            Tuple[Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker]:
+            ModelStatsTracker and metrics trackers for loss, top1, and top5 accuracy.
         """
+
         meters, progress = create_meters(
-            batch_size=len(self.val_loader), prefix=f"{prefix}:"
+            batch_size=len(data_loader),
+            prefix=f"{prefix}:[{current_epoch}]",
         )
         losses_meter, top1, top5, batch_processing_time, data_loading_time = meters
 
         self.model.eval()
 
         end = time.time()
-        for i, batch in enumerate(self.val_loader):
+        for i, batch in enumerate(data_loader):
             loss, acc1, acc5 = process_batch(
                 batch=batch,
                 model=self.model,
@@ -225,7 +277,7 @@ class Trainer:
             )
 
             batch_processing_time.update(val=time.time() - end)
-            end: float = time.time()
+            end = time.time()
 
             if verbose and i % print_freq == 0:
                 self.train_logger.debug(progress.display(i + 1))
@@ -233,16 +285,17 @@ class Trainer:
         if verbose:
             self.train_logger.debug(progress.display_summary())
 
+        if self.model_stats_tracker is not None:
+            pass
+
         return self.model_stats_tracker, losses_meter, top1, top5
 
     def train_multiple_epochs(
         self,
-    ) -> Tuple[float | int]:
+    ) -> Tuple[float, int]:
         best_acc1 = 0.0
         best_epoch = self.start_epoch
-        self.histogram_record_interval: int = max(
-            1, self.epochs // self.hist_record_num
-        )
+
         if self.gpu == 0:
             input_tensor = torch.randn(1, 3, 32, 32).to(self.device)
             if not self.writer:
@@ -256,11 +309,19 @@ class Trainer:
             if self.is_distributed:
                 self.train_sampler.set_epoch(current_epoch)
             tracker, train_losses_meter, train_top1, train_top5 = self.train_one_epoch(
-                current_epoch
+                current_epoch,
+                data_loader=self.train_loader,
+                verbose=self.verbose,
+                print_freq=self.print_freq,
             )
-            if self.is_evaluation_enabled:
+            if self.is_validation_enabled:
                 val_tracker, val_losses_meter, val_top1, val_top5 = (
-                    self.validate_one_epoch(current_epoch)
+                    self.evaluate_one_epoch(
+                        current_epoch,
+                        data_loader=self.val_loader,
+                        verbose=self.verbose,
+                        print_freq=self.print_freq,
+                    )
                 )
             # Evaluate the early stopping decision and whether it's the best model so far
             is_best = False
@@ -298,31 +359,35 @@ class Trainer:
                     checkpoint_state, is_best, current_epoch, check_point_suffix=None
                 )
 
+            self.log_epoch_timing(current_epoch, epoch_start)
             if self.early_stop(
                 val_loss=val_losses_meter.avg, current_epoch=current_epoch
             ):
                 break
-
-            """time left calculation"""
-            epoch_duration = time.time() - epoch_start
-            self.times.append(epoch_duration)
-            average_epoch_duration = sum(self.times) / len(self.times)
-            estimated_time_left = (
-                self.epochs - current_epoch - 1
-            ) * average_epoch_duration
-
-            hours_left = int(estimated_time_left // 3600)
-            minutes_left = int((estimated_time_left % 3600) // 60)
-            self.train_logger.info(
-                f"Epoch {current_epoch + 1}/{self.epochs} completed in {epoch_duration:.2f} seconds."
-            )
-            self.train_logger.info(
-                f"Approximate time left: {hours_left} hours, {minutes_left} minutes"
-            )
-
         # Finalize training at the end of all loops
         self.finalize_training()
         return (best_acc1, best_epoch)
+
+    def log_epoch_timing(self, current_epoch, epoch_start):
+        """
+        Logs the duration of the current epoch and estimates the time left for the training.
+
+        Args:
+            current_epoch (int): The current epoch number.
+            epoch_start (float): The start time of the current epoch.
+        """
+        epoch_duration = time.time() - epoch_start
+        self.times.append(epoch_duration)
+        average_epoch_duration = sum(self.times) / len(self.times)
+        estimated_time_left = (self.epochs - current_epoch - 1) * average_epoch_duration
+
+        hours_left, minutes_left = divmod(estimated_time_left, 3600)
+        self.train_logger.info(
+            f"Epoch {current_epoch + 1}/{self.epochs} completed in {epoch_duration:.2f} seconds."
+        )
+        self.train_logger.info(
+            f"Approximate time left: {int(hours_left)} hours, {int(minutes_left // 60)} minutes"
+        )
 
     def log_epoch_completion(self, current_epoch: int, epoch_start: float):
         epoch_duration = time.time() - epoch_start
@@ -339,7 +404,8 @@ class Trainer:
 
     def early_stop(self, val_loss: float, current_epoch: int):
         """Determine if early stopping is triggered and broadcast the decision."""
-        early_stop_decision = self.optimizer_manager.early_stop(val_loss)
+
+        early_stop_decision = self.optimizer_manager.check_early_stopping(val_loss)
 
         # Create a tensor from the early stop decision and broadcast it
         early_stop_tensor = torch.tensor(
@@ -353,7 +419,7 @@ class Trainer:
         # Log and return the decision
         if early_stop_decision:
             self.train_logger.info(
-                f"Early stopping triggered across all processes at {current_epoch}"
+                f"Early stopping triggered across all processes at epoch:{current_epoch}"
             )
         return early_stop_decision
 
@@ -434,7 +500,7 @@ class Trainer:
             "Top1/train": train_top1.avg,
             "Top5/train": train_top5.avg,
         }
-        if self.is_evaluation_enabled:
+        if self.is_validation_enabled:
             val_metrics = {
                 "Loss/val": val_losses_meter.avg,
                 "Top1/val": val_top1.avg,

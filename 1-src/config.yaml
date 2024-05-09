@@ -1,19 +1,23 @@
 training:
-  lr: 2e-3
+  lr: 5e-3
   batch_size: 256
   verbose: false
   seed: 17
-  hist_record_num: 30
+  hist_record_num: 20
   train_ratio: 0.9
   print_freq: 300
   workers: 0
   start_epoch: 0
-  epochs: 2000
+  epochs: 1500
   debug_mode: false
-  tracker: false
+  model_stats_tracker: false
   checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
   checkpoint_path:
-  ckpt_save_interval: 300
+  ckpt_save_interval: 200
+
+commit:
+  commit_message: "res34-5e-3"
+  commit_file_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/commit_log.csv
 
 model:
   arch: resnet34
@@ -30,7 +34,7 @@ scheduler:
   type: ReduceLROnPlateau
   mode: min
   factor: 0.5 # for lr reduction
-  patience: 60
+  patience: 75
   warmup_iters: 0
 
 early_stopping:
@@ -48,7 +52,8 @@ logging:
   # checkpoint_path:
 
 evaluation:
-  evaluate: true
+  is_evaluation_enabled: true
+  is_validation_enabled: true
 
 distributed_training:
   distributed: true
@@ -64,6 +69,6 @@ distributed_training:
   device_list: [0, 1, 2, 3, 4, 5, 6, 7]
 
 amp:
-  enabled: false
+  is_amp_enabled: false
   loss_scale: 1024.
   opt_level: O0

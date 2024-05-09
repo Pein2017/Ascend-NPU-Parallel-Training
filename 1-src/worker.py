@@ -13,7 +13,7 @@ from optimizer import CriterionManager, SchedulerManager, initialize_optimizer_m
 from stats_tracker import ModelStatsTracker
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
-from train import run_training_loop, validate
+from trainer import Trainer
 from utilis import init_distributed_training, load_checkpoint, set_device, setup_logger
 
 
@@ -267,7 +267,7 @@ def main_worker(
         worker_logger.debug(
             f"Scheduler {scheduler_type} set with parameters: {scheduler_kwargs}"
         )
-        amp_enabled: bool = config["amp"]["enabled"]
+        amp_enabled: bool = config["amp"]["is_amp_enabled"]
         opt_level: str = config["amp"]["opt_level"]
         loss_scale: float | int = config["amp"]["loss_scale"]
     else:
@@ -285,12 +285,12 @@ def main_worker(
         )
 
     # Check configuration for enabling ModelStatsTracker
-    track_flag: bool = config.get("training").get("tracker", False)
+    track_flag: bool = config.get("training").get("model_stats_tracker", False)
     if track_flag:
-        tracker = ModelStatsTracker(model=model)
+        model_stats_tracker = ModelStatsTracker(model=model)
         worker_logger.debug("ModelStatsTracker is enabled.")
     else:
-        tracker = None
+        model_stats_tracker = None
 
     # For NPU or any other devices where benchmarking needs to be turned off
     cudnn.benchmark = False
@@ -315,66 +315,72 @@ def main_worker(
         f'Starting from epoch {start_epoch}.'
     )
 
-    best_acc1, best_epoch = run_training_loop(
+    # Initialize the Trainer with configurations
+    trainer = Trainer(
         model=model,
         criterion=criterion,
         optimizer_manager=optimizer_manager,
         scheduler_manager=scheduler_manager,
-        epochs=config["training"]["epochs"],
-        hist_record_num=config["training"].get("hist_record_num", 20),
         train_loader=train_loader,
         val_loader=val_loader,
+        test_loader=test_loader,
         device=device,
-        start_epoch=start_epoch,
-        tracker=tracker,
-        distributed=distributed,
-        train_sampler=train_sampler,
-        val_sampler=val_sampler,
-        ngpus_per_node=ngpus_per_node,
-        # NOTE: the batch size is already overall and not per GPU
-        batch_size=batch_size,
-        verbose=verbose,
+        epochs=config["training"]["epochs"],
+        start_epoch=config["training"]["start_epoch"],
         print_freq=print_freq,
         arch=config["model"]["arch"],
+        batch_size=batch_size,
         lr=config["training"]["lr"],
         optimizer_name=config["optimizer"]["name"],
-        amp_enabled=config["amp"]["enabled"],
+        verbose=verbose,
+        is_validation_enabled=config["evaluation"]["is_validation_enabled"],
+        is_distributed=(ngpus_per_node > 1),
+        is_amp_enabled=amp_enabled,
         amp=amp,
-        tb_log_dir=config["logging"].get("tb_log_dir", None),
-        checkpoint_folder=config["training"].get("checkpoint_folder", None),
-        debug_mode=debug_mode,
-        world_size=world_size,
+        hist_record_num=config["training"].get("hist_record_num", 20),
+        train_logger=None,  # NOTE initilized inside the trainer
+        train_sampler=train_sampler,
+        val_sampler=val_sampler,
+        tb_log_dir=config["logging"]["tb_log_dir"],
+        debug_mode=config["training"]["debug_mode"],
+        checkpoint_folder=config["training"]["checkpoint_folder"],
         ckpt_save_interval=ckpt_save_interval,
+        commit_message=config["commit"]["commit_message"],
+        commit_file_path=config["commit"]["commit_file_path"],
     )
 
-    # If evaluation is specified, execute the validation process and return
-    if config["evaluation"]["evaluate"] and gpu == 0:
-        worker_logger.info("\n" + "-" * 20)
-        worker_logger.info(
-            msg=f"For validation set during training, best acc1: {best_acc1:.3f} at epoch {best_epoch}"
-        )
+    # Run training loop
+    best_acc1, best_epoch = trainer.train_multiple_epochs()
 
     top1 = None
-    if gpu == 0:
-        if len(test_loader) > 10:
-            tracker: ModelStatsTracker | None
-            loss_metric: MetricTracker
-            top1: MetricTracker
-            top5: MetricTracker
-            tracker, loss_metric, top1, top5 = validate(
-                val_loader=test_loader,
-                model=model,
-                criterion=criterion,
-                train_logger=worker_logger,
-                current_epoch=best_epoch,
-                device=device,
-                tracker=tracker,
-                prefix="Test",
-            )
-            worker_logger.info(f"Final testing at NPU/GPU: {gpu}")
-            worker_logger.info(
-                msg=f"For test set, test loss is: {loss_metric.avg}, test top1 is: {top1.avg}, test top5 is: {top5.avg}"
-            )
-            result[0] = best_acc1
-            result[1] = best_epoch
-            result[2] = top1.avg if top1 else -1
+    if gpu == 0 and config["evaluation"]["is_evaluation_enabled"]:
+        if len(test_loader) < 10:
+            raise ValueError("Test loader is too small, something is wrong.")
+        # Evaluate the model on the test set
+        model_stats_tracker: ModelStatsTracker | None
+        loss_metric: MetricTracker
+        top1: MetricTracker
+        top5: MetricTracker
+        model_stats_tracker, loss_metric, top1, top5 = trainer.evaluate_one_epoch(
+            current_epoch=-1,
+            data_loader=test_loader,
+            prefix="Test",
+            verbose=False,
+        )
+        worker_logger.info(f"Final testing at NPU/GPU: {gpu}")
+        worker_logger.info(
+            msg=f"For test set, test loss is: {loss_metric.avg}, test top1 is: {top1.avg}, test top5 is: {top5.avg}"
+        )
+        result[0] = best_acc1
+        result[1] = best_epoch
+        result[2] = top1.avg if top1 else -1
+
+        # commit the test information and best acc1/epoch
+        metrics_data = {
+            "best_acc1": best_acc1,
+            "best_epoch": int(best_epoch),
+            "test_top1": top1.avg if top1 else -1,
+        }
+        trainer.training_setup_manager.update_commit_log(
+            event_file_dir=trainer.writer.log_dir, metrics_data=metrics_data
+        )

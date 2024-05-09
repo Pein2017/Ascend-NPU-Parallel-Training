@@ -1,3 +1,2 @@
-Index,Architecture,Configuration,Event File Dir,Commit
-0,resnet34,batch-256-lr-2e-3-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-2e-3-SGD/2024-05-08 12:42:14,res34 training
-1,resnet34,batch-256-lr-2e-3-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-2e-3-SGD/2024-05-08 08:43:21,res34 training
+Architecture,Configuration,Event File Dir,Commit,best_acc1,best_epoch,test_top1
+resnet34,batch-256-lr-5e-3-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-5e-3-SGD/2024-05-09 11:43:15,res34-5e-3,76.15131578947368,528.0,72.42
