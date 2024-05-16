@@ -1,0 +1,77 @@
+training:
+  lr: 1e-1
+  batch_size: 2048 # total
+  epochs: 1000
+  seed: 17
+  verbose: false
+  hist_save_interval: 50 # should be fixed
+  train_ratio: 0.9 # should be fixed
+  print_freq: 100
+  workers: 0
+  start_epoch: 0
+  is_deteriminstic: false
+  debug_mode: false
+  model_stats_tracker_flag: false
+  checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
+  checkpoint_path:
+  ckpt_save_interval: 200 # should be fixed
+
+commit:
+  commit_message: "res34-1e-1-2048"
+  commit_file_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/commit_log.csv
+
+model:
+  arch: resnet34
+  pretrained: false
+
+optimizer:
+  name: SGD
+  momentum: 0.9
+  weight_decay: 5e-4
+  betas: [0.9, 0.99]
+  criterion: CrossEntropyLoss
+
+scheduler:
+  type: ReduceLROnPlateau
+  mode: min
+  factor: 0.2 # for lr reduction
+  patience: 30
+  warmup_iters: 0
+
+early_stopping:
+  min_loss_improvement: 1e-4
+  patience: 60
+
+data:
+  path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data
+  dataset_name: cifar100
+  use_dummy: false
+
+logging:
+  experiment_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/
+  tb_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/
+  logger_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-loggers/
+
+evaluation:
+  is_evaluation_enabled: true
+  is_validation_enabled: true
+
+amp:
+  is_amp_enabled: false
+  loss_scale: 1024.
+  opt_level: O0
+
+distributed_training:
+  distributed: true
+  # world_size: 1
+  # rank: 0
+  dist_url: tcp://192.168.18.48:12345
+  dist_backend: hccl
+  master_addr: 192.168.18.48
+  master_port: 12345
+  multiprocessing_distributed: true
+  ## gpu: None depreciated
+  device_type: npu
+  device_list: [0, 1, 2, 3, 4, 5, 6, 7]
+
+log_csv_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/commit_log.csv

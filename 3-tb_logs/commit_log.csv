@@ -1,2 +1,6 @@
-Architecture,Configuration,Event File Dir,Commit,best_acc1,best_epoch,test_top1
-resnet34,batch-256-lr-5e-3-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-5e-3-SGD/2024-05-09 11:43:15,res34-5e-3,76.15131578947368,528.0,72.42
+time,commit_message,best_epoch,best_train_acc,best_val_acc,best_test_acc,lr_at_best,final_test_acc,lr,batch_size
+2024-05-16_20-10-14,res34-1e-1-2048,,,,,,,1e-1,2048.0
+2024-05-16_20-03-46,res34-1e-1-2048,,,,,,,0.1,2048.0
+2024-05-16_19-45-10,res34-1e-1-2048,,,,,,,0.1,2048.0
+2024-05-16_19-39-05,res34-1e-1-2048,,,,,,,0.1,2048.0
+2024-05-16_19-38-44,res34-5e-4-256,,,,,,,0.0005,

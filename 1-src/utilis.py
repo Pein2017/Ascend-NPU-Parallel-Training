@@ -14,6 +14,7 @@ utilis_worker: logging.Logger = setup_logger(
     level=logging.DEBUG,
     console=False,
 )
+utilis_worker.debug("Utilis process logger initialized.")
 
 
 def load_checkpoint(checkpoint_path: str) -> Tuple[Dict, Dict, int, Optional[float]]:
@@ -100,9 +101,9 @@ def set_device(device: str, gpu: Optional[Union[str, int]]) -> torch.device:
 
     if device == "npu":
         loc = f"npu:{gpu}"
-        import torch_npu  # Import locally to avoid errors if the module isn't available
+        import torch_npu  # Import locally to avoid errors if the module isn't available # noqa
 
-        torch_npu.npu.set_device(loc)
+        torch.npu.set_device(loc)
     elif device == "gpu":
         loc = f"cuda:{gpu}"
         torch.cuda.set_device(loc)

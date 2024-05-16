@@ -1,0 +1,12 @@
+2024-05-16 19:45:31,306 - INFO - Worker:4 - Worker Logger initialized.
+2024-05-16 19:45:31,306 - INFO - Worker:4 - Initialized npu on npu:4.
+2024-05-16 19:45:47,820 - INFO - Worker:4 - Data loaders initialized successfully.
+2024-05-16 19:45:56,224 - INFO - Worker:4 - Trainer initialized successfully.
+2024-05-16 20:04:07,192 - INFO - Worker:4 - Worker Logger initialized.
+2024-05-16 20:04:07,192 - INFO - Worker:4 - Initialized npu on npu:4.
+2024-05-16 20:04:23,383 - INFO - Worker:4 - Data loaders initialized successfully.
+2024-05-16 20:04:31,352 - INFO - Worker:4 - Trainer initialized successfully.
+2024-05-16 20:10:35,145 - INFO - Worker:4 - Worker Logger initialized.
+2024-05-16 20:10:35,146 - INFO - Worker:4 - Initialized npu on npu:4.
+2024-05-16 20:10:51,953 - INFO - Worker:4 - Data loaders initialized successfully.
+2024-05-16 20:10:59,724 - INFO - Worker:4 - Trainer initialized successfully.

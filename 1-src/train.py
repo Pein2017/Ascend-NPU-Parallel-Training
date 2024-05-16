@@ -170,7 +170,7 @@ def run_training_loop(
     val_loader: DataLoader,
     device: torch.device,
     epochs: int,
-    hist_record_num=20,
+    hist_save_interval=20,
     start_epoch: int = 0,
     distributed: bool = False,
     world_size: int = 1,
@@ -229,7 +229,8 @@ def run_training_loop(
         train_logger.debug("Model graph added to TensorBoard.")
     # start_time = time.time()
     times = []
-    histogram_record_interval: int = max(1, epochs // hist_record_num)
+    # histogram_record_interval: int = max(1, epochs // hist_save_interval)
+    histogram_record_interval = hist_save_interval
     for current_epoch in range(start_epoch, epochs):
         epoch_start = time.time()
         if distributed:

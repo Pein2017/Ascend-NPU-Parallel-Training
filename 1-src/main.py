@@ -65,7 +65,7 @@ def start_worker(config: Dict) -> Tuple[float, int, float]:
     distributed: bool = world_size > 1 or multiprocessing_distributed
 
     # Map device IDs to physical device names
-    device: str = dist_training["device"]
+    device_type: str = dist_training["device_type"]
     device_list: List[str] | List[int] = dist_training["device_list"]
     process_device_map: Dict[int, int] = device_id_to_process_device_map(
         device_list=device_list
@@ -74,7 +74,7 @@ def start_worker(config: Dict) -> Tuple[float, int, float]:
     config["distributed_training"]["distributed"] = distributed
 
     ngpus_per_node: int = (
-        len(process_device_map) if device == "npu" else torch.cuda.device_count()
+        len(process_device_map) if device_type == "npu" else torch.npu.device_count()
     )
 
     if distributed:

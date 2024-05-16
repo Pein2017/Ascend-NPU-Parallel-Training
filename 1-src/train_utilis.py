@@ -10,7 +10,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 
 def create_meters(
-    batch_size: int, prefix: str
+    batch_size: int, prefix: str, device: TorchDevice
 ) -> Tuple[List[MetricTracker], ProgressMeter]:
     """
     Create metric trackers for monitoring various metrics during training or validation.
@@ -23,20 +23,43 @@ def create_meters(
         Tuple[List[MetricTracker], ProgressMeter]: Tuple containing a list of metric trackers and a progress meter.
     """
     # Define the metric trackers with appropriate format specifications
-    batch_processing_time = MetricTracker(
-        name="Batch Processing:", fmt=":1.2f", metric_type=MetricType.AVERAGE
-    )
-    data_loading_time = MetricTracker(
-        "Data Loading:", fmt=":1.2f", metric_type=MetricType.AVERAGE
-    )
+
     losses_meter = MetricTracker(
-        name="Loss", fmt=":1.4e", metric_type=MetricType.AVERAGE
+        name="Loss",
+        fmt=":1.4e",
+        metric_type=MetricType.AVERAGE,
+        device=device,
     )
     top1 = MetricTracker(
-        name="Top-1 accuracy", fmt=":1.3f", metric_type=MetricType.AVERAGE
+        name="Top-1 accuracy",
+        fmt=":1.3f",
+        metric_type=MetricType.AVERAGE,
+        device=device,
     )
     top5 = MetricTracker(
-        name="Top-5 accuracy", fmt=":1.3f", metric_type=MetricType.AVERAGE
+        name="Top-5 accuracy",
+        fmt=":1.3f",
+        metric_type=MetricType.AVERAGE,
+        device=device,
+    )
+
+    batch_processing_time = MetricTracker(
+        name="Batch Training:",
+        fmt=":1.2f",
+        metric_type=MetricType.AVERAGE,
+        device=device,
+    )
+    data_loading_time = MetricTracker(
+        "Data Loading:",
+        fmt=":1.2f",
+        metric_type=MetricType.AVERAGE,
+        device=device,
+    )
+    sync_time = MetricTracker(
+        "Synchronization:",
+        fmt=":1.2f",
+        metric_type=MetricType.AVERAGE,
+        device=device,
     )
 
     meters: List[MetricTracker] = [
@@ -45,6 +68,7 @@ def create_meters(
         top5,
         batch_processing_time,
         data_loading_time,
+        sync_time,
     ]
     progress = ProgressMeter(total_batches=batch_size, trackers=meters, prefix=prefix)
 
@@ -52,30 +76,31 @@ def create_meters(
 
 
 def process_batch(
-    batch: Tuple[Tensor, Tensor],
+    batch: Tuple[torch.Tensor, torch.Tensor],
     model: nn.Module,
     criterion: nn.Module,
-    device: TorchDevice,
+    device: torch.device,
     is_training: bool,
-) -> Tuple[Tensor, float, float]:
+) -> Tuple[torch.Tensor, float, float]:
     """
     Process a single batch of data, perform forward propagation and loss calculation.
 
     Args:
-        batch (Tuple[Tensor, Tensor]): Data batch, containing features and targets.
+        batch (Tuple[torch.Tensor, torch.Tensor]): Data batch, containing features and targets.
         model (nn.Module): The model to use.
         criterion (nn.Module): Loss function.
-        device (torch.device): The computation device.
+        device: torch.device): The computation device.
         is_training (bool): Indicates whether it is in training mode.
 
     Returns:
-        Tuple[Tensor, float, float]: A tuple containing the loss, top-1 get_topk_acc, and top-5 get_topk_acc.
+        Tuple[torch.Tensor, float, float]: A tuple containing the loss, top-1 get_topk_acc, and top-5 get_topk_acc.
     """
+
     images, target = batch
     images = images.to(device, non_blocking=True)
     target = target.to(device, non_blocking=True)
 
-    # Set model to the correct mode
+    # Set model to the correct mode and perform forward pass
     if is_training:
         model.train()
         output = model(images)
@@ -84,12 +109,9 @@ def process_batch(
         with torch.no_grad():
             output = model(images)
 
+    # Compute loss and accuracy
     loss = criterion(output, target)
     acc1, acc5 = get_topk_acc(output, target, topk=(1, 5))
-
-    # Check if the values are in a reasonable range
-    if not torch.isfinite(loss):
-        raise ValueError(f"Loss is not finite: {loss}")
 
     return loss, acc1, acc5
 

@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Tuple
 
 import matplotlib.pyplot as plt
 from setup_utilis import setup_logger
@@ -34,22 +35,18 @@ class TBLogExporter:
         self.custom_suffix = custom_suffix
         self.tb_logger = tb_logger
         self.event_prefix = event_prefix
-        self.arch = os.path.basename(
-            os.path.dirname(os.path.dirname(event_folder_path))
-        )
+
         if not fig_exported_dir:
-            self.fig_exported_dir = os.path.dirname(
-                os.path.dirname(
-                    os.path.dirname(os.path.dirname(self.event_folder_path))
-                )
+            self.main_folder_dir = os.path.dirname(
+                os.path.dirname(self.event_folder_path)
             )
-            self.fig_exported_dir = os.path.join(self.fig_exported_dir, "figs")
+            self.fig_exported_dir = os.path.join(self.main_folder_dir, "fig")
         else:
             # recommended format {dir_path/figs}
             pass
         self.event_file_name, self.experiment_number = self.find_latest_log_event()
 
-    def find_latest_log_event(self):
+    def find_latest_log_event(self) -> Tuple[str, int]:
         """
         Find the latest TensorBoard log event file from the most recent timestamp directory
         and count the total number of experiments based on the number of timestamp directories.
@@ -57,53 +54,51 @@ class TBLogExporter:
         Returns:
             Tuple[str, int]: The latest log file name and the experiment count.
         """
-        parent_dir = os.path.dirname(self.event_folder_path)
+        parent_dir = self.main_folder_dir
+
         # List all timestamp directories in the parent directory of the specified event folder path
         timestamp_dirs = [
             d
             for d in os.listdir(parent_dir)
-            if os.path.isdir(os.path.join(parent_dir, d))
+            if os.path.isdir(os.path.join(parent_dir, d)) and d != "fig"
         ]
 
         if not timestamp_dirs:
-            self.tb_logger.error(
-                f"No timestamp directories found in {self.event_folder_path}"
-            )
-            raise FileNotFoundError(
-                f"No timestamp directories found in {self.event_folder_path}"
-            )
+            self.tb_logger.error(f"No timestamp directories found in {parent_dir}")
+            raise FileNotFoundError(f"No timestamp directories found in {parent_dir}")
 
         # Sort directories to find the latest
         timestamp_dirs.sort(key=lambda x: os.path.getmtime(os.path.join(parent_dir, x)))
         latest_dir = timestamp_dirs[-1]
-        full_path_to_latest_dir = os.path.join(parent_dir, latest_dir)
+        full_path_to_latest_dir = os.path.join(parent_dir, latest_dir, "event")
 
-        # Listing event files within the latest directory
+        # Assuming there is only one event file in the directory
         event_files = [
             f
             for f in os.listdir(full_path_to_latest_dir)
-            if f.startswith(self.event_prefix) and f.endswith(self.custom_suffix)
+            if f.startswith(self.event_prefix)  # and f.endswith(self.custom_suffix)
         ]
-        event_files.sort(
-            key=lambda f: os.path.getmtime(os.path.join(full_path_to_latest_dir, f))
-        )
-        latest_file = event_files[-1] if event_files else None
+
+        if not event_files:
+            self.tb_logger.error(f"No event files found in {full_path_to_latest_dir}")
+            raise FileNotFoundError(
+                f"No event files found in {full_path_to_latest_dir}"
+            )
+
+        latest_file = event_files[0]
 
         experiment_number = len(timestamp_dirs)  # Count of timestamp directories
 
         return latest_file, experiment_number
 
-    def load_tb_event(self, event_file_name: str):
+    def load_tb_event(self):
         """
-        Load TensorBoard events from a specified log file.
-
-        Args:
-            event_file_name (str): Name of the log file to load events from.
+        Load TensorBoard events from the log file in the specified event folder path.
 
         Returns:
             EventAccumulator: Loaded events or None if the file cannot be found or loaded.
         """
-        event_file_path = os.path.join(self.event_folder_path, event_file_name)
+        event_file_path = self.event_folder_path
         if not os.path.exists(event_file_path):
             self.tb_logger.error(f"Event file does not exist: {event_file_path}")
             return None
@@ -169,10 +164,12 @@ class TBLogExporter:
 
     def construct_save_path(self, fig_name: str) -> str:
         # Construct the final save path for the plot
+        """
+        fig_name = f"{self.custom_suffix}.png" in Trainer class
+        """
         save_path = os.path.join(
             self.fig_exported_dir,
-            self.arch,
-            f"{self.custom_suffix}-exp{self.experiment_number}-{fig_name}",
+            f"Exp{self.experiment_number}-{fig_name}",
         )
 
         # Ensure the directory exists
@@ -188,7 +185,7 @@ class TBLogExporter:
             grouped_metrics: Metrics to plot, grouped by category.
             fig_name: Name for the output plot file.
         """
-        tb_event = self.load_tb_event(event_file_name=self.event_file_name)
+        tb_event = self.load_tb_event()
         self.plot_metrics(
             tb_event=tb_event, grouped_metrics=grouped_metrics, fig_name=fig_name
         )
@@ -203,9 +200,9 @@ if __name__ == "__main__":
     )
 
     # Define the directory and custom suffix for the TensorBoard logs
-    custom_suffix = "batch-256-lr-5e-2-SGD"
-    fig_name = f"metrics-{custom_suffix}.png"
-    event_folder_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-5e-2-SGD/2024-05-06 18:18:43"
+    custom_suffix = "testing"
+    fig_name = f"{custom_suffix}.png"
+    event_folder_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/lr-5e-4/batch_size-512/arch-resnet18/2024-05-16_16-05-49/event"
 
     # Ensure the log directory exists
     if not os.path.exists(event_folder_path):

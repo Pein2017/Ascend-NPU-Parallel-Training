@@ -1,0 +1,7 @@
+2024-05-16 19:38:44,975 - DEBUG - MainProcess - Main Logger initialized.
+2024-05-16 19:38:44,975 - INFO - MainProcess - Main logger is set up on node 0.
+2024-05-16 19:38:44,975 - INFO - MainProcess - Distributed training initialized with backend: hccl, init_method: tcp://192.168.18.48:12345
+2024-05-16 19:39:01,397 - INFO - MainProcess - Dataset verified and ready at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data'.
+2024-05-16 19:39:01,398 - INFO - MainProcess - Dataset verified and downloaded successfully.
+2024-05-16 19:39:01,398 - INFO - MainProcess - Attempting to synchronize all processes...
+2024-05-16 19:39:06,145 - INFO - MainProcess - All processes synchronized successfully.

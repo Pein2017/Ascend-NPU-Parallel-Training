@@ -1,0 +1,4 @@
+Architecture,Configuration,Event File Dir,Commit,best_acc1,best_epoch,test_top1
+resnet34,batch-256-lr-5e-2-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-5e-2-SGD/2024-05-11 15:33:50,"res34-256-5e-2,SGD,factor:0.2,patience:(60,120)",98.23999990234375,335.0,75.32
+resnet34,batch-256-lr-5e-3-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-5e-3-SGD/2024-05-11 11:35:33,"res34-256-5e-3,SGD,factor:0.2,patience:(30,90)",89.120000390625,327.0,52.57
+resnet34,batch-256-lr-5e-3-SGD,/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/events/resnet34/batch-256-lr-5e-3-SGD/2024-05-11 09:51:08,"wrong,before val_sampler,res34-256-5e-3,SGD,factor:0.2,patience:(30,90)",50.78125,171.0,52.24

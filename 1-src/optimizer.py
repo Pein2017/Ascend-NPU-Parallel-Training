@@ -5,7 +5,12 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from setup_utilis import setup_logger
-from torch.optim.lr_scheduler import CosineAnnealingLR, ReduceLROnPlateau, StepLR, _LRScheduler
+from torch.optim.lr_scheduler import (
+    CosineAnnealingLR,
+    ReduceLROnPlateau,
+    StepLR,
+    _LRScheduler,
+)
 
 optimizer_logger = setup_logger(
     name="OptimizerProcess",
@@ -13,6 +18,7 @@ optimizer_logger = setup_logger(
     level=logging.INFO,
     console=False,
 )
+optimizer_logger.debug("Optimizer process logger initialized.")
 
 
 def initialize_optimizer_manager(model: nn.Module, config: Dict):
@@ -38,7 +44,7 @@ def initialize_optimizer_manager(model: nn.Module, config: Dict):
         optimizer_type=config["optimizer"]["name"],
         optimizer_params=optimizer_params,
         patience=int(config["early_stopping"]["patience"]),
-        early_stop_delta=float(config["early_stopping"]["delta"]),
+        min_loss_improvement=float(config["early_stopping"]["min_loss_improvement"]),
     )
 
     return optimizer_manager
@@ -55,7 +61,7 @@ class OptimizerManager:
         optimizer_type: str,
         optimizer_params: Dict[str, Any],
         patience: int = 10,
-        early_stop_delta: float = 1e-6,
+        min_loss_improvement: float = 1e-6,
     ):
         """
         Initialize the OptimizerManager with the specified optimizer type and parameters.
@@ -67,7 +73,7 @@ class OptimizerManager:
         )
         self.scheduler = None  # Placeholder for a learning rate scheduler
         self.patience = patience
-        self.early_stop_delta = early_stop_delta
+        self.min_loss_improvement = min_loss_improvement
         self.best_loss = float("inf")
         self.early_stop_counter = 0
 
@@ -135,15 +141,14 @@ class OptimizerManager:
         """
         Perform a single optimization step.
         """
+
         self.optimizer.step()
-        optimizer_logger.debug("Optimizer step executed.")
 
     def zero_grad(self) -> None:
         """
         Clear the gradients of all optimized parameters.
         """
         self.optimizer.zero_grad()
-        optimizer_logger.debug("Cleared gradients of all optimized parameters.")
 
     def check_early_stopping(self, val_loss: float) -> bool:
         """
@@ -152,7 +157,10 @@ class OptimizerManager:
         Args:
             val_loss (float): The validation loss for the current epoch.
         """
-        if self.best_loss is None or val_loss < self.best_loss - self.early_stop_delta:
+        if (
+            self.best_loss is None
+            or val_loss < self.best_loss - self.min_loss_improvement
+        ):
             self.best_loss = val_loss
             self.early_stop_counter = 0
             optimizer_logger.debug("New best loss recorded.")
@@ -232,7 +240,7 @@ class SchedulerManager:
             "Scheduler {} created successfully.".format(scheduler_type)
         )
 
-    def scheduler_step(self, current_epoch: int, metric=None, **kwargs):
+    def scheduler_step(self, current_epoch: int, metric: float, **kwargs):
         """
         Execute a step of the scheduler, typically after an optimizer step.
         If in the warmup phase, the warmup scheduler is updated instead of the main scheduler.

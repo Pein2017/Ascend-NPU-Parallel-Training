@@ -7,6 +7,7 @@ from torch.utils.data.distributed import DistributedSampler
 from torchvision import datasets, transforms
 
 
+# TODO: Encapsulate this as @staticmethod in Class
 def verify_and_download_dataset(
     dataset_name: str, dataset_path: str, logger: logging.Logger
 ) -> None:
@@ -46,29 +47,6 @@ def verify_and_download_dataset(
         logger.info(
             f"Dataset {dataset_name} already exists at '{dataset_path}'. No download needed."
         )
-
-
-def calculate_mean_std(loader: DataLoader) -> Tuple[float, float]:
-    """
-    Helper function for get the mean and standard deviation of the dataset.
-    """
-    mean = 0.0
-    std = 0.0
-    total_images_count = 0
-
-    for images, _ in loader:
-        # Reshape [B, C, W, H] -> [B, C, W * H]
-        images = images.view(images.size(0), images.size(1), -1)
-        # Update total number of images
-        total_images_count += images.size(0)
-        # Compute mean and std for this batch
-        mean += images.mean(2).sum(0)
-        std += images.std(2).sum(0)
-
-    # Normalize by the total number of images
-    mean /= total_images_count
-    std /= total_images_count
-    return mean, std
 
 
 def get_dataloaders(
@@ -157,22 +135,31 @@ def get_dataloaders(
 
     assert len(transform) == 2, "Transform should be a tuple of two transforms."
 
-    # Load entire dataset for splitting
+    # Load the entire dataset for splitting (initially without transform)
     full_dataset = Dataset(
-        root=dataset_path, train=True, download=download, transform=transform[0]
+        root=dataset_path, train=True, download=download, transform=None
     )
-    total_size: int = len(full_dataset)
-    train_size: int = int(total_size * train_ratio)
-    val_size: int = total_size - train_size
+    total_size = len(full_dataset)
+    train_size = int(total_size * train_ratio)
+    val_size = total_size - train_size
+
+    # Split the dataset into training and validation sets
     train_dataset, val_dataset = random_split(
         dataset=full_dataset, lengths=[train_size, val_size]
     )
+
+    # Manually set the transform for each subset
+    train_dataset.dataset.transform = transform[0]
+    val_dataset.dataset.transform = transform[1]
+
     logger.debug(
         f"In function get_dataloaders: \n Train size: {train_size}, Validation size: {val_size}"
     )
+
     train_sampler = DistributedSampler(train_dataset) if distributed else None
     if train_sampler:
         logger.debug(f"Train sampler: {train_sampler} initilized.")
+
     val_sampler = DistributedSampler(val_dataset) if distributed else None
     if val_sampler:
         logger.debug(f"Validation sampler: {val_sampler} initilized.")
@@ -202,6 +189,29 @@ def get_dataloaders(
     )
 
     return train_loader, val_loader, test_loader, train_sampler, val_sampler
+
+
+def calculate_mean_std(loader: DataLoader) -> Tuple[float, float]:
+    """
+    Helper function for get the mean and standard deviation of the dataset.
+    """
+    mean = 0.0
+    std = 0.0
+    total_images_count = 0
+
+    for images, _ in loader:
+        # Reshape [B, C, W, H] -> [B, C, W * H]
+        images = images.view(images.size(0), images.size(1), -1)
+        # Update total number of images
+        total_images_count += images.size(0)
+        # Compute mean and std for this batch
+        mean += images.mean(2).sum(0)
+        std += images.std(2).sum(0)
+
+    # Normalize by the total number of images
+    mean /= total_images_count
+    std /= total_images_count
+    return mean, std
 
 
 if __name__ == "__main__":

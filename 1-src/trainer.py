@@ -3,15 +3,17 @@ import os
 import time
 from typing import Any, Dict, Optional, Tuple
 
+import numpy as np
 import torch
 import torch.distributed as dist
+import torch_npu  # noqa
 from metric_utilis import MetricTracker
 from optimizer import OptimizerManager, SchedulerManager
-from setup_utilis import TrainingSetupManager, setup_logger
+from setup_utilis import setup_logger
 from stats_tracker import ModelStatsTracker
 from tb_log_visualization import TBLogExporter
 from torch.nn import Module
-from torch.utils.data import DataLoader, Sampler
+from torch.utils.data import DataLoader, DistributedSampler, Sampler
 from torch.utils.tensorboard import SummaryWriter
 from train_utilis import create_meters, process_batch, update_meters
 
@@ -39,11 +41,16 @@ class Trainer:
         is_distributed: bool,
         is_amp_enabled: bool,
         amp: Optional[Any],
-        hist_record_num: int,
+        hist_save_interval: int,
+        writer: Optional[SummaryWriter],
+        custom_suffix: Optional[str],
+        # event_timestamp: str,
+        accumulation_steps: int = 5,
         train_logger: Optional[logging.Logger] = None,
         model_stats_tracker: Optional[ModelStatsTracker] = None,
         train_sampler: Optional[Sampler] = None,
         val_sampler: Optional[Sampler] = None,
+        test_sampler: Optional[Sampler] = None,
         tb_log_dir: Optional[str] = None,
         debug_mode: bool = False,
         ckpt_save_interval: int = 300,
@@ -72,16 +79,24 @@ class Trainer:
         self.is_distributed = is_distributed
         self.is_amp_enabled = is_amp_enabled
         self.amp = amp
-        self.hist_record_num = hist_record_num
+        self.hist_save_interval = hist_save_interval
+
+        # TODO: pass in
+        self.writer = writer
+        self.custom_suffix = custom_suffix
+        self.accumulation_steps = accumulation_steps
 
         self.train_logger = train_logger
         self.model_stats_tracker = model_stats_tracker
         self.train_sampler = train_sampler
         self.val_sampler = val_sampler
+        self.test_sampler = test_sampler
         self.tb_log_dir = tb_log_dir
         self.debug_mode = debug_mode
         self.ckpt_save_interval = ckpt_save_interval
         self.gpu = self.device.index
+        self.rank = dist.get_rank() if is_distributed else 0
+        self.world_size = dist.get_world_size() if is_distributed else 1
 
         self.checkpoint_folder = (
             "./checkpoints" if checkpoint_folder is None else checkpoint_folder
@@ -93,62 +108,36 @@ class Trainer:
             "./commit.csv" if commit_file_path is None else commit_file_path
         )
 
-        self.event_timestamp = None
         self.times = []
-        self.trainer_setup()
-        self.histogram_record_interval: int = max(
-            1,
-            self.epochs
-            // max(self.hist_record_num, self.epochs),  # avoid division by zero
-        )
+        self.train_logger_setup()
+        # self.histogram_record_interval: int = max(
+        #     1,
+        #     self.epochs
+        #     // max(self.hist_save_interval, self.epochs),  # avoid division by zero
+        # ) Depreciated
 
-    def trainer_setup(self) -> None:
+    def train_logger_setup(self) -> None:
         """
         Perform any necessary setup before training.
         """
         # Setup logging
         if self.train_logger is None:
-            log_level = logging.DEBUG if self.gpu == 0 else logging.INFO
+            log_level = logging.DEBUG if self.debug_mode else logging.INFO
             self.train_logger = setup_logger(
-                name=f"Train:{self.gpu}",
-                log_file_name=f"train_{self.gpu}.log",
+                name=f"Trainer:{self.rank}",
+                log_file_name=f"train_{self.rank}.log",
                 level=log_level,
                 console=False,
             )
-
-        self.writer: SummaryWriter | None
-        self.custom_suffix: str | None
-
-        self.training_setup_manager = TrainingSetupManager(
-            self.train_logger,
-            self.gpu,
-            self.tb_log_dir,
-            self.commit_file_path,
-            self.debug_mode,
-            commit_message=self.commit_message,
-        )
-        # Set up TensorBoard and obtain the writer and custom suffix for file naming
-        """
-        custom_suffix: str = f"{self.arch}_{self.lr}_{self.optimizer_name}
-                            eg:batch-256-lr-2e-3-SGD
-        """
-        self.writer, self.custom_suffix, self.event_timestamp = (
-            self.training_setup_manager.setup_tensorboard_and_commit(
-                self.batch_size,
-                self.arch,
-                self.lr,
-                self.optimizer_name,
-                commit_message=self.commit_message,
-            )
-        )  # NOTE: if gpu !=0, writer and custom_suffix will be None
 
     def train_one_epoch(
         self,
         current_epoch: int,
         data_loader: DataLoader,
-        prefix: str = "Training Epoch",
+        prefix: str = "Train_one_epoch",
         verbose: bool = False,
         print_freq: int = 100,
+        accumulation_steps: int = 5,
     ) -> Tuple[
         Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker
     ]:
@@ -161,25 +150,154 @@ class Trainer:
             prefix (str): A string prefix for logging, identifying this as a training epoch.
             verbose (bool): If True, provides detailed logging information.
             print_freq (int): How frequently to log progress within the epoch.
+            accumulation_steps (int): Number of batches to accumulate before performing a backward pass and optimizer step.
 
         Returns:
             Tuple[Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker]:
             ModelStatsTracker and metrics trackers for loss, top1, and top5 accuracy.
         """
+        torch.autograd.set_detect_anomaly(True)
+
         # Initialize progress meters with the given prefix and data loader size
         meters, progress = create_meters(
             batch_size=len(data_loader),
-            prefix=f"{prefix}:[{current_epoch}]",
+            prefix=f"{prefix}-Epoch:[{current_epoch}]",
+            device=self.device,
         )
-        losses_meter, top1, top5, batch_processing_time, data_loading_time = meters
+        (
+            losses_meter,
+            top1,
+            top5,
+            process_one_batch_time,
+            data_loading_time,
+            sync_time,
+        ) = meters
 
-        # Set the model to training mode
-        self.model.train()
         end = time.time()
 
+        # Zero gradients at the start
+        self.optimizer_manager.zero_grad()
+
+        # Initialize list to accumulate losses
+        accumulated_losses = []
+
         # Training loop using the provided data loader
-        for i, batch in enumerate(data_loader):
+        for i, batch in enumerate(iterable=data_loader):
             data_loading_time.update(time.time() - end)
+
+            loss, acc1, acc5 = process_batch(
+                batch=batch,
+                model=self.model,
+                criterion=self.criterion,
+                device=self.device,
+                is_training=True,
+            )
+
+            # Update the meters
+            update_meters(
+                meters=[losses_meter, top1, top5],
+                loss=loss,
+                acc1=acc1,
+                acc5=acc5,
+                batch_size=batch[0].size(0),
+            )
+
+            # Accumulate loss
+            accumulated_losses.append(loss / accumulation_steps)
+
+            # Perform backward pass and optimizer step every accumulation_steps
+            if (i + 1) % accumulation_steps == 0 or (i + 1) == len(data_loader):
+                # Sum the accumulated losses
+                accumulated_loss = sum(accumulated_losses)
+
+                sync_start = time.time()
+                accumulated_loss.backward()
+
+                sync_time.update(time.time() - sync_start)
+
+                # Optimizer step and zero gradients
+                self.optimizer_manager.step()
+                self.optimizer_manager.zero_grad()
+
+            # Reset accumulated losses
+            accumulated_losses = []
+
+            process_one_batch_time.update(time.time() - end)
+            end = time.time()
+
+            # Verbose logging per specified print frequency
+            if self.rank == 0 and verbose and (i + 1) % print_freq == 0:
+                self.train_logger.debug(progress.display(i + 1))
+                self.train_logger.debug("\n")
+
+        losses_meter.all_reduce()
+        top1.all_reduce()
+        top5.all_reduce()
+        process_one_batch_time.all_reduce()
+        data_loading_time.all_reduce()
+        sync_time.all_reduce()
+
+        # Summary logging of the epoch progress
+        if self.rank == 0 and verbose:
+            self.train_logger.debug(progress.display_summary())
+
+        # Optional tracking of model statistics
+        if self.rank == 0 and self.model_stats_tracker is not None:
+            pass
+
+        return self.model_stats_tracker, losses_meter, top1, top5
+
+    def train_one_epoch2(
+        self,
+        current_epoch: int,
+        data_loader: DataLoader,
+        prefix: str = "Train_one_epoch",
+        verbose: bool = False,
+        print_freq: int = 100,
+        accumulation_steps: int = 1,
+    ) -> Tuple[
+        Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker
+    ]:
+        """
+        Train model for one epoch and handle all associated metrics and logging.
+
+        Args:
+            current_epoch (int): The current epoch number for logging purposes.
+            data_loader (DataLoader): The data loader used for training.
+            prefix (str): A string prefix for logging, identifying this as a training epoch.
+            verbose (bool): If True, provides detailed logging information.
+            print_freq (int): How frequently to log progress within the epoch.
+            accumulation_steps (int): Number of batches to accumulate before performing a optimizer step.
+
+        Returns:
+            Tuple[Optional[ModelStatsTracker], MetricTracker, MetricTracker, MetricTracker]:
+            ModelStatsTracker and metrics trackers for loss, top1, and top5 accuracy.
+        """
+
+        # Initialize progress meters with the given prefix and data loader size
+        meters, progress = create_meters(
+            batch_size=len(data_loader),
+            prefix=f"{prefix}-Epoch:[{current_epoch}]",
+            device=self.device,
+        )
+        (
+            losses_meter,
+            top1,
+            top5,
+            process_one_batch_time,
+            data_loading_time,
+            sync_time,
+        ) = meters
+
+        end = time.time()
+
+        # Zero gradients at the start
+        self.optimizer_manager.zero_grad()
+
+        # Training loop using the provided data loader
+        for i, batch in enumerate(iterable=data_loader):
+            data_loading_time.update(time.time() - end)
+
             loss, acc1, acc5 = process_batch(
                 batch=batch,
                 model=self.model,
@@ -199,28 +317,37 @@ class Trainer:
 
             # Zero gradients, backward pass, and optimizer step
             self.optimizer_manager.zero_grad()
-            loss.backward()
-            self.optimizer_manager.step()
 
-            batch_processing_time.update(time.time() - end)
+            sync_start = time.time()
+            loss.backward()
+            sync_time.update(time.time() - sync_start)
+
+            # Perform optimizer step every accumulation_steps
+            if (i + 1) % accumulation_steps == 0 or (i + 1) == len(data_loader):
+                self.optimizer_manager.step()
+                self.optimizer_manager.zero_grad()
+
+            process_one_batch_time.update(time.time() - end)
             end = time.time()
 
             # Verbose logging per specified print frequency
-            if self.gpu == 0 and verbose and i % print_freq == 0:
+            if self.rank == 0 and verbose and (i + 1) % print_freq == 0:
                 self.train_logger.debug(progress.display(i + 1))
                 self.train_logger.debug("\n")
 
-        # Synchronize the metrics across all GPUs if using distributed training
         losses_meter.all_reduce()
         top1.all_reduce()
         top5.all_reduce()
+        process_one_batch_time.all_reduce()
+        data_loading_time.all_reduce()
+        sync_time.all_reduce()
 
         # Summary logging of the epoch progress
-        if self.gpu == 0 and verbose:
+        if self.rank == 0 and verbose:
             self.train_logger.debug(progress.display_summary())
 
         # Optional tracking of model statistics
-        if self.gpu == 0 and self.model_stats_tracker is not None:
+        if self.rank == 0 and self.model_stats_tracker is not None:
             pass
 
         return self.model_stats_tracker, losses_meter, top1, top5
@@ -237,7 +364,8 @@ class Trainer:
     ]:
         """
         Perform validation or testing on the specified dataset to evaluate the performance of the model.
-
+        #NOTE:
+        No processing time record in evaluation
         Args:
             current_epoch (int): The current epoch number, used for logging.
             data_loader (DataLoade): DataLoader to use for validation or testing.
@@ -250,15 +378,29 @@ class Trainer:
             ModelStatsTracker and metrics trackers for loss, top1, and top5 accuracy.
         """
 
+        # Check if the DataLoader uses a DistributedSampler
+        if isinstance(data_loader.sampler, DistributedSampler):
+            # self.train_logger.debug(f"{prefix} DataLoader is using DistributedSampler")
+            pass
+        else:
+            raise ValueError(f"{prefix} DataLoader must use DistributedSampler")
+
         meters, progress = create_meters(
             batch_size=len(data_loader),
-            prefix=f"{prefix}:[{current_epoch}]",
+            prefix=f"{prefix}-Epoch:[{current_epoch}]",
+            device=self.device,
         )
-        losses_meter, top1, top5, batch_processing_time, data_loading_time = meters
+        (
+            losses_meter,
+            top1,
+            top5,
+            _,
+            _,
+            _,
+        ) = meters
 
         self.model.eval()
 
-        end = time.time()
         for i, batch in enumerate(data_loader):
             loss, acc1, acc5 = process_batch(
                 batch=batch,
@@ -267,7 +409,6 @@ class Trainer:
                 device=self.device,
                 is_training=False,
             )
-
             update_meters(
                 meters=[losses_meter, top1, top5],
                 loss=loss,
@@ -276,11 +417,12 @@ class Trainer:
                 batch_size=batch[0].size(0),
             )
 
-            batch_processing_time.update(val=time.time() - end)
-            end = time.time()
-
-            if verbose and i % print_freq == 0:
+            if self.rank == 0 and verbose and (i + 1) % print_freq == 0:
                 self.train_logger.debug(progress.display(i + 1))
+
+        losses_meter.all_reduce()
+        top1.all_reduce()
+        top5.all_reduce()
 
         if verbose:
             self.train_logger.debug(progress.display_summary())
@@ -290,43 +432,85 @@ class Trainer:
 
         return self.model_stats_tracker, losses_meter, top1, top5
 
-    def train_multiple_epochs(
-        self,
-    ) -> Tuple[float, int]:
-        best_acc1 = 0.0
-        best_epoch = self.start_epoch
+    def train_multiple_epochs(self) -> Tuple[int, float, float, float, float]:
+        """
+        Train the model over multiple epochs and return the training statistics.
 
-        if self.gpu == 0:
-            input_tensor = torch.randn(1, 3, 32, 32).to(self.device)
+        This function trains the model for a set number of epochs and monitors the accuracy on the validation set
+        to determine the best performing epoch. The best epoch is defined as the one where the model achieves
+        the highest top-1 accuracy on the validation set.
+
+        Returns:
+            Tuple[int, float, float, float]:
+                best_epoch (int): The epoch number where the best_val_acc1 was achieved, indicative of the model's optimal performance.
+                best_train_acc1 (float): The highest training accuracy achieved across all epochs.
+                best_val_acc1 (float): The highest validation accuracy achieved, used to determine the best epoch.
+                best_test_acc1 (float): The highest test accuracy achieved, providing context for the model's generalization.
+                lr_at_best (float): The learning rate at the best epoch, providing context for the training conditions at optimal performance.
+        """
+        best_train_acc1 = 0.0
+        best_val_acc1 = 0.0
+        best_test_acc1 = 0.0
+        best_epoch = self.start_epoch
+        lr_at_best = 0.0
+
+        if self.rank == 0:
+            # Infer input tensor shape from the train_loader
+            input_tensor = next(iter(self.train_loader))[0].to(self.device)
+
             if not self.writer:
                 self.train_logger.error("TensorBoard writer not initialized.")
                 raise ValueError("TensorBoard writer not initialized.")
-            self.writer.add_graph(self.model, input_tensor)
+
+            # Use self.model.module to refer to the underlying model when using DDP
+            original_model = (
+                self.model.module
+                if isinstance(self.model, torch.nn.parallel.DistributedDataParallel)
+                else self.model
+            )
+
+            self.writer.add_graph(original_model, input_tensor)
             self.train_logger.debug("Model graph added to TensorBoard.")
 
         for current_epoch in range(self.start_epoch, self.epochs):
             epoch_start = time.time()
+
             if self.is_distributed:
                 self.train_sampler.set_epoch(current_epoch)
+
             tracker, train_losses_meter, train_top1, train_top5 = self.train_one_epoch(
                 current_epoch,
                 data_loader=self.train_loader,
+                prefix=f"Trainer[{self.rank}]",
                 verbose=self.verbose,
                 print_freq=self.print_freq,
             )
+
             if self.is_validation_enabled:
+                # All ranks will perform validation
                 val_tracker, val_losses_meter, val_top1, val_top5 = (
                     self.evaluate_one_epoch(
-                        current_epoch,
+                        current_epoch=current_epoch,
                         data_loader=self.val_loader,
+                        prefix="Validation",
                         verbose=self.verbose,
                         print_freq=self.print_freq,
                     )
                 )
+
+                test_tracker, test_losses_meter, test_top1, test_top5 = (
+                    self.evaluate_one_epoch(
+                        current_epoch=current_epoch,
+                        data_loader=self.test_loader,
+                        prefix="Test",
+                        verbose=self.verbose,
+                        print_freq=self.print_freq,
+                    )
+                )
+
             # Evaluate the early stopping decision and whether it's the best model so far
             is_best = False
-
-            if self.gpu == 0:
+            if self.rank == 0:
                 self.record_parameter_histograms(current_epoch)
                 self.process_epoch_metrics(
                     current_epoch,
@@ -336,87 +520,106 @@ class Trainer:
                     val_losses_meter,
                     val_top1,
                     val_top5,
+                    test_losses_meter,
+                    test_top1,
+                    test_top5,
                 )
 
-                is_best: bool = val_top1.avg > best_acc1
-                best_acc1: float = (
-                    max(val_top1.avg, best_acc1) if is_best else best_acc1
-                )
-                best_epoch: int = current_epoch if is_best else best_epoch
+                is_best = val_top1.avg > best_val_acc1
+                if is_best:
+                    best_train_acc1 = train_top1.avg
+                    best_val_acc1 = val_top1.avg
+                    best_test_acc1 = test_top1.avg
+                    best_epoch = current_epoch
+                    lr_at_best = self.optimizer_manager.optimizer.param_groups[0]["lr"]
 
-            # Update scheduler and early stopping based on validation results
+            if self.check_early_stop(
+                val_loss=float(val_losses_meter.avg), current_epoch=current_epoch
+            ):
+                break
+
+            # Update scheduler on all devices using the broadcasted validation loss
             if self.scheduler_manager:
                 self.scheduler_manager.scheduler_step(
-                    current_epoch, val_losses_meter.avg
+                    current_epoch, float(val_losses_meter.avg)
                 )
 
             # Handle model checkpointing
-            checkpoint_state = self.create_checkpoint_state(best_epoch, best_acc1)
+            checkpoint_state = self.create_checkpoint_state(best_epoch, best_val_acc1)
             if self.is_amp_enabled and self.amp:
                 checkpoint_state["amp"] = self.amp.state_dict()
             if current_epoch % self.ckpt_save_interval == 0 or is_best:
-                self.save_checkpoint(
-                    checkpoint_state, is_best, current_epoch, check_point_suffix=None
-                )
+                if self.rank == 0:
+                    self.save_checkpoint(
+                        checkpoint_state,
+                        is_best,
+                        current_epoch,
+                    )
 
-            self.log_epoch_timing(current_epoch, epoch_start)
-            if self.early_stop(
-                val_loss=val_losses_meter.avg, current_epoch=current_epoch
-            ):
-                break
+            self.log_epoch_duration_and_estimate_remaining_time(
+                current_epoch, epoch_start
+            )
+            # self.train_logger.debug(f"{self.rank}: mark 7")
         # Finalize training at the end of all loops
-        self.finalize_training()
-        return (best_acc1, best_epoch)
+        if self.rank == 0:
+            self.finalize_training()
+            self.train_logger.info(
+                f"Trainer 0 finalized_training, best_acc1={best_val_acc1}, best_epoch={best_epoch}"
+            )
 
-    def log_epoch_timing(self, current_epoch, epoch_start):
+        # NOTE: only the rank0 is responsible for return, other ranks will return all zeros
+
+        return (best_epoch, best_train_acc1, best_val_acc1, best_test_acc1, lr_at_best)
+
+    def log_epoch_duration_and_estimate_remaining_time(
+        self, current_epoch, epoch_start, print_interval=20
+    ):
         """
-        Logs the duration of the current epoch and estimates the time left for the training.
+        Logs the duration of the current epoch and estimates the time left for the training at specified intervals.
 
         Args:
             current_epoch (int): The current epoch number.
             epoch_start (float): The start time of the current epoch.
+            print_interval (int): Interval at which to print logging information.
         """
         epoch_duration = time.time() - epoch_start
         self.times.append(epoch_duration)
-        average_epoch_duration = sum(self.times) / len(self.times)
+
+        # Total running time so far
+        total_running_time = sum(self.times)
+
+        # Average time for one epoch
+        average_epoch_duration = np.mean(self.times)
+
+        # Approximate remaining time
         estimated_time_left = (self.epochs - current_epoch - 1) * average_epoch_duration
 
-        hours_left, minutes_left = divmod(estimated_time_left, 3600)
-        self.train_logger.info(
-            f"Epoch {current_epoch + 1}/{self.epochs} completed in {epoch_duration:.2f} seconds."
-        )
-        self.train_logger.info(
-            f"Approximate time left: {int(hours_left)} hours, {int(minutes_left // 60)} minutes"
-        )
+        hours_total, remainder_total = divmod(total_running_time, 3600)
+        minutes_total, seconds_total = divmod(remainder_total, 60)
 
-    def log_epoch_completion(self, current_epoch: int, epoch_start: float):
-        epoch_duration = time.time() - epoch_start
-        self.times.append(epoch_duration)
-        average_epoch_duration = sum(self.times) / len(self.times)
-        estimated_time_left = (self.epochs - current_epoch - 1) * average_epoch_duration
-        hours_left, minutes_left = divmod(estimated_time_left, 3600)
-        self.train_logger.info(
-            f"Epoch {current_epoch + 1}/{self.epochs} completed in {epoch_duration:.2f} seconds."
-        )
-        self.train_logger.info(
-            f"Approximate time left: {int(hours_left)} hours, {int(minutes_left // 60)} minutes"
-        )
+        hours_left, remainder_left = divmod(estimated_time_left, 3600)
+        minutes_left, seconds_left = divmod(remainder_left, 60)
 
-    def early_stop(self, val_loss: float, current_epoch: int):
-        """Determine if early stopping is triggered and broadcast the decision."""
+        # Log only at specified intervals or the last epoch
+        if current_epoch % print_interval == 0 or (current_epoch + 1) == self.epochs:
+            self.train_logger.info(
+                f"Epoch {current_epoch + 1}/{self.epochs} completed in {epoch_duration:.2f} seconds."
+            )
+            self.train_logger.info(
+                f"Total running time so far: {int(hours_total)}h:{int(minutes_total)}m:{int(seconds_total)}s."
+            )
+            self.train_logger.info(
+                f"Average time per epoch: {average_epoch_duration:.2f} seconds."
+            )
+            self.train_logger.info(
+                f"Approximate time left: {int(hours_left)}h:{int(minutes_left)}m:{int(seconds_left)}s."
+            )
 
+    def check_early_stop(self, val_loss: float, current_epoch: int):
+        """Determine if early stopping is triggered."""
         early_stop_decision = self.optimizer_manager.check_early_stopping(val_loss)
+        early_stop_decision = bool(early_stop_decision)
 
-        # Create a tensor from the early stop decision and broadcast it
-        early_stop_tensor = torch.tensor(
-            [int(early_stop_decision)], dtype=torch.int, device=self.device
-        )
-        dist.broadcast(tensor=early_stop_tensor, src=0)
-
-        # Retrieve the updated early stop decision after the broadcast
-        early_stop_decision = bool(early_stop_tensor.item())
-
-        # Log and return the decision
         if early_stop_decision:
             self.train_logger.info(
                 f"Early stopping triggered across all processes at epoch:{current_epoch}"
@@ -455,34 +658,52 @@ class Trainer:
                 "Learning Rate": ["Learning Rate"],
             }
 
-            fig_name = f"metrics-{self.custom_suffix}.png"
+            fig_name = f"{self.custom_suffix}.png"
             exporter.export(grouped_metrics=grouped_metrics, fig_name=fig_name)
 
     def record_parameter_histograms(self, current_epoch: int):
         """Log parameter histograms to TensorBoard."""
         if (
-            current_epoch % self.histogram_record_interval == 0
+            current_epoch % self.hist_save_interval == 0
             or current_epoch == self.epochs - 1
         ):
-            for name, param in self.model.named_parameters():
+            original_model = (
+                self.model.module
+                if isinstance(self.model, torch.nn.parallel.DistributedDataParallel)
+                else self.model
+            )
+            for name, param in original_model.named_parameters():
                 self.writer.add_histogram(
                     tag=name.replace(".", "/"),
                     values=param.cpu().data.numpy(),
                     global_step=current_epoch,
                 )
 
-    def record_metrics(self, current_epoch, train_metrics, val_metrics):
+    def record_metrics(self, current_epoch, train_metrics, val_metrics, test_metrics):
         """Utility to log metrics to TensorBoard."""
         if train_metrics:
             for metric_name, value in train_metrics.items():
-                self.writer.add_scalar(metric_name, value, current_epoch)
+                self.writer.add_scalar(f"Train/{metric_name}", value, current_epoch)
         else:
             self.train_logger.error("No training metrics to log.")
+
+        self.writer.flush()
+
         if val_metrics:
             for metric_name, value in val_metrics.items():
-                self.writer.add_scalar(metric_name, value, current_epoch)
+                self.writer.add_scalar(f"Val/{metric_name}", value, current_epoch)
         else:
-            self.train_logger.error("No validation metrics to log.")
+            self.train_logger.warning("No validation metrics to log.")
+
+        self.writer.flush()
+
+        if test_metrics:
+            for metric_name, value in test_metrics.items():
+                self.writer.add_scalar(f"Test/{metric_name}", value, current_epoch)
+        else:
+            self.train_logger.warning("No test metrics to log.")
+
+        self.writer.flush()
 
     def process_epoch_metrics(
         self,
@@ -493,6 +714,9 @@ class Trainer:
         val_losses_meter,
         val_top1,
         val_top5,
+        test_losses_meter,
+        test_top1,
+        test_top5,
     ):
         """Record training and validation metrics."""
         train_metrics = {
@@ -506,59 +730,74 @@ class Trainer:
                 "Top1/val": val_top1.avg,
                 "Top5/val": val_top5.avg,
             }
+            test_metrics = {
+                "Loss/test": test_losses_meter.avg,
+                "Top1/test": test_top1.avg,
+                "Top5/test": test_top5.avg,
+            }
         else:
             val_metrics = {}
+            test_metrics = {}
             self.train_logger.warning("Evaluation for validation set is disabled.")
+
         self.writer.add_scalar(
             "Learning Rate",
             self.optimizer_manager.optimizer.param_groups[0]["lr"],
             global_step=current_epoch,
         )
-        self.record_metrics(current_epoch, train_metrics, val_metrics)
+        self.record_metrics(
+            current_epoch, train_metrics, val_metrics, test_metrics=test_metrics
+        )
 
     def save_checkpoint(
         self,
-        state: Dict,
+        state: dict,
         is_best: bool,
         current_epoch: int,
-        check_point_suffix: Optional[str] = None,
     ) -> None:
         """
-        Save the model checkpoint during training. If the current checkpoint is the best model,
-        it's saved under a special name. Regular checkpoints are saved at specified intervals.
+        Save the model checkpoint during training. Saves 'regular' checkpoints at specified intervals
+        and 'best' checkpoints whenever a new best model is found.
 
         Args:
-            state (Dict): Model state to be saved (parameters and other information).
+            state (dict): Model state to be saved (parameters and other information).
             is_best (bool): Indicates whether the current checkpoint is the best so far.
             current_epoch (int): Current epoch number, used in the filename.
-            check_point_suffix (Optional[str]): Custom suffix for filename differentiation.
         """
         try:
             # Ensure the checkpoint folder for the architecture exists
-            save_checkpoint_folder = os.path.join(
-                self.checkpoint_folder,
-                self.arch,
-                self.custom_suffix,
-                self.event_timestamp,
-            )
-            if not os.path.exists(save_checkpoint_folder):
-                os.makedirs(save_checkpoint_folder)
+            main_folder = os.path.dirname(self.writer.log_dir)
 
-            # Define base filename with architecture, custom suffix, and epoch
-            if check_point_suffix:
-                base_filename = f"epoch{current_epoch}-{check_point_suffix}"
-            else:
-                base_filename = f"epoch{current_epoch}"
+            save_checkpoint_folder = os.path.join(main_folder, "checkpoints")
+            os.makedirs(save_checkpoint_folder, exist_ok=True)
 
-            # Determine file path for the checkpoint
-            if current_epoch % self.ckpt_save_interval == 0 or is_best:
-                suffix = "best" if is_best else "regular"
-                filename = f"{base_filename}-{suffix}.pth"
-                file_path = os.path.join(save_checkpoint_folder, filename)
+            # Regular checkpoint saving
+            regular_filename = f"regular-epoch:{current_epoch}.pth"
+            regular_file_path = os.path.join(save_checkpoint_folder, regular_filename)
+            torch.save(state, regular_file_path)
 
-                # Save the checkpoint
-                torch.save(state, file_path)
-                self.train_logger.debug(f"Checkpoint saved at {file_path}")
+            self.train_logger.debug(f"Regular checkpoint saved at {regular_file_path}")
+
+            # Best checkpoint logic
+            if is_best:
+                best_filename = f"best-epoch:{current_epoch}.pth"
+                best_file_path = os.path.join(save_checkpoint_folder, best_filename)
+
+                # Find and delete the previous best checkpoint
+                previous_best_checkpoints = [
+                    os.path.join(save_checkpoint_folder, file)
+                    for file in os.listdir(save_checkpoint_folder)
+                    if "best-epoch" in file and file.endswith(".pth")
+                ]
+                for file in previous_best_checkpoints:
+                    os.remove(file)
+                    # self.train_logger.debug(
+                    #     f"Deleted previous best checkpoint at {file}"
+                    # )
+
+                # Save the new best checkpoint
+                torch.save(state, best_file_path)
+                self.train_logger.debug(f"Best checkpoint saved at {best_file_path}")
 
         except Exception as e:
             self.train_logger.error(f"Error saving checkpoint: {e}", exc_info=True)
@@ -569,11 +808,18 @@ class Trainer:
         best_acc1: float,
     ) -> Dict:
         """Create and return the checkpoint state to be saved."""
+
+        # Access the underlying model if it's wrapped by DDP
+        model_state_dict = (
+            self.model.module.state_dict()
+            if hasattr(self.model, "module")
+            else self.model.state_dict()
+        )
         state = {
             "best_epoch": best_epoch,
             "best_acc1": best_acc1,
             "arch": self.arch,
-            "state_dict": self.model.state_dict(),
+            "state_dict": model_state_dict,
             "optimizer": self.optimizer_manager.optimizer.state_dict(),
             "scheduler": self.scheduler_manager.scheduler.state_dict()
             if self.scheduler_manager

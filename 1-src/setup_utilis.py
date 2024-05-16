@@ -1,8 +1,9 @@
 import logging
 import os
 import random
+from collections import OrderedDict
 from datetime import datetime
-from typing import Optional, Tuple
+from typing import Dict, Optional, Tuple
 
 import pandas as pd
 import torch
@@ -64,6 +65,171 @@ setup_utilis_logger: logging.Logger = setup_logger(
     level=logging.DEBUG,
     console=False,
 )
+
+
+class TrainingSetupManager:
+    def __init__(
+        self,
+        train_logger: logging.Logger,
+        gpu: int,
+        tb_log_dir: str,
+        commit_file_path: str,
+        debug_mode: bool = False,
+        commit_message: str = "Setup completed",
+    ) -> None:
+        self.train_logger = train_logger
+        self.gpu = gpu
+        self.tb_log_dir = tb_log_dir
+        self.commit_file_path = commit_file_path
+        self.debug_mode = debug_mode
+        self.commit_message = commit_message
+
+        self.event_timestamp = None
+
+    def setup_tensorboard_and_commit(
+        self, config: Dict[str, any]
+    ) -> Tuple[Optional[SummaryWriter], Optional[str], Optional[str]]:
+        """
+        Setup TensorBoard logging and commit the training configuration.
+
+        Args:
+            config (Dict[str, any]): Dictionary containing configuration parameters such as batch_size, architecture name, learning rate, optimizer name.
+
+        Returns:
+            Tuple[Optional[SummaryWriter], Optional[str], Optional[str]]:
+            A tuple containing a SummaryWriter instance or None, a custom suffix string or None,
+            and a timestamp string or None.
+        """
+        if not isinstance(config, OrderedDict):
+            raise ValueError("Configuration must be an OrderedDict for now.")
+            # # Sort based on integer keys passed in a tuple list or directly applying sorted on dictionary items
+            # sorted_items = sorted(
+            #     config.items(), key=lambda item: int(item[0].split("-")[0])
+            # )
+            # config = OrderedDict(sorted_items)
+
+        writer = None
+        custom_suffix = None
+        timestamp = None
+
+        if self.gpu == 0:
+            # Construct the configuration suffix and the save path from the configuration dictionary
+            configuration_suffix = "-".join(
+                [f"{key}-{value}" for key, value in config.items()]
+            )
+            if self.debug_mode:
+                configuration_suffix = f"debug-{configuration_suffix}"
+            custom_suffix = configuration_suffix
+
+            # Create a more hierarchical folder structure
+            folder_hierarchy = [self.tb_log_dir, "events"] + [
+                str(value) for key, value in config.items()
+            ]
+            save_event_path = os.path.join(*folder_hierarchy)
+            os.makedirs(save_event_path, exist_ok=True)
+            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            self.event_timestamp = timestamp
+            full_event_dir = os.path.join(save_event_path, timestamp)
+            writer = SummaryWriter(
+                log_dir=full_event_dir, filename_suffix=custom_suffix
+            )
+
+            self.train_logger.debug(f"TensorBoard set up at {full_event_dir}")
+
+            # Prepare and log commit data
+            commit_data = {
+                "Configuration": custom_suffix,
+                "Event File Dir": writer.log_dir,
+                "Commit": self.commit_message,
+            }
+            # Commenting out logging commit data to ignore it temporarily
+            self.log_commit_data(commit_data)
+
+        return writer, custom_suffix, timestamp
+
+        return writer, custom_suffix, timestamp
+
+    def log_commit_data(self, commit_data: dict) -> None:
+        """
+        Log setup details to a CSV file for record-keeping using a dictionary of commit data.
+        This method is enhanced to support arbitrary keys for logging additional metrics and ensures
+        the most recent data is at the top of the file.
+
+        Args:
+            commit_data (dict): A dictionary containing training setup data and possibly new metrics.
+        """
+        if self.gpu != 0:
+            return  # Only log from the primary GPU
+
+        # Specify column order, starting with expected columns
+        default_columns = ["Architecture", "Configuration", "Event File Dir", "Commit"]
+        additional_columns = [key for key in commit_data if key not in default_columns]
+        column_order = default_columns + additional_columns
+
+        # Create a DataFrame with a single row of commit data
+        df = pd.DataFrame([commit_data], columns=column_order)
+
+        if os.path.exists(self.commit_file_path):
+            # Load existing data
+            existing_df = pd.read_csv(self.commit_file_path)
+            # Prepend the new data by concatenating it before the existing data
+            combined_df = pd.concat([df, existing_df], ignore_index=True, sort=False)
+        else:
+            # If the file does not exist, create new and log creation
+            combined_df = df
+            self.train_logger.info(
+                f"Log file does not exist, creating new one at {self.commit_file_path}"
+            )
+
+        # Save to CSV without an additional index column
+        combined_df.to_csv(self.commit_file_path, index=False)
+        self.train_logger.info("Log data committed successfully.")
+
+    def update_commit_log(self, event_file_dir, metrics_data):
+        """
+        Update the commit log with additional metrics data.
+
+        Args:
+            event_file_dir (str): The directory related to the event for which data is being logged.
+            metrics_data (dict): Metrics to log, e.g., best accuracy or test scores. This dictionary
+                                 can contain any number of additional metrics.
+
+        Description:
+            This method checks if the log file exists, updates it with new metrics or creates it if it doesn't exist.
+        """
+        self.train_logger.info("Attempting to update commit log with final results.")
+
+        # Check if the log file exists
+        if os.path.exists(self.commit_file_path):
+            df = pd.read_csv(self.commit_file_path)
+
+            # Check if the specific event directory already has a record
+            row_index = df[df["Event File Dir"] == event_file_dir].index
+            if not row_index.empty:
+                # Update existing rows with new metrics
+                for key, value in metrics_data.items():
+                    if key not in df.columns:
+                        df[key] = (
+                            None  # Create new columns for metrics not previously logged
+                        )
+                    df.loc[row_index, key] = value
+                df.to_csv(self.commit_file_path, index=False)
+                self.train_logger.info("Commit log updated successfully.")
+            else:
+                # Append new row if no matching record is found
+                new_data = {"Event File Dir": event_file_dir, **metrics_data}
+                new_row = pd.DataFrame([new_data])
+                df = pd.concat([df, new_row], ignore_index=True, sort=False)
+                df.to_csv(self.commit_file_path, index=False)
+                self.train_logger.info("New commit log entry created.")
+        else:
+            # Create a new log file with the specified metrics if it does not exist
+            new_data = {"Event File Dir": event_file_dir, **metrics_data}
+            df = pd.DataFrame([new_data])
+            df.to_csv(self.commit_file_path, index=False)
+            self.train_logger.info(
+                "Commit log file created as it did not previously exist."
+            )
 
 
 def setup_deterministic_mode(seed: int = None) -> None:
@@ -211,164 +377,6 @@ def setup_tensorboard_and_commit(
         log_commit_data(commit_file_path=commit_file_path, commit_data=commit_data)
 
     return writer, custom_suffix
-
-
-class TrainingSetupManager:
-    def __init__(
-        self,
-        train_logger: logging.Logger,
-        gpu: int,
-        tb_log_dir: str,
-        commit_file_path: str,
-        debug_mode: bool = False,
-        commit_message: str = "Setup completed",
-    ) -> None:
-        self.train_logger = train_logger
-        self.gpu = gpu
-        self.tb_log_dir = tb_log_dir
-        self.commit_file_path = commit_file_path
-        self.debug_mode = debug_mode
-        self.commit_message = commit_message
-
-        self.event_timestamp = None
-
-    def setup_tensorboard_and_commit(
-        self,
-        batch_size: int,
-        arch: str,
-        lr: float,
-        optimizer_name: str,
-        commit_message: str,
-    ) -> Tuple[Optional[SummaryWriter], Optional[str], Optional[str]]:
-        """
-        Setup TensorBoard logging and commit the training configuration.
-
-        Args:
-            batch_size (int): The batch size used in training.
-            arch (str): The architecture name of the model.
-            lr (float): Learning rate.
-            optimizer_name (str): The name of the optimizer used.
-            commit_message (str): Message to log as part of the training commit.
-
-        Returns:
-            Tuple[Optional[SummaryWriter], Optional[str], Optional[str]]:
-            A tuple containing a SummaryWriter instance or None, a custom suffix string or None,
-            and a timestamp string or None.
-        """
-        writer = None
-        custom_suffix = None
-        timestamp = None
-
-        if self.gpu == 0:
-            configuration_suffix = f"batch-{batch_size}-lr-{lr}-{optimizer_name}"
-            if self.debug_mode:
-                configuration_suffix = f"debug-{configuration_suffix}"
-            custom_suffix = configuration_suffix
-
-            save_event_path = os.path.join(
-                self.tb_log_dir, "events", arch, configuration_suffix
-            )
-            os.makedirs(save_event_path, exist_ok=True)
-            timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            self.event_timestamp = timestamp
-            full_event_dir = os.path.join(save_event_path, timestamp)
-            writer = SummaryWriter(
-                log_dir=full_event_dir, filename_suffix=custom_suffix
-            )
-            self.train_logger.debug(f"TensorBoard set up at {full_event_dir}")
-
-            # Prepare and log commit data
-            commit_data = {
-                "Architecture": arch,
-                "Configuration": custom_suffix,
-                "Event File Dir": writer.log_dir,
-                "Commit": self.commit_message,
-            }
-            self.log_commit_data(commit_data)
-
-        return writer, custom_suffix, timestamp
-
-    def log_commit_data(self, commit_data: dict) -> None:
-        """
-        Log setup details to a CSV file for record-keeping using a dictionary of commit data.
-        This method is enhanced to support arbitrary keys for logging additional metrics and ensures
-        the most recent data is at the top of the file.
-
-        Args:
-            commit_data (dict): A dictionary containing training setup data and possibly new metrics.
-        """
-        if self.gpu != 0:
-            return  # Only log from the primary GPU
-
-        # Specify column order, starting with expected columns
-        default_columns = ["Architecture", "Configuration", "Event File Dir", "Commit"]
-        additional_columns = [key for key in commit_data if key not in default_columns]
-        column_order = default_columns + additional_columns
-
-        # Create a DataFrame with a single row of commit data
-        df = pd.DataFrame([commit_data], columns=column_order)
-
-        if os.path.exists(self.commit_file_path):
-            # Load existing data
-            existing_df = pd.read_csv(self.commit_file_path)
-            # Prepend the new data by concatenating it before the existing data
-            combined_df = pd.concat([df, existing_df], ignore_index=True, sort=False)
-        else:
-            # If the file does not exist, create new and log creation
-            combined_df = df
-            self.train_logger.info(
-                f"Log file does not exist, creating new one at {self.commit_file_path}"
-            )
-
-        # Save to CSV without an additional index column
-        combined_df.to_csv(self.commit_file_path, index=False)
-        self.train_logger.info("Log data committed successfully.")
-
-    def update_commit_log(self, event_file_dir, metrics_data):
-        """
-        Update the commit log with additional metrics data.
-
-        Args:
-            event_file_dir (str): The directory related to the event for which data is being logged.
-            metrics_data (dict): Metrics to log, e.g., best accuracy or test scores. This dictionary
-                                 can contain any number of additional metrics.
-
-        Description:
-            This method checks if the log file exists, updates it with new metrics or creates it if it doesn't exist.
-        """
-        self.train_logger.info("Attempting to update commit log with final results.")
-
-        # Check if the log file exists
-        if os.path.exists(self.commit_file_path):
-            df = pd.read_csv(self.commit_file_path)
-
-            # Check if the specific event directory already has a record
-            row_index = df[df["Event File Dir"] == event_file_dir].index
-            if not row_index.empty:
-                # Update existing rows with new metrics
-                for key, value in metrics_data.items():
-                    if key not in df.columns:
-                        df[key] = (
-                            None  # Create new columns for metrics not previously logged
-                        )
-                    df.loc[row_index, key] = value
-                df.to_csv(self.commit_file_path, index=False)
-                self.train_logger.info("Commit log updated successfully.")
-            else:
-                # Append new row if no matching record is found
-                new_data = {"Event File Dir": event_file_dir, **metrics_data}
-                new_row = pd.DataFrame([new_data])
-                df = pd.concat([df, new_row], ignore_index=True, sort=False)
-                df.to_csv(self.commit_file_path, index=False)
-                self.train_logger.info("New commit log entry created.")
-        else:
-            # Create a new log file with the specified metrics if it does not exist
-            new_data = {"Event File Dir": event_file_dir, **metrics_data}
-            df = pd.DataFrame([new_data])
-            df.to_csv(self.commit_file_path, index=False)
-            self.train_logger.info(
-                "Commit log file created as it did not previously exist."
-            )
 
 
 if __name__ == "__main__":

@@ -1,0 +1,38 @@
+2024-05-16 19:38:53,627 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:38:53,670 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:38:53,704 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:38:53,751 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:38:53,756 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:38:53,778 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:38:53,804 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:38:53,846 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,750 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,804 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,814 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,821 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,883 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,918 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,928 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:44:58,936 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 19:45:48,322 - DEBUG - ModelProcess - CIFARNet adjusted for CIFAR-10/100 dataset
+2024-05-16 19:45:48,323 - DEBUG - ModelProcess - All layers are unfrozen for training
+2024-05-16 20:03:35,684 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:03:35,706 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:03:35,730 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:03:35,738 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:03:35,770 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:03:35,775 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:03:35,801 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:03:35,839 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:04:24,682 - DEBUG - ModelProcess - CIFARNet adjusted for CIFAR-10/100 dataset
+2024-05-16 20:04:24,683 - DEBUG - ModelProcess - All layers are unfrozen for training
+2024-05-16 20:10:04,316 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:04,316 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:04,379 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:04,413 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:04,418 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:04,453 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:04,529 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:04,537 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-16 20:10:52,385 - DEBUG - ModelProcess - CIFARNet adjusted for CIFAR-10/100 dataset
+2024-05-16 20:10:52,386 - DEBUG - ModelProcess - All layers are unfrozen for training

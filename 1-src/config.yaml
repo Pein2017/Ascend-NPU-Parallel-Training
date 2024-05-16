@@ -1,22 +1,23 @@
 training:
-  lr: 5e-3
-  batch_size: 256
+  lr: 5e-2
+  batch_size: 256 # total
+  epochs: 1000
   verbose: false
   seed: 17
-  hist_record_num: 20
+  hist_save_interval: 50 # should be fixed
   train_ratio: 0.9
   print_freq: 300
   workers: 0
   start_epoch: 0
-  epochs: 1500
+  is_deteriminstic: false
   debug_mode: false
-  model_stats_tracker: false
+  model_stats_tracker_flag: false
   checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
   checkpoint_path:
   ckpt_save_interval: 200
 
 commit:
-  commit_message: "res34-5e-3"
+  commit_message: "res34-256-5e-2,SGD,factor:0.2,patience:(60,120)"
   commit_file_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/commit_log.csv
 
 model:
@@ -33,42 +34,44 @@ optimizer:
 scheduler:
   type: ReduceLROnPlateau
   mode: min
-  factor: 0.5 # for lr reduction
-  patience: 75
+  factor: 0.2 # for lr reduction
+  patience: 50
   warmup_iters: 0
 
 early_stopping:
-  delta: 1e-4
-  patience: 150
+  min_loss_improvement: 1e-4
+  patience: 100
 
 data:
   path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data
   dataset_name: cifar100
-  dummy: false
+  use_dummy: false
 
 logging:
+  experiment_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/
   tb_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/
-  # checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
-  # checkpoint_path:
+  logger_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-loggers/
 
 evaluation:
   is_evaluation_enabled: true
   is_validation_enabled: true
 
+amp:
+  is_amp_enabled: false
+  loss_scale: 1024.
+  opt_level: O0
+
 distributed_training:
   distributed: true
-  world_size: 1
-  rank: 0
+  # world_size: 1
+  # rank: 0
   dist_url: tcp://192.168.18.48:12345
   dist_backend: hccl
   master_addr: 192.168.18.48
   master_port: 12345
   multiprocessing_distributed: true
-  gpu: None
-  device: npu
+  ## gpu: None depreciated
+  device_type: npu
   device_list: [0, 1, 2, 3, 4, 5, 6, 7]
 
-amp:
-  is_amp_enabled: false
-  loss_scale: 1024.
-  opt_level: O0
+log_csv_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/commit_log.csv

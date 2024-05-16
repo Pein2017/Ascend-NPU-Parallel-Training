@@ -28,17 +28,15 @@ class MetricTracker:
         fmt: str = ":f",
         metric_type: MetricType = MetricType.AVERAGE,
         device=None,
-    ):
+    ) -> None:
         self.name = name
         self.fmt = fmt
         self.metric_type = metric_type
         if device is None:
-            if torch.npu.is_available():
-                self.device = torch.device(f"npu:{dist.get_rank()}")
-            else:
-                self.device = torch.device("cpu")
-        else:
-            self.device = device
+            raise ValueError(
+                "device must be specified in MetricTracker due to all reduce operation."
+            )
+        self.device = device
 
         self.total = torch.zeros(2, device=self.device)
         self.reset()
@@ -69,6 +67,7 @@ class MetricTracker:
     def all_reduce(self):
         """Synchronize metrics across all processes in distributed mode."""
         if dist.is_available() and dist.is_initialized():
+            # dist.barrier()
             dist.all_reduce(self.total, op=dist.ReduceOp.SUM)
             self.sum, self.count = self.total.tolist()
             self.avg = self.sum / self.count if self.count != 0 else 0
@@ -98,9 +97,9 @@ class MetricTracker:
         """Returns a summary based on the metric_type."""
         fmtstr = {
             MetricType.NONE: "",
-            MetricType.AVERAGE: f"{self.name} Avg: {self.avg:.3f}",
-            MetricType.TOTAL_SUM: f"{self.name} Total Sum: {self.sum:.3f}",
-            MetricType.COUNT: f"{self.name} Count: {self.count}",
+            MetricType.AVERAGE: f"{self.name} avg: {self.avg:.3f}",
+            MetricType.TOTAL_SUM: f"{self.name} total Sum: {self.sum:.3f}",
+            MetricType.COUNT: f"{self.name} count: {self.count}",
         }.get(self.metric_type, "")
 
         if fmtstr == "":
@@ -144,7 +143,7 @@ class ProgressMeter:
             str: A format string for batch progress display.
         """
         total_digits = len(str(total_batches))
-        return f"{{:>{total_digits}}} / {total_batches}"
+        return f"-batch:{{:>{total_digits}}}/{total_batches}"
 
     def display(self, current_batch: int) -> str:
         """
@@ -155,20 +154,15 @@ class ProgressMeter:
         """
         entries = [f"{self.prefix}{self.batch_format_str.format(current_batch)}"]
         entries += [str(tracker) for tracker in self.trackers]
-        print("\t".join(entries))
-        return "\t".join(entries)
+        return "\n".join(entries)
 
     def display_summary(self) -> str:
-        """Displays a summary of all metrics at the end of an epoch or training session."""
-        entries = [f"{self.prefix} *"]
+        """
+        Displays a summary of all metrics at the end of an epoch or training session.
+        """
+        entries = [f"{self.prefix} Summary:"]
         entries += [tracker.summary() for tracker in self.trackers]
-        print(" ".join(entries))
-        return "\t".join(entries)
-
-    def _generate_batch_format_string(self, total_batches: int) -> str:
-        """Generates a format string for batch progress display."""
-        num_digits = len(str(total_batches))
-        return f"[{{:>{num_digits}}} / {total_batches}]"
+        return "\n".join(entries)
 
 
 def get_topk_acc(

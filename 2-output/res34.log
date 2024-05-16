@@ -1,132 +1,0 @@
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:33,463 - DEBUG - MainProcess - Logger initialized.
-Removed worker_6.log
-Removed worker_0.log
-Removed worker_1.log
-Removed worker_2.log
-Removed main_process.log
-Removed train_0.log
-Removed train_6.log
-Removed utilis_process.log
-Removed train_4.log
-Removed model_process.log
-Removed worker_7.log
-Removed optimizer_process.log
-Removed worker_4.log
-Removed train_7.log
-Removed train_2.log
-Removed worker_5.log
-Removed worker_3.log
-Removed train_1.log
-Removed setup_process.log
-Removed train_5.log
-Removed train_3.log
-2024-05-09 11:42:33,466 - INFO - MainProcess - Dataset cifar100 already exists at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data'. No download needed.
-2024-05-09 11:42:33,466 - DEBUG - MainProcess - Loading model...
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=None`.
-  warnings.warn(msg)
-2024-05-09 11:42:34,282 - DEBUG - MainProcess - Model resnet34 downloaded.
-2024-05-09 11:42:34,293 - DEBUG - MainProcess - Worker processes spawned successfully. Waiting for results...
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,291 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,397 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,420 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,433 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,491 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,606 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,630 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:39,745 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,030 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,075 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,153 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,221 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,298 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,402 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,596 - DEBUG - MainProcess - Logger initialized.
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-2024-05-09 11:42:47,640 - DEBUG - MainProcess - Logger initialized.
-2024-05-09 11:42:53,697 - DEBUG - Worker:0 - Initialized logger for npu0.
-2024-05-09 11:42:54,508 - DEBUG - ModelProcess - All layers are unfrozen for training
-2024-05-09 11:42:56,172 - DEBUG - Worker:0 - Model resnet34 loaded with pretrained=False and moved to npu:0.
-2024-05-09 11:42:56,172 - DEBUG - Worker:0 - Adjusted batch size to 32 and worker count to 0.
-2024-05-09 11:42:56,655 - INFO - Worker:5 - Distributed training initialized for 8 nodes.
-2024-05-09 11:42:56,741 - INFO - Worker:2 - Distributed training initialized for 8 nodes.
-2024-05-09 11:42:56,744 - INFO - Worker:7 - Distributed training initialized for 8 nodes.
-2024-05-09 11:42:56,781 - INFO - Worker:6 - Distributed training initialized for 8 nodes.
-2024-05-09 11:42:57,039 - INFO - Worker:3 - Distributed training initialized for 8 nodes.
-2024-05-09 11:42:57,366 - INFO - Worker:4 - Distributed training initialized for 8 nodes.
-2024-05-09 11:42:57,632 - INFO - Worker:1 - Distributed training initialized for 8 nodes.
-2024-05-09 11:42:57,639 - INFO - Worker:0 - Distributed training initialized for 8 nodes.
---2024-05-09 11:43:14,701 - DEBUG - Worker:0 - In function get_dataloaders: 
- Train size: 45000, Validation size: 5000
-2024-05-09 11:43:14,702 - DEBUG - Worker:0 - Train sampler: <torch.utils.data.distributed.DistributedSampler object at 0xffff73000c10> initilized.
-2024-05-09 11:43:14,702 - DEBUG - Worker:0 - Validation sampler: <torch.utils.data.distributed.DistributedSampler object at 0xffff7301a2e0> initilized.
----2024-05-09 11:43:15,577 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and batch size 256.
-2024-05-09 11:43:15,578 - DEBUG - Worker:0 - Training size is 45000, val size is 5000, test size is 10000
-2024-05-09 11:43:15,579 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau set with parameters: {'mode': 'min', 'factor': 0.5, 'patience': 75}
-2024-05-09 11:43:15,580 - DEBUG - Worker:0 - Training debug mode is disabled, Verbose mode is off, Printing frequency set to every 300 iterations, Starting from epoch 0.
----Warning: Device do not support double dtype now, dtype cast repalce with float.
-[W IscloseKernelNpu.cpp:32] Warning: Device do not support double dtype of rtol and atol now, dtype cast repalce with float. (function operator())
-\\\\\\\\||||||||////////Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
--\2024-05-09 13:56:03,000 - INFO - Worker:0 - Final testing at NPU/GPU: 0
-2024-05-09 13:56:03,000 - INFO - Worker:0 - For test set, test loss is: 1.1873535409927367, test top1 is: 72.42, test top5 is: 91.81
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-2024-05-09 13:56:07,980 - DEBUG - MainProcess - Results received. <multiprocessing.sharedctypes.c_double_Array_3 object at 0xfffd0e73bdc0>
-2024-05-09 13:56:07,981 - INFO - MainProcess - Finished! Best validation accuracy: 76.15131578947368 at epoch 528. Test top1 accuracy: 72.42
-2024-05-09 13:56:07,981 - INFO - MainProcess - Total time cost: 02h:13mins:34s
-2024-05-09 13:56:07,981 - INFO - MainProcess - lr: 5e-3 , batch_size: 256

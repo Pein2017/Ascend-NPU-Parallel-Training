@@ -337,7 +337,7 @@ def main_worker(
         is_distributed=(ngpus_per_node > 1),
         is_amp_enabled=amp_enabled,
         amp=amp,
-        hist_record_num=config["training"].get("hist_record_num", 20),
+        hist_save_interval=config["training"].get("hist_save_interval", 20),
         train_logger=None,  # NOTE initilized inside the trainer
         train_sampler=train_sampler,
         val_sampler=val_sampler,
