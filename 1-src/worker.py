@@ -48,13 +48,6 @@ class Worker:
         self.rank = dist.get_rank()
 
         # Automatically set the number of workers based on the number of GPUs
-        #! Here, $NPROC_PER_NODE should be manually set in the environment variables before training starts.
-        self.ngpus_per_node = int(os.getenv("NPROC_PER_NODE", "1"))
-        if self.ngpus_per_node == 1:
-            Warning("ngpus_per_node is set to 1, make sure this is intended.")
-        print(
-            f"Initializing Worker: Global Rank = {self.rank}, Local Rank = {self.gpu}, World Size = {self.world_size}, ngpus_per_node = {self.ngpus_per_node} \n"
-        )
 
         # Initialize to None, will be set in methods
         self.worker_logger = None
@@ -145,7 +138,7 @@ class Worker:
         self.scheduler_mode = scheduler_config["mode"]
         self.scheduler_factor = scheduler_config["factor"]
         self.scheduler_patience = scheduler_config["patience"]
-        self.warmup_iters = scheduler_config["warmup_iters"]
+        self.warmup_steps = scheduler_config["warmup_steps"]
 
         # Early Stopping
         early_stopping_config = self.config["early_stopping"]
@@ -214,6 +207,16 @@ class Worker:
         )
 
         self.worker_logger.info("Worker Logger initialized.")
+        #! Here, $NPROC_PER_NODE should be manually set in the environment variables before training starts.
+        self.ngpus_per_node = int(os.getenv("NPROC_PER_NODE", "1"))
+        if self.ngpus_per_node == 1 and self.rank == 0:
+            self.worker_logger.warning(
+                "ngpus_per_node is set to 1, make sure this is intended."
+            )
+
+        self.worker_logger.info(
+            f"Initializing Worker: Global Rank={self.rank}, Local Rank={self.gpu}, World Size={self.world_size}, ngpus_per_node={self.ngpus_per_node} \n"
+        )
 
     def set_device(self, device_type: str):
         """
@@ -372,27 +375,27 @@ class Worker:
 
             # Extract scheduler parameters from the configuration
             scheduler_type = self.scheduler_type
-            warmup_iters = self.warmup_iters
+            warmup_steps = self.warmup_steps
 
             # Filter out specific keys and handle necessary type conversions
             scheduler_kwargs = {
                 k: self._convert_scheduler_param(k, v)
                 for k, v in scheduler_config.items()
-                if k not in ["type", "warmup_iters"]
+                if k not in ["type", "warmup_steps"]
             }
 
             # Create the scheduler using the manager
             self.scheduler_manager.create_scheduler(
                 scheduler_type=scheduler_type,
-                warmup_iters=warmup_iters,
+                warmup_steps=warmup_steps,
                 **scheduler_kwargs,
             )
-            self.worker_logger.debug(
+            self.worker_logger.info(
                 f"Scheduler {scheduler_type} initialized with parameters: {scheduler_kwargs}"
             )
         else:
             self.scheduler_manager = None
-            self.worker_logger.debug(
+            self.worker_logger.info(
                 "No scheduler configuration found. Skipping scheduler setup."
             )
 

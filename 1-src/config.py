@@ -23,7 +23,7 @@ class ExperimentManager:
             "training": ["lr", "batch_size"],
             "model": ["arch", "pretrained"],
             "optimizer": ["name", "momentum", "weight_decay", "betas", "criterion"],
-            "scheduler": ["type", "mode", "factor", "patience", "warmup_iters"],
+            "scheduler": ["type", "mode", "factor", "patience", "warmup_steps"],
         }
 
         self.debug_mode = self.experiment_config["training"]["debug_mode"]

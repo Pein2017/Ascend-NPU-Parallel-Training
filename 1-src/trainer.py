@@ -136,7 +136,6 @@ class Trainer:
         prefix: str = "Train_one_epoch",
         verbose: bool = False,
         verbose_print_interval: int = 100,
-        accum_steps: int = 5,
     ) -> Tuple[
         Optional[ModelStatsTracker],
         MetricProgressTracker,
@@ -152,7 +151,6 @@ class Trainer:
             prefix (str): A string prefix for logging, identifying this as a training epoch.
             verbose (bool): If True, provides detailed logging information.
             verbose_print_interval (int): How frequently to log progress within the epoch.
-            accum_steps (int): Number of batches to accumulate before performing a backward pass and optimizer step.
 
         Returns:
             Tuple[Optional[ModelStatsTracker], MetricProgressTracker, MetricProgressTracker, MetricProgressTracker]:
@@ -210,9 +208,12 @@ class Trainer:
             )
 
             # Perform optimizer step every accum_steps
-            if (i + 1) % accum_steps == 0 or (i + 1) == len(data_loader):
+            if (i + 1) % self.accum_steps == 0 or (i + 1) == len(data_loader):
                 # Measure backward pass time
                 backward_start = time.time()
+                # Gradient clipping
+                torch.nn.utils.clip_grad_norm_(self.model.parameters(), max_norm=0.1)
+
                 self.optimizer_manager.step()
                 self.optimizer_manager.zero_grad()
                 backward_time.update(time.time() - backward_start)
@@ -479,18 +480,20 @@ class Trainer:
             ):
                 break
 
-            # Update scheduler on all devices using the broadcasted validation loss
-            if self.scheduler_manager:
-                if val_losses_meter is not None:
+        # Call scheduler_step for each epoch
+        if self.scheduler_manager:
+            if isinstance(self.scheduler_manager.scheduler, ReduceLROnPlateau):
+                # Call scheduler_step with validation loss if available
+                if self.val_enabled and (current_epoch + 1) % self.eval_interval == 0:
                     self.scheduler_manager.scheduler_step(
                         current_epoch, float(val_losses_meter.avg)
                     )
                 else:
-                    # Only call scheduler_step without a metric if the scheduler is not ReduceLROnPlateau
-                    if not isinstance(
-                        self.scheduler_manager.scheduler, ReduceLROnPlateau
-                    ):
-                        self.scheduler_manager.scheduler_step(current_epoch)
+                    # Skip if no validation loss is available
+                    pass
+            else:
+                # Call scheduler_step for other schedulers
+                self.scheduler_manager.scheduler_step(current_epoch)
 
             if self.rank == 0:
                 self.save_checkpoint(
@@ -518,7 +521,7 @@ class Trainer:
         return (best_epoch, best_train_acc1, best_val_acc1, best_test_acc1, lr_at_best)
 
     def log_epoch_duration_and_estimate_remaining_time(
-        self, current_epoch: int, epoch_start_time: float, log_interval: int = 20
+        self, current_epoch: int, epoch_start_time: float, log_interval: int = 50
     ) -> None:
         """
         Logs the duration of the current epoch and estimates the remaining training time at specified intervals.

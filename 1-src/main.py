@@ -12,6 +12,7 @@ from typing import Dict, Optional
 import torch
 import torch.distributed as dist
 import torch_npu  # noqa
+from torch.utils.tensorboard import SummaryWriter
 
 
 def initialize_distributed_environment(backend="hccl", init_method="env://"):
@@ -24,24 +25,17 @@ def initialize_distributed_environment(backend="hccl", init_method="env://"):
     if not dist.is_initialized():
         dist.init_process_group(backend=backend, init_method=init_method)
 
-    print(f"Distributed Environment initialized with backend {backend}.")
     # Print out rank and world size for verification
     rank = dist.get_rank()
     world_size = dist.get_world_size()
+    if dist.get_rank() == 0:
+        print(f"Distributed Environment initialized with backend {backend}.")
     print(f"Rank {rank}/{world_size} reporting for duty.")
     torch.npu.set_device(rank)
 
 
 # Initialize the distributed environment before importing self-defined packages
 initialize_distributed_environment()
-
-# Import self-defined packages after initializing the distributed environment
-from config import ExperimentManager  # noqa: E402
-from config import config_from_yaml as config  # noqa: E402
-from data_loader_class import DataLoaderManager  # noqa: E402
-from setup_utilis import setup_logger  # noqa: E402
-from torch.utils.tensorboard import SummaryWriter  # noqa: E402
-from worker import Worker  # noqa: E402
 
 
 class MainManager:
@@ -143,11 +137,13 @@ class MainManager:
 
     def _setup_logger(self):
         """Initialize the main logger. Should be called on the master node only."""
+        from setup_utilis import setup_logger
+
         if dist.is_initialized():
             self.main_logger = setup_logger(
                 name="MainProcess",
                 log_file_name="main_process.log",
-                level=logging.DEBUG,
+                level=logging.INFO,
                 console=True,
             )
         else:
@@ -192,6 +188,8 @@ class MainManager:
 
     def verify_and_download_data(self):
         """Perform dataset verification and downloading on master node only."""
+        from data_loader_class import DataLoaderManager
+
         if self.rank == 0:
             # dataset_path = self.config["data"]["path"]
             dataset_name = self.config["data"]["dataset_name"]
@@ -210,7 +208,7 @@ class MainManager:
                 dataset_name=dataset_name,
                 dataset_path=dataset_path,
                 logger=self.main_logger,
-                use_fake_data=config["data"]["use_dummy"],
+                use_fake_data=self.config["data"]["use_dummy"],
             )
             data_loader_manager.verify_and_download_dataset()
             del data_loader_manager
@@ -269,6 +267,7 @@ class MainManager:
 
     def start_worker_and_get_result(self):
         """Start a Worker instance to handle the main training tasks."""
+        from worker import Worker
 
         worker = Worker(
             config=self.config,
@@ -303,6 +302,8 @@ class MainManager:
 
 
 def main(default_yaml_path: str, experiment_yaml_path: str):
+    from config import ExperimentManager
+
     # Since I initialize this outside the main
     if not dist.is_initialized():
         initialize_distributed_environment(

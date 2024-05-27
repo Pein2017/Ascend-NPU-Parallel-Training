@@ -1,7 +1,7 @@
 import logging
 import os
+import sys
 from typing import Optional, Tuple
-
 import torch.distributed as dist
 import torchvision.datasets as datasets
 from torch.utils.data import DataLoader, DistributedSampler, random_split
@@ -29,6 +29,18 @@ def calculate_mean_std(loader: DataLoader) -> Tuple[float, float]:
     mean /= total_images_count
     std /= total_images_count
     return mean, std
+
+
+# Function to temporarily suppress stdout
+def suppress_print(func):
+    def wrapper(*args, **kwargs):
+        original_stdout = sys.stdout
+        sys.stdout = open(os.devnull, "w")
+        result = func(*args, **kwargs)
+        sys.stdout = original_stdout
+        return result
+
+    return wrapper
 
 
 class DataLoaderManager:
@@ -101,6 +113,7 @@ class DataLoaderManager:
                 "cifar100": datasets.CIFAR100,
             }
             Dataset = dataset_classes[self.dataset_name]
+            Dataset.download = suppress_print(Dataset.download)
 
             # Define default transformations if none provided
             if transform is None:

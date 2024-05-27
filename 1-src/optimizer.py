@@ -8,6 +8,7 @@ import torch.optim as optim
 from setup_utilis import setup_logger
 from torch.optim.lr_scheduler import (
     CosineAnnealingLR,
+    OneCycleLR,
     ReduceLROnPlateau,
     StepLR,
     _LRScheduler,
@@ -196,11 +197,26 @@ class OptimizerManager:
 
 class WarmUpLR(_LRScheduler):
     def __init__(self, optimizer, total_iters, last_epoch=-1):
+        """
+        WarmUpLR Scheduler
+
+        Args:
+            optimizer (Optimizer): Wrapped optimizer.
+            total_iters (int): The total number of iterations for the warmup phase.
+            last_epoch (int): The index of the last epoch. Default: -1.
+        """
         self.total_iters = total_iters
         super().__init__(optimizer, last_epoch)
 
     def get_lr(self):
-        """Linear warmup"""
+        """
+        Calculate the learning rate for the current epoch.
+
+        Returns:
+            List of learning rates for each parameter group.
+        """
+        if self.last_epoch == -1:
+            return [0.0 for base_lr in self.base_lrs]
         return [
             base_lr * min(1.0, self.last_epoch / self.total_iters)
             for base_lr in self.base_lrs
@@ -223,37 +239,36 @@ class SchedulerManager:
         self.is_warmup = False
 
     def create_scheduler(
-        self, scheduler_type: str, warmup_iters: int = 0, **kwargs: Any
+        self, scheduler_type: str, warmup_steps: int = 0, **kwargs: Any
     ):
         """
         Create a learning rate scheduler based on the type and parameters specified.
-        If warmup_iters is provided and greater than 0, a warmup scheduler will also be created.
+        If warmup_steps is provided and greater than 0, a warmup scheduler will also be created.
 
         Args:
             scheduler_type (str): The type of the scheduler.
-            warmup_iters (int): The number of iterations to perform warmup.
+            warmup_steps (int): The number of iterations to perform warmup.
             **kwargs (Any): Additional keyword arguments for the scheduler constructor.
         """
-        if warmup_iters > 0:
+        if warmup_steps > 0:
             self.is_warmup = True
-            self.warmup_scheduler = WarmUpLR(self.optimizer, total_iters=warmup_iters)
+            self.warmup_scheduler = WarmUpLR(self.optimizer, total_iters=warmup_steps)
 
             if optimizer_logger is not None:
-                optimizer_logger.debug(
-                    "Warmup scheduler created for the first {} iterations.".format(
-                        warmup_iters
-                    )
+                optimizer_logger.info(
+                    f"Warmup scheduler created for the first {warmup_steps} iterations."
                 )
 
         scheduler_map = {
             "ReduceLROnPlateau": ReduceLROnPlateau,
             "StepLR": StepLR,
             "CosineAnnealingLR": CosineAnnealingLR,
+            "OneCycleLR": OneCycleLR,
         }
 
         scheduler_cls = scheduler_map.get(scheduler_type)
         if scheduler_cls is None:
-            raise ValueError("Unsupported scheduler type: {}".format(scheduler_type))
+            raise ValueError(f"Unsupported scheduler type: {scheduler_type}")
 
         self.scheduler = scheduler_cls(self.optimizer, **kwargs)
         # Adjust patience for ReduceLROnPlateau based on evaluation interval
@@ -263,9 +278,7 @@ class SchedulerManager:
             )
 
         if optimizer_logger is not None:
-            optimizer_logger.debug(
-                "Scheduler {} created successfully.".format(scheduler_type)
-            )
+            optimizer_logger.debug(f"Scheduler {scheduler_type} created successfully.")
 
     def scheduler_step(
         self, current_epoch: int, metric: Optional[float] = None, **kwargs
@@ -285,7 +298,7 @@ class SchedulerManager:
 
             if optimizer_logger is not None:
                 optimizer_logger.debug(
-                    "Warmup scheduler step executed for epoch {}.".format(current_epoch)
+                    f"Warmup scheduler step executed for epoch {current_epoch}."
                 )
         else:
             if isinstance(self.scheduler, ReduceLROnPlateau):

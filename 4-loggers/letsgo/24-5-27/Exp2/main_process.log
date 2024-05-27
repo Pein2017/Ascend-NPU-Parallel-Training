@@ -1,0 +1,8 @@
+2024-05-27 12:09:38,067 - INFO - MainProcess - Dataset verified and downloaded successfully.
+2024-05-27 13:32:29,931 - INFO - MainProcess - 
+ 
+Training Finished! 
+
+2024-05-27 13:32:29,932 - INFO - MainProcess - Total time cost: 1h:22mins:47s
+2024-05-27 13:32:29,932 - INFO - MainProcess - Best training accuracy: 99.9683, Best validation accuracy: 95.4200, Best epoch: 579.0, LR at best: 0.014400, Final test accuracy: 60.0400
+2024-05-27 13:32:29,932 - INFO - MainProcess - lr: 2, batch_size: 8192, optimizer: SGD

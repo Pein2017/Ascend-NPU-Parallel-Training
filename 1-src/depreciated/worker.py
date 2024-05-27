@@ -14,11 +14,11 @@ from stats_tracker import ModelStatsTracker
 from torch.utils.data import DataLoader
 from torch.utils.data.distributed import DistributedSampler
 from trainer import Trainer
-from utilis import (  # , init_distributed_training
+from utilis import (
     load_checkpoint,
     set_device,
     setup_logger,
-)
+)  # , init_distributed_training
 
 
 def main_worker(
@@ -240,13 +240,13 @@ def main_worker(
         scheduler_manager = SchedulerManager(optimizer=optimizer_manager.optimizer)
         scheduler_config: Dict = config["scheduler"]
         scheduler_type: str = scheduler_config["type"]
-        warmup_iters: int = scheduler_config["warmup_iters"]
+        warmup_steps: int = scheduler_config["warmup_steps"]
 
-        # scheduler type and warmup_iters should be explicitly passed to the scheduler
+        # scheduler type and warmup_steps should be explicitly passed to the scheduler
         scheduler_kwargs: Dict = {
             k: v
             for k, v in scheduler_config.items()
-            if k not in ["type", "warmup_iters"]
+            if k not in ["type", "warmup_steps"]
         }
 
         # Convert numerical values as necessary
@@ -261,7 +261,7 @@ def main_worker(
 
         # Create scheduler using SchedulerManager
         scheduler_manager.create_scheduler(
-            scheduler_type=scheduler_type, warmup_iters=warmup_iters, **scheduler_kwargs
+            scheduler_type=scheduler_type, warmup_steps=warmup_steps, **scheduler_kwargs
         )
         worker_logger.debug(
             f"Scheduler {scheduler_type} set with parameters: {scheduler_kwargs}"

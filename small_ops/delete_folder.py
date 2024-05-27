@@ -13,12 +13,7 @@ def delete_folders(folder_paths):
 
 if __name__ == "__main__":
     base_dir = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs"
-    event_paths = [
-        "lr-1e-1/batch_size-1024/patience-30/2024-05-24||15-52-12",
-        "lr-8e-1/batch_size-1024/patience-30/2024-05-25||03-53-45",
-        "lr-8e-2/batch_size-1024/patience-30/2024-05-24||16-23-46",
-        # "lr-1/batch_size-8192/patience-20/2024-05-21_13-09-48",
-    ]
+    event_paths = []
     to_be_deleted_folders = [
         os.path.join(base_dir, event_path) for event_path in event_paths
     ]

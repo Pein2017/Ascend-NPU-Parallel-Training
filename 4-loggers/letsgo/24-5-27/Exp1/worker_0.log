@@ -1,0 +1,6 @@
+2024-05-27 10:19:42,072 - INFO - Worker:0 - Worker Logger initialized.
+2024-05-27 10:19:42,072 - INFO - Worker:0 - Initialized npu on npu:0.
+2024-05-27 10:19:58,821 - INFO - Worker:0 - Data loaders initialized successfully.
+2024-05-27 10:20:05,538 - INFO - Worker:0 - Trainer initialized successfully.
+2024-05-27 11:01:20,938 - INFO - Worker:0 - Worker[0] has finished, the best epoch is 259, best train acc1 is 3.388671875, best val acc1 is 2.46, best test acc1 is 3.07, lr at best is 0.8
+2024-05-27 11:01:20,938 - INFO - Worker:0 - Final evaluation on the test set.

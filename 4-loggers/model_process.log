@@ -1,0 +1,3 @@
+2024-05-27 21:53:40,712 - DEBUG - ModelProcess - Model process logger initialized.
+2024-05-27 21:53:58,729 - DEBUG - ModelProcess - CIFARNet adjusted for CIFAR-10/100 dataset
+2024-05-27 21:53:58,730 - DEBUG - ModelProcess - All layers are unfrozen for training

@@ -1,29 +1,50 @@
 training:
   lr: 1
-  batch_size: 2048 # total
+  batch_size: 2048
   epochs: 1000
   accum_steps: 5
-  seed: 17
+  debug_mode: false
+  train_ratio: 0.9
   verbose: false
-  hist_save_interval: 50 # should be fixed
-  train_ratio: 0.9 # should be fixed
+  seed: 17
+  hist_save_interval: 50
   verbose_print_interval: 100
   workers: 0
   start_epoch: 0
   is_deteriminstic: false
-  debug_mode: false
   track_model_stats: false
   ckpt_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
-  ckpt_path:
-  ckpt_save_interval: 200 # should be fixed
+  ckpt_path: null
+  ckpt_save_interval: 200
 
 commit:
-  commit_message: "res34-1-2048-1000-accum-5"
+  commit_message: res34-1-2048-1000-accum-5
   commit_file_path: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/commit_log.csv
+
+logging:
+  experiment_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/
+  tb_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/
+  logger_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-loggers/letsgo/Exp2
+
+scheduler:
+  type: ReduceLROnPlateau
+  mode: min
+  factor: 0.2
+  patience: 20
+  warmup_steps: 0
 
 model:
   arch: resnet34
   pretrained: false
+
+evaluation:
+  eval_enabled: true
+  val_enabled: true
+
+amp:
+  amp_enabled: false
+  loss_scale: 1024.0
+  opt_level: O0
 
 optimizer:
   name: SGD
@@ -31,13 +52,6 @@ optimizer:
   weight_decay: 5e-4
   betas: [0.9, 0.99]
   criterion: CrossEntropyLoss
-
-scheduler:
-  type: ReduceLROnPlateau
-  mode: min
-  factor: 0.2 # for lr reduction
-  patience: 20
-  warmup_iters: 0
 
 early_stopping:
   min_loss_improvement: 1e-2
@@ -48,32 +62,13 @@ data:
   dataset_name: cifar100
   use_dummy: false
 
-logging:
-  experiment_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/
-  tb_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/
-  logger_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-loggers/letsgo/Exp2
-
-evaluation:
-  eval_enabled: true
-  val_enabled: true
-  val_eval_interval: 1 # TODO:
-  test_eval_interval: 20
-
-amp:
-  amp_enabled: false
-  loss_scale: 1024.
-  opt_level: O0
-
 distributed_training:
   distributed: true
-  # world_size: 1
-  # rank: 0
   dist_url: tcp://192.168.18.48:12345
   dist_backend: hccl
   master_addr: 192.168.18.48
   master_port: 12345
   multiprocessing_distributed: true
-  ## gpu: None depreciated
   device_type: npu
   device_list: [0, 1, 2, 3, 4, 5, 6, 7]
 
