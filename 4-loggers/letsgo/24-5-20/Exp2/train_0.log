@@ -1,0 +1,139 @@
+2024-05-20 18:28:55,822 - INFO - Trainer:0 - Epoch 1/1000 completed in 16.10 seconds.
+2024-05-20 18:28:55,822 - INFO - Trainer:0 - Total running time so far: 0h:0m:16s.
+2024-05-20 18:28:55,822 - INFO - Trainer:0 - Average time per epoch: 16.10 seconds.
+2024-05-20 18:28:55,822 - INFO - Trainer:0 - Approximate time left: 4h:28m:1s.
+2024-05-20 18:33:31,431 - INFO - Trainer:0 - Epoch 21/1000 completed in 13.53 seconds.
+2024-05-20 18:33:31,431 - INFO - Trainer:0 - Total running time so far: 0h:4m:51s.
+2024-05-20 18:33:31,431 - INFO - Trainer:0 - Average time per epoch: 13.89 seconds.
+2024-05-20 18:33:31,431 - INFO - Trainer:0 - Approximate time left: 3h:46m:38s.
+2024-05-20 18:38:06,280 - INFO - Trainer:0 - Epoch 41/1000 completed in 13.42 seconds.
+2024-05-20 18:38:06,280 - INFO - Trainer:0 - Total running time so far: 0h:9m:26s.
+2024-05-20 18:38:06,280 - INFO - Trainer:0 - Average time per epoch: 13.82 seconds.
+2024-05-20 18:38:06,281 - INFO - Trainer:0 - Approximate time left: 3h:40m:51s.
+2024-05-20 18:42:41,020 - INFO - Trainer:0 - Epoch 61/1000 completed in 13.30 seconds.
+2024-05-20 18:42:41,020 - INFO - Trainer:0 - Total running time so far: 0h:14m:1s.
+2024-05-20 18:42:41,020 - INFO - Trainer:0 - Average time per epoch: 13.79 seconds.
+2024-05-20 18:42:41,020 - INFO - Trainer:0 - Approximate time left: 3h:35m:50s.
+2024-05-20 18:47:11,783 - INFO - Trainer:0 - Epoch 81/1000 completed in 13.45 seconds.
+2024-05-20 18:47:11,783 - INFO - Trainer:0 - Total running time so far: 0h:18m:32s.
+2024-05-20 18:47:11,783 - INFO - Trainer:0 - Average time per epoch: 13.73 seconds.
+2024-05-20 18:47:11,784 - INFO - Trainer:0 - Approximate time left: 3h:30m:16s.
+2024-05-20 18:51:44,896 - INFO - Trainer:0 - Epoch 101/1000 completed in 15.64 seconds.
+2024-05-20 18:51:44,897 - INFO - Trainer:0 - Total running time so far: 0h:23m:5s.
+2024-05-20 18:51:44,897 - INFO - Trainer:0 - Average time per epoch: 13.71 seconds.
+2024-05-20 18:51:44,897 - INFO - Trainer:0 - Approximate time left: 3h:25m:29s.
+2024-05-20 18:56:15,169 - INFO - Trainer:0 - Epoch 121/1000 completed in 13.57 seconds.
+2024-05-20 18:56:15,170 - INFO - Trainer:0 - Total running time so far: 0h:27m:35s.
+2024-05-20 18:56:15,170 - INFO - Trainer:0 - Average time per epoch: 13.68 seconds.
+2024-05-20 18:56:15,170 - INFO - Trainer:0 - Approximate time left: 3h:20m:25s.
+2024-05-20 19:00:45,263 - INFO - Trainer:0 - Epoch 141/1000 completed in 13.88 seconds.
+2024-05-20 19:00:45,263 - INFO - Trainer:0 - Total running time so far: 0h:32m:5s.
+2024-05-20 19:00:45,263 - INFO - Trainer:0 - Average time per epoch: 13.66 seconds.
+2024-05-20 19:00:45,263 - INFO - Trainer:0 - Approximate time left: 3h:15m:30s.
+2024-05-20 19:05:20,081 - INFO - Trainer:0 - Epoch 161/1000 completed in 13.40 seconds.
+2024-05-20 19:05:20,082 - INFO - Trainer:0 - Total running time so far: 0h:36m:40s.
+2024-05-20 19:05:20,082 - INFO - Trainer:0 - Average time per epoch: 13.67 seconds.
+2024-05-20 19:05:20,082 - INFO - Trainer:0 - Approximate time left: 3h:11m:6s.
+2024-05-20 19:09:50,923 - INFO - Trainer:0 - Epoch 181/1000 completed in 13.38 seconds.
+2024-05-20 19:09:50,924 - INFO - Trainer:0 - Total running time so far: 0h:41m:11s.
+2024-05-20 19:09:50,924 - INFO - Trainer:0 - Average time per epoch: 13.65 seconds.
+2024-05-20 19:09:50,924 - INFO - Trainer:0 - Approximate time left: 3h:6m:21s.
+2024-05-20 19:14:25,814 - INFO - Trainer:0 - Epoch 201/1000 completed in 16.23 seconds.
+2024-05-20 19:14:25,814 - INFO - Trainer:0 - Total running time so far: 0h:45m:46s.
+2024-05-20 19:14:25,814 - INFO - Trainer:0 - Average time per epoch: 13.66 seconds.
+2024-05-20 19:14:25,814 - INFO - Trainer:0 - Approximate time left: 3h:1m:55s.
+2024-05-20 19:18:57,384 - INFO - Trainer:0 - Epoch 221/1000 completed in 13.39 seconds.
+2024-05-20 19:18:57,385 - INFO - Trainer:0 - Total running time so far: 0h:50m:17s.
+2024-05-20 19:18:57,385 - INFO - Trainer:0 - Average time per epoch: 13.65 seconds.
+2024-05-20 19:18:57,385 - INFO - Trainer:0 - Approximate time left: 2h:57m:16s.
+2024-05-20 19:23:28,121 - INFO - Trainer:0 - Epoch 241/1000 completed in 13.44 seconds.
+2024-05-20 19:23:28,122 - INFO - Trainer:0 - Total running time so far: 0h:54m:48s.
+2024-05-20 19:23:28,122 - INFO - Trainer:0 - Average time per epoch: 13.64 seconds.
+2024-05-20 19:23:28,122 - INFO - Trainer:0 - Approximate time left: 2h:52m:36s.
+2024-05-20 19:28:00,097 - INFO - Trainer:0 - Epoch 261/1000 completed in 13.36 seconds.
+2024-05-20 19:28:00,097 - INFO - Trainer:0 - Total running time so far: 0h:59m:20s.
+2024-05-20 19:28:00,097 - INFO - Trainer:0 - Average time per epoch: 13.64 seconds.
+2024-05-20 19:28:00,097 - INFO - Trainer:0 - Approximate time left: 2h:48m:0s.
+2024-05-20 19:32:29,567 - INFO - Trainer:0 - Epoch 281/1000 completed in 13.51 seconds.
+2024-05-20 19:32:29,568 - INFO - Trainer:0 - Total running time so far: 1h:3m:49s.
+2024-05-20 19:32:29,568 - INFO - Trainer:0 - Average time per epoch: 13.63 seconds.
+2024-05-20 19:32:29,568 - INFO - Trainer:0 - Approximate time left: 2h:43m:19s.
+2024-05-20 19:37:03,683 - INFO - Trainer:0 - Epoch 301/1000 completed in 16.41 seconds.
+2024-05-20 19:37:03,683 - INFO - Trainer:0 - Total running time so far: 1h:8m:23s.
+2024-05-20 19:37:03,683 - INFO - Trainer:0 - Average time per epoch: 13.63 seconds.
+2024-05-20 19:37:03,683 - INFO - Trainer:0 - Approximate time left: 2h:38m:50s.
+2024-05-20 19:41:33,952 - INFO - Trainer:0 - Epoch 321/1000 completed in 14.08 seconds.
+2024-05-20 19:41:33,952 - INFO - Trainer:0 - Total running time so far: 1h:12m:54s.
+2024-05-20 19:41:33,953 - INFO - Trainer:0 - Average time per epoch: 13.63 seconds.
+2024-05-20 19:41:33,953 - INFO - Trainer:0 - Approximate time left: 2h:34m:12s.
+2024-05-20 19:46:04,556 - INFO - Trainer:0 - Epoch 341/1000 completed in 13.43 seconds.
+2024-05-20 19:46:04,557 - INFO - Trainer:0 - Total running time so far: 1h:17m:24s.
+2024-05-20 19:46:04,557 - INFO - Trainer:0 - Average time per epoch: 13.62 seconds.
+2024-05-20 19:46:04,557 - INFO - Trainer:0 - Approximate time left: 2h:29m:36s.
+2024-05-20 19:50:35,437 - INFO - Trainer:0 - Epoch 361/1000 completed in 13.49 seconds.
+2024-05-20 19:50:35,438 - INFO - Trainer:0 - Total running time so far: 1h:21m:55s.
+2024-05-20 19:50:35,438 - INFO - Trainer:0 - Average time per epoch: 13.62 seconds.
+2024-05-20 19:50:35,438 - INFO - Trainer:0 - Approximate time left: 2h:25m:1s.
+2024-05-20 19:55:07,099 - INFO - Trainer:0 - Epoch 381/1000 completed in 13.54 seconds.
+2024-05-20 19:55:07,100 - INFO - Trainer:0 - Total running time so far: 1h:26m:27s.
+2024-05-20 19:55:07,100 - INFO - Trainer:0 - Average time per epoch: 13.61 seconds.
+2024-05-20 19:55:07,100 - INFO - Trainer:0 - Approximate time left: 2h:20m:27s.
+2024-05-20 19:59:37,826 - INFO - Trainer:0 - Epoch 401/1000 completed in 15.99 seconds.
+2024-05-20 19:59:37,827 - INFO - Trainer:0 - Total running time so far: 1h:30m:58s.
+2024-05-20 19:59:37,827 - INFO - Trainer:0 - Average time per epoch: 13.61 seconds.
+2024-05-20 19:59:37,827 - INFO - Trainer:0 - Approximate time left: 2h:15m:52s.
+2024-05-20 20:04:06,158 - INFO - Trainer:0 - Epoch 421/1000 completed in 13.40 seconds.
+2024-05-20 20:04:06,158 - INFO - Trainer:0 - Total running time so far: 1h:35m:26s.
+2024-05-20 20:04:06,158 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:04:06,158 - INFO - Trainer:0 - Approximate time left: 2h:11m:15s.
+2024-05-20 20:08:36,379 - INFO - Trainer:0 - Epoch 441/1000 completed in 13.35 seconds.
+2024-05-20 20:08:36,379 - INFO - Trainer:0 - Total running time so far: 1h:39m:56s.
+2024-05-20 20:08:36,379 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:08:36,379 - INFO - Trainer:0 - Approximate time left: 2h:6m:41s.
+2024-05-20 20:13:09,567 - INFO - Trainer:0 - Epoch 461/1000 completed in 13.57 seconds.
+2024-05-20 20:13:09,567 - INFO - Trainer:0 - Total running time so far: 1h:44m:29s.
+2024-05-20 20:13:09,567 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:13:09,567 - INFO - Trainer:0 - Approximate time left: 2h:2m:10s.
+2024-05-20 20:17:40,148 - INFO - Trainer:0 - Epoch 481/1000 completed in 13.92 seconds.
+2024-05-20 20:17:40,149 - INFO - Trainer:0 - Total running time so far: 1h:49m:0s.
+2024-05-20 20:17:40,149 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:17:40,149 - INFO - Trainer:0 - Approximate time left: 1h:57m:37s.
+2024-05-20 20:22:12,464 - INFO - Trainer:0 - Epoch 501/1000 completed in 15.60 seconds.
+2024-05-20 20:22:12,464 - INFO - Trainer:0 - Total running time so far: 1h:53m:32s.
+2024-05-20 20:22:12,464 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:22:12,465 - INFO - Trainer:0 - Approximate time left: 1h:53m:5s.
+2024-05-20 20:26:43,069 - INFO - Trainer:0 - Epoch 521/1000 completed in 13.93 seconds.
+2024-05-20 20:26:43,069 - INFO - Trainer:0 - Total running time so far: 1h:58m:3s.
+2024-05-20 20:26:43,069 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:26:43,069 - INFO - Trainer:0 - Approximate time left: 1h:48m:32s.
+2024-05-20 20:31:14,096 - INFO - Trainer:0 - Epoch 541/1000 completed in 13.41 seconds.
+2024-05-20 20:31:14,096 - INFO - Trainer:0 - Total running time so far: 2h:2m:34s.
+2024-05-20 20:31:14,096 - INFO - Trainer:0 - Average time per epoch: 13.59 seconds.
+2024-05-20 20:31:14,096 - INFO - Trainer:0 - Approximate time left: 1h:43m:59s.
+2024-05-20 20:35:46,783 - INFO - Trainer:0 - Epoch 561/1000 completed in 13.93 seconds.
+2024-05-20 20:35:46,784 - INFO - Trainer:0 - Total running time so far: 2h:7m:6s.
+2024-05-20 20:35:46,784 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:35:46,784 - INFO - Trainer:0 - Approximate time left: 1h:39m:28s.
+2024-05-20 20:40:19,453 - INFO - Trainer:0 - Epoch 581/1000 completed in 13.43 seconds.
+2024-05-20 20:40:19,453 - INFO - Trainer:0 - Total running time so far: 2h:11m:39s.
+2024-05-20 20:40:19,453 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:40:19,453 - INFO - Trainer:0 - Approximate time left: 1h:34m:56s.
+2024-05-20 20:44:52,777 - INFO - Trainer:0 - Epoch 601/1000 completed in 15.98 seconds.
+2024-05-20 20:44:52,777 - INFO - Trainer:0 - Total running time so far: 2h:16m:12s.
+2024-05-20 20:44:52,777 - INFO - Trainer:0 - Average time per epoch: 13.60 seconds.
+2024-05-20 20:44:52,777 - INFO - Trainer:0 - Approximate time left: 1h:30m:25s.
+2024-05-20 20:49:21,404 - INFO - Trainer:0 - Epoch 621/1000 completed in 13.47 seconds.
+2024-05-20 20:49:21,404 - INFO - Trainer:0 - Total running time so far: 2h:20m:41s.
+2024-05-20 20:49:21,404 - INFO - Trainer:0 - Average time per epoch: 13.59 seconds.
+2024-05-20 20:49:21,404 - INFO - Trainer:0 - Approximate time left: 1h:25m:51s.
+2024-05-20 20:53:51,379 - INFO - Trainer:0 - Epoch 641/1000 completed in 13.96 seconds.
+2024-05-20 20:53:51,380 - INFO - Trainer:0 - Total running time so far: 2h:25m:11s.
+2024-05-20 20:53:51,380 - INFO - Trainer:0 - Average time per epoch: 13.59 seconds.
+2024-05-20 20:53:51,380 - INFO - Trainer:0 - Approximate time left: 1h:21m:18s.
+2024-05-20 20:58:22,418 - INFO - Trainer:0 - Epoch 661/1000 completed in 13.36 seconds.
+2024-05-20 20:58:22,419 - INFO - Trainer:0 - Total running time so far: 2h:29m:42s.
+2024-05-20 20:58:22,419 - INFO - Trainer:0 - Average time per epoch: 13.59 seconds.
+2024-05-20 20:58:22,419 - INFO - Trainer:0 - Approximate time left: 1h:16m:46s.
+2024-05-20 21:02:51,348 - INFO - Trainer:0 - Early stopping triggered across all processes at epoch:680
+2024-05-20 21:02:57,352 - INFO - Trainer:0 - Figure exported successfully to /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/lr-1/batch_size-2048/patience-20/fig/Exp1-lr-1-batch_size-2048-patience-20.png
+2024-05-20 21:02:57,358 - INFO - Trainer:0 - Trainer 0 finalized_training, best_acc1=93.28, best_epoch=680

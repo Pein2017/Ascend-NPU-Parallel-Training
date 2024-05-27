@@ -200,9 +200,9 @@ if __name__ == "__main__":
     )
 
     # Define the directory and custom suffix for the TensorBoard logs
-    custom_suffix = "testing"
+    custom_suffix = "lr-5e-1-batch_size-2048-patience-20"
     fig_name = f"{custom_suffix}.png"
-    event_folder_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/lr-5e-4/batch_size-512/arch-resnet18/2024-05-16_16-05-49/event"
+    event_folder_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/lr-5e-1/batch_size-2048/patience-20/2024-05-17_08-51-38/event"
 
     # Ensure the log directory exists
     if not os.path.exists(event_folder_path):
@@ -218,9 +218,9 @@ if __name__ == "__main__":
 
     # Define the metrics to be plotted
     grouped_metrics = {
-        "Loss": ["Loss/train", "Loss/val"],
-        "Top1": ["Top1/train", "Top1/val"],
-        "Top5": ["Top5/train", "Top5/val"],
+        "Loss": ["Loss/train", "Loss/val", "Loss/test"],
+        "Top1": ["Top1/train", "Top1/val", "Top1/test"],
+        "Top5": ["Top5/train", "Top5/val", "Top5/test"],
         "Learning Rate": ["Learning Rate"],
     }
 

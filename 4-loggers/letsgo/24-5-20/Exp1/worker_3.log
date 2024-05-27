@@ -1,0 +1,14 @@
+2024-05-20 15:40:33,884 - INFO - Worker:3 - Worker Logger initialized.
+2024-05-20 15:40:33,885 - DEBUG - Worker:3 - Set device npu:3 for training.
+2024-05-20 15:40:33,885 - INFO - Worker:3 - Initialized npu on npu:3.
+2024-05-20 15:40:50,641 - DEBUG - Worker:3 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and total batch size 2048.
+2024-05-20 15:40:50,642 - DEBUG - Worker:3 - Training size is 45000, val size is 5000, test size is 10000.
+2024-05-20 15:40:50,642 - INFO - Worker:3 - Data loaders initialized successfully.
+2024-05-20 15:40:58,912 - DEBUG - Worker:3 - Model resnet34 loaded with pretrained=False and moved to npu:3.
+2024-05-20 15:40:58,913 - DEBUG - Worker:3 - Adjusted batch size to 256 and worker count to 0.
+2024-05-20 15:40:58,914 - DEBUG - Worker:3 - Optimizer initialized.
+2024-05-20 15:40:58,914 - DEBUG - Worker:3 - Scheduler ReduceLROnPlateau initialized with parameters: {'mode': 'min', 'factor': 0.2, 'patience': 20}
+2024-05-20 15:40:58,914 - DEBUG - Worker:3 - Training debug mode is enabled, Verbose mode is off, Printing frequency set to every 100 iterations, Starting from epoch 0.
+2024-05-20 15:40:58,915 - DEBUG - Worker:3 - Criterion CrossEntropyLoss initialized and set to device.
+2024-05-20 15:40:58,916 - INFO - Worker:3 - Trainer initialized successfully.
+2024-05-20 18:27:56,864 - INFO - Worker:3 - Final evaluation on the test set.

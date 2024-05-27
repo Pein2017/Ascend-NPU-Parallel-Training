@@ -1,0 +1,15 @@
+2024-05-20 15:40:33,884 - INFO - Worker:0 - Worker Logger initialized.
+2024-05-20 15:40:33,884 - DEBUG - Worker:0 - Set device npu:0 for training.
+2024-05-20 15:40:33,884 - INFO - Worker:0 - Initialized npu on npu:0.
+2024-05-20 15:40:50,453 - DEBUG - Worker:0 - Data loaders for cifar100 initialized successfully with split ratio 0.9 and total batch size 2048.
+2024-05-20 15:40:50,454 - DEBUG - Worker:0 - Training size is 45000, val size is 5000, test size is 10000.
+2024-05-20 15:40:50,454 - INFO - Worker:0 - Data loaders initialized successfully.
+2024-05-20 15:40:58,911 - DEBUG - Worker:0 - Model resnet34 loaded with pretrained=False and moved to npu:0.
+2024-05-20 15:40:58,911 - DEBUG - Worker:0 - Adjusted batch size to 256 and worker count to 0.
+2024-05-20 15:40:58,912 - DEBUG - Worker:0 - Optimizer initialized.
+2024-05-20 15:40:58,912 - DEBUG - Worker:0 - Scheduler ReduceLROnPlateau initialized with parameters: {'mode': 'min', 'factor': 0.2, 'patience': 20}
+2024-05-20 15:40:58,913 - DEBUG - Worker:0 - Training debug mode is enabled, Verbose mode is off, Printing frequency set to every 100 iterations, Starting from epoch 0.
+2024-05-20 15:40:58,913 - DEBUG - Worker:0 - Criterion CrossEntropyLoss initialized and set to device.
+2024-05-20 15:40:58,914 - INFO - Worker:0 - Trainer initialized successfully.
+2024-05-20 18:28:02,419 - INFO - Worker:0 - Worker[0] has finished, the best epoch is 691, best train acc1 is 99.7953869047619, best val acc1 is 92.48, best test acc1 is 73.85, lr at best is 0.00016000000000000007
+2024-05-20 18:28:02,420 - INFO - Worker:0 - Final evaluation on the test set.

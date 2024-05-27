@@ -2,18 +2,20 @@ training:
   lr: 5e-2
   batch_size: 256 # total
   epochs: 1000
+  accum_steps: 5
   verbose: false
   seed: 17
   hist_save_interval: 50 # should be fixed
+  eval_interval: 5
   train_ratio: 0.9
-  print_freq: 300
+  verbose_print_interval: 300
   workers: 0
   start_epoch: 0
   is_deteriminstic: false
   debug_mode: false
-  model_stats_tracker_flag: false
-  checkpoint_folder: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
-  checkpoint_path:
+  track_model_stats: false
+  ckpt_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/checkpoints
+  ckpt_path:
   ckpt_save_interval: 200
 
 commit:
@@ -39,7 +41,7 @@ scheduler:
   warmup_iters: 0
 
 early_stopping:
-  min_loss_improvement: 1e-4
+  min_loss_improvement: 1e-2
   patience: 100
 
 data:
@@ -49,15 +51,17 @@ data:
 
 logging:
   experiment_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/
-  tb_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/
+  tb_log_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/ # deprecated
   logger_dir: /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-loggers/
 
 evaluation:
-  is_evaluation_enabled: true
-  is_validation_enabled: true
+  eval_enabled: true
+  val_enabled: true
+  val_eval_interval: 1
+  test_eval_interval: 20
 
 amp:
-  is_amp_enabled: false
+  amp_enabled: false
   loss_scale: 1024.
   opt_level: O0
 

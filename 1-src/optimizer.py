@@ -1,7 +1,8 @@
 import logging
-from typing import Any, Dict, Type
+from typing import Any, Dict, Optional, Type
 
 import torch
+import torch.distributed as dist
 import torch.nn as nn
 import torch.optim as optim
 from setup_utilis import setup_logger
@@ -12,13 +13,20 @@ from torch.optim.lr_scheduler import (
     _LRScheduler,
 )
 
-optimizer_logger = setup_logger(
-    name="OptimizerProcess",
-    log_file_name="optimizer_process.log",
-    level=logging.INFO,
-    console=False,
-)
-optimizer_logger.debug("Optimizer process logger initialized.")
+optimizer_logger = None
+if dist.is_initialized():
+    if dist.get_rank() == 0:
+        optimizer_logger = setup_logger(
+            name="OptimizerProcess",
+            log_file_name="optimizer_process.log",
+            level=logging.INFO,
+            console=False,
+        )
+        optimizer_logger.debug("Optimizer process logger initialized.")
+else:
+    raise ValueError(
+        "Distributed training is not initialized. Rasied error from optimizer.py"
+    )
 
 
 def initialize_optimizer_manager(model: nn.Module, config: Dict):
@@ -110,7 +118,9 @@ class OptimizerManager:
         """
         Update specific states of the optimizer from a state dictionary, while reinitializing others.
         """
-        optimizer_logger.debug("Updating optimizer state...")
+        if optimizer_logger is not None:
+            optimizer_logger.debug("Updating optimizer state...")
+
         if params_to_restore is None:
             params_to_restore = []
 
@@ -133,9 +143,10 @@ class OptimizerManager:
                         param_name, "Undefined"
                     )
                     group[param_name] = restored_value
-                    optimizer_logger.debug(
-                        f"Restored {param_name} from {original_value} to {restored_value}"
-                    )
+                    if optimizer_logger is not None:
+                        optimizer_logger.debug(
+                            f"Restored {param_name} from {original_value} to {restored_value}"
+                        )
 
     def step(self) -> None:
         """
@@ -163,16 +174,22 @@ class OptimizerManager:
         ):
             self.best_loss = val_loss
             self.early_stop_counter = 0
-            optimizer_logger.debug("New best loss recorded.")
+
+            if optimizer_logger is not None:
+                optimizer_logger.debug("New best loss recorded.")
         else:
             self.early_stop_counter += 1
-            optimizer_logger.debug(
-                f"No improvement in loss for {self.early_stop_counter} epochs."
-            )
+
+            if optimizer_logger is not None:
+                optimizer_logger.debug(
+                    f"No improvement in loss for {self.early_stop_counter} epochs."
+                )
 
         if self.early_stop_counter >= self.patience:
             self.early_stop = True
-            optimizer_logger.info("Early stopping triggered.")
+
+            if optimizer_logger is not None:
+                optimizer_logger.info("Early stopping triggered.")
 
         return self.early_stop
 
@@ -195,11 +212,12 @@ class SchedulerManager:
     Manager class for creating and managing PyTorch learning rate schedulers.
     """
 
-    def __init__(self, optimizer):
+    def __init__(self, optimizer: optim.Optimizer, evaluation_interval: int):
         """
         Initialize the SchedulerManager with the specified optimizer.
         """
         self.optimizer = optimizer
+        self.evaluation_interval = evaluation_interval
         self.scheduler = None
         self.warmup_scheduler = None
         self.is_warmup = False
@@ -219,11 +237,13 @@ class SchedulerManager:
         if warmup_iters > 0:
             self.is_warmup = True
             self.warmup_scheduler = WarmUpLR(self.optimizer, total_iters=warmup_iters)
-            optimizer_logger.debug(
-                "Warmup scheduler created for the first {} iterations.".format(
-                    warmup_iters
+
+            if optimizer_logger is not None:
+                optimizer_logger.debug(
+                    "Warmup scheduler created for the first {} iterations.".format(
+                        warmup_iters
+                    )
                 )
-            )
 
         scheduler_map = {
             "ReduceLROnPlateau": ReduceLROnPlateau,
@@ -236,26 +256,37 @@ class SchedulerManager:
             raise ValueError("Unsupported scheduler type: {}".format(scheduler_type))
 
         self.scheduler = scheduler_cls(self.optimizer, **kwargs)
-        optimizer_logger.debug(
-            "Scheduler {} created successfully.".format(scheduler_type)
-        )
+        # Adjust patience for ReduceLROnPlateau based on evaluation interval
+        if isinstance(self.scheduler, ReduceLROnPlateau):
+            self.scheduler.patience = max(
+                1, self.scheduler.patience // self.evaluation_interval
+            )
 
-    def scheduler_step(self, current_epoch: int, metric: float, **kwargs):
+        if optimizer_logger is not None:
+            optimizer_logger.debug(
+                "Scheduler {} created successfully.".format(scheduler_type)
+            )
+
+    def scheduler_step(
+        self, current_epoch: int, metric: Optional[float] = None, **kwargs
+    ):
         """
         Execute a step of the scheduler, typically after an optimizer step.
         If in the warmup phase, the warmup scheduler is updated instead of the main scheduler.
 
         Args:
             current_epoch (int): The current epoch number.
-            metric (optional): metric to pass to ReduceLROnPlateau scheduler.
+            metric (optional): Metric to pass to ReduceLROnPlateau scheduler.
         """
         current_lr = self.scheduler.optimizer.param_groups[0]["lr"]
 
         if self.is_warmup and current_epoch <= self.warmup_scheduler.total_iters:
             self.warmup_scheduler.step(current_epoch)
-            optimizer_logger.debug(
-                "Warmup scheduler step executed for epoch {}.".format(current_epoch)
-            )
+
+            if optimizer_logger is not None:
+                optimizer_logger.debug(
+                    "Warmup scheduler step executed for epoch {}.".format(current_epoch)
+                )
         else:
             if isinstance(self.scheduler, ReduceLROnPlateau):
                 if metric is None:
@@ -269,9 +300,10 @@ class SchedulerManager:
             updated_lr = self.scheduler.optimizer.param_groups[0]["lr"]
 
             if current_lr != updated_lr:
-                optimizer_logger.info(
-                    f"Learning Rate updated from {current_lr} to {updated_lr}"
-                )
+                if optimizer_logger is not None:
+                    optimizer_logger.info(
+                        f"Learning Rate updated from {current_lr} to {updated_lr}"
+                    )
 
 
 class CriterionManager:

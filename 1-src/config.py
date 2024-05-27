@@ -37,11 +37,13 @@ class ExperimentManager:
             "commit_message", ""
         )
 
-        self.event_timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        self.event_timestamp = datetime.now().strftime("%Y-%m-%d||%H-%M-%S")
 
         self.experiment_log_dir = self.experiment_config["logging"][
             "experiment_log_dir"
         ]
+
+        self.logger_dir = self.experiment_config["logging"]["logger_dir"]
 
     def load_yaml(self, path: str) -> OrderedDict:
         """
@@ -108,11 +110,11 @@ class ExperimentManager:
             ["time", "commit_message"]
             + [
                 "best_epoch",
-                "best_train_acc",
-                "best_val_acc",
-                "best_test_acc",
+                "best_train_acc1",
+                "best_val_acc1",
+                "best_test_acc1",
                 "lr_at_best",
-                "final_test_acc",
+                "final_test_acc1",
             ]
             + list(self.differences.keys())
         )
@@ -225,9 +227,15 @@ class ExperimentManager:
         timestamp = self.event_timestamp
 
         # Create a hierarchical folder structure based on configuration values, formatted as 'key-value'
-        folder_hierarchy = [self.experiment_log_dir] + [
-            f"{key}-{value}" for key, value in config.items()
-        ]
+        if self.debug_mode:
+            folder_hierarchy = [self.experiment_log_dir, "debug"] + [
+                f"{key}-{value}" for key, value in config.items()
+            ]
+        else:
+            folder_hierarchy = [self.experiment_log_dir] + [
+                f"{key}-{value}" for key, value in config.items()
+            ]
+
         # Append the predefined timestamp under an 'event' subfolder to maintain consistent event logging
         folder_hierarchy += [
             timestamp,
@@ -262,7 +270,7 @@ class ExperimentManager:
 
         # Copy the file
         shutil.copy(self.experiment_yaml_path, destination_path)
-        print(f"File copied to {destination_path}")
+        print(f"Yaml file copied to {destination_path} by ExperimentManager.")
 
 
 def load_config_from_yaml():
@@ -284,7 +292,7 @@ if __name__ == "__main__":
     )
 
     experiment_yaml_path = (
-        "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/1-src/yamls/config_1.yaml"
+        "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/1-src/yamls/config1.yaml"
     )
 
     # Instantiate the ExperimentManager with the example configurations
@@ -306,10 +314,11 @@ if __name__ == "__main__":
 
     test_updated_results = {
         "best_epoch": 100,
-        "best_train_acc": 0.99,
-        "best_val_acc": 0.98,
+        "best_train_acc1": 0.99,
+        "best_val_acc1": 0.98,
+        "best_test_acc1": 0.97,
         "lr_at_best": 3e-3,
-        "final_test_acc": 0.97,
+        "final_test_acc1": 0.97,
     }
     manager.update_experiment_metrics(
         timestamp=manager.event_timestamp, metrics=test_updated_results

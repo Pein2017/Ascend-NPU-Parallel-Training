@@ -1,0 +1,12 @@
+2024-05-25 01:00:44,940 - DEBUG - MainProcess - Main Logger initialized by MainManager.
+2024-05-25 01:00:44,940 - INFO - MainProcess - Main logger is set up on node 0.
+2024-05-25 01:00:44,940 - INFO - MainProcess - Distributed training initialized with backend: hccl, init_method: tcp://192.168.18.48:12345
+2024-05-25 01:01:00,774 - INFO - MainProcess - Dataset verified and ready at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data'.
+2024-05-25 01:01:00,774 - INFO - MainProcess - Dataset verified and downloaded successfully.
+2024-05-25 03:53:45,078 - INFO - MainProcess - 
+ 
+Training Finished! 
+
+2024-05-25 03:53:45,079 - INFO - MainProcess - Total time cost: 2h:52mins:44s
+2024-05-25 03:53:45,079 - INFO - MainProcess - Best training accuracy: 99.9568, Best validation accuracy: 96.6200, Best epoch: 589.0, LR at best: 0.004000, Final test accuracy: 70.9600
+2024-05-25 03:53:45,079 - INFO - MainProcess - lr: 5e-1, batch_size: 1024, optimizer: SGD

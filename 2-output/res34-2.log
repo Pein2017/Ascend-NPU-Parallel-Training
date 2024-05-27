@@ -1,95 +1,0 @@
-[2024-05-16 20:10:00,133] torch.distributed.run: [WARNING] 
-[2024-05-16 20:10:00,133] torch.distributed.run: [WARNING] *****************************************
-[2024-05-16 20:10:00,133] torch.distributed.run: [WARNING] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
-[2024-05-16 20:10:00,133] torch.distributed.run: [WARNING] *****************************************
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-/root/miniconda3/envs/Pein38/lib/python3.8/site-packages/torch_npu/dynamo/__init__.py:18: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
-  warnings.warn(
-Distributed Environment initialized with backend hccl.
-Rank 3/8 reporting for duty.
-Distributed Environment initialized with backend hccl.
-Rank 7/8 reporting for duty.
-Distributed Environment initialized with backend hccl.
-Rank 6/8 reporting for duty.
-Distributed Environment initialized with backend hccl.
-Rank 1/8 reporting for duty.
-Distributed Environment initialized with backend hccl.
-Rank 0/8 reporting for duty.
-Distributed Environment initialized with backend hccl.
-Rank 4/8 reporting for duty.
-Distributed Environment initialized with backend hccl.
-Rank 2/8 reporting for duty.
-Distributed Environment initialized with backend hccl.
-Rank 5/8 reporting for duty.
-Distributed environment initialized.
-TensorBoard set up at /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/lr-1e-1/batch_size-2048/2024-05-16_20-10-14/event
-Experiment data logged successfully.
-Experiment data logged successfully.
-File copied to /data/Pein/Pytorch/Ascend-NPU-Parallel-Training/5-experiment_logs/lr-1e-1/batch_size-2048/2024-05-16_20-10-14/config_2.yaml
-Experiment YAML copied successfully.
-Seed set to 17. Training will be deterministic.
-2024-05-16 20:10:14,964 - DEBUG - MainProcess - Main Logger initialized.
-2024-05-16 20:10:14,964 - INFO - MainProcess - Main logger is set up on node 0.
-2024-05-16 20:10:14,964 - INFO - MainProcess - Distributed training initialized with backend: hccl, init_method: tcp://192.168.18.48:12345
-Distributed environment initialized.
-Files already downloaded and verified
-Distributed environment initialized.
-Distributed environment initialized.
-Distributed environment initialized.
-Distributed environment initialized.
-Distributed environment initialized.
-Distributed environment initialized.
-Files already downloaded and verified
-Files already downloaded and verified
-2024-05-16 20:10:31,224 - INFO - MainProcess - Dataset verified and ready at '/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data'.
-2024-05-16 20:10:31,224 - INFO - MainProcess - Dataset verified and downloaded successfully.
-2024-05-16 20:10:31,224 - INFO - MainProcess - Attempting to synchronize all processes...
-Initializing Worker: Global Rank = 6, Local Rank = 6, World Size = 8, ngpus_per_node = 8
-Initializing Worker: Global Rank = 4, Local Rank = 4, World Size = 8, ngpus_per_node = 8
-Initializing Worker: Global Rank = 5, Local Rank = 5, World Size = 8, ngpus_per_node = 8
-Initializing Worker: Global Rank = 7, Local Rank = 7, World Size = 8, ngpus_per_node = 82024-05-16 20:10:35,145 - INFO - MainProcess - All processes synchronized successfully.
-
-Initializing Worker: Global Rank = 0, Local Rank = 0, World Size = 8, ngpus_per_node = 8
-Initializing Worker: Global Rank = 2, Local Rank = 2, World Size = 8, ngpus_per_node = 8
-Initializing Worker: Global Rank = 1, Local Rank = 1, World Size = 8, ngpus_per_node = 8
-Initializing Worker: Global Rank = 3, Local Rank = 3, World Size = 8, ngpus_per_node = 8
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verifiedFiles already downloaded and verified
-
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
-Files already downloaded and verified
---------\Warning: Device do not support double dtype now, dtype cast repalce with float.
-[W IscloseKernelNpu.cpp:32] Warning: Device do not support double dtype of rtol and atol now, dtype cast repalce with float. (function operator())
-\\\\\\\||||||||////////--------\\\\\\\\||||||||////////-------\-\\\|\\\\||||/|||//////-/---\----\\\\\|\\|||/||||///

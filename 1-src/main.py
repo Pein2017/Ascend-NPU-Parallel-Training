@@ -1,160 +1,473 @@
-"""逐行测试时启用"""
-# import sys
-
-# sys.path.append('/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/src')
-
+import argparse
+import datetime
 import logging
 import os
+import shutil
+import sys
 import time
+import traceback
 from multiprocessing import Array
-from multiprocessing.sharedctypes import SynchronizedArray
-from typing import Any, Dict, List, Tuple
+from typing import Dict, Optional
 
-import torch.multiprocessing as mp
-import torch.utils.data.distributed
-from config import config_from_yaml as config
-from data_loader import verify_and_download_dataset
-from model import CIFARNet, load_or_create_model
-from setup_utilis import setup_environment, setup_logger
-from utilis import device_id_to_process_device_map
-from worker import main_worker
-
-# Declare the logger as a global variable
-main_logger: logging.Logger = setup_logger(
-    name="MainProcess",
-    log_file_name="main_process.log",
-    level=logging.DEBUG,
-    console=True,
-)
-main_logger.debug(msg="Logger initialized.")
+import torch
+import torch.distributed as dist
+import torch_npu  # noqa
 
 
-#! Clean up all the previous logs
-def clean_logs(directory):
-    if os.path.exists(directory):
-        files = [file for file in os.listdir(directory) if file.endswith(".log")]
-        for log_file in files:
-            os.remove(os.path.join(directory, log_file))
-            print(f"Removed {log_file}")
-
-
-def start_worker(config: Dict) -> Tuple[float, int, float]:
+def initialize_distributed_environment(backend="hccl", init_method="env://"):
     """
-    Execute the training process based on provided configuration, managing device
-    assignment and initialization of distributed training.
-
+    Initialize the distributed environment.
     Args:
-        config (Dict): Configuration settings including device and distributed training specifics.
-
-    Returns:
-        Tuple[float, int, float]: Tuple containing the best accuracy, corresponding epoch,
-        and top-1 accuracy average.
+        backend (str): The backend to use for distributed processing.
+        init_method (str): The method to initialize the process group.
     """
-    # global main_logger
+    if not dist.is_initialized():
+        dist.init_process_group(backend=backend, init_method=init_method)
 
-    dist_training: Dict = config["distributed_training"]
-    dist_url: str = dist_training["master_addr"]
-    world_size: int = dist_training["world_size"]
-    multiprocessing_distributed: bool = dist_training.get(
-        "multiprocessing_distributed", False
-    )
+    print(f"Distributed Environment initialized with backend {backend}.")
+    # Print out rank and world size for verification
+    rank = dist.get_rank()
+    world_size = dist.get_world_size()
+    print(f"Rank {rank}/{world_size} reporting for duty.")
+    torch.npu.set_device(rank)
 
-    # Automatically configure world size from environment if using environment setup for distributed training
-    if dist_url == "env://" and world_size == -1:
-        world_size = int(x=os.environ["WORLD_SIZE"])
-    distributed: bool = world_size > 1 or multiprocessing_distributed
 
-    # Map device IDs to physical device names
-    device_type: str = dist_training["device_type"]
-    device_list: List[str] | List[int] = dist_training["device_list"]
-    process_device_map: Dict[int, int] = device_id_to_process_device_map(
-        device_list=device_list
-    )
-    config["distributed_training"]["process_device_map"] = process_device_map
-    config["distributed_training"]["distributed"] = distributed
+# Initialize the distributed environment before importing self-defined packages
+initialize_distributed_environment()
 
-    ngpus_per_node: int = (
-        len(process_device_map) if device_type == "npu" else torch.npu.device_count()
-    )
+# Import self-defined packages after initializing the distributed environment
+from config import ExperimentManager  # noqa: E402
+from config import config_from_yaml as config  # noqa: E402
+from data_loader_class import DataLoaderManager  # noqa: E402
+from setup_utilis import setup_logger  # noqa: E402
+from torch.utils.tensorboard import SummaryWriter  # noqa: E402
+from worker import Worker  # noqa: E402
 
-    if distributed:
-        # Adjust world size based on the number of GPUs/NPUs per node
-        world_size *= ngpus_per_node
-        dist_training["world_size"] = world_size
 
-        # Log model loading
-        main_logger.debug(msg="Loading model...")
-        model: CIFARNet = load_or_create_model(config=config)
-        main_logger.debug(msg=f'Model {config["model"]["arch"]} downloaded.')
-        del model
+class MainManager:
+    def __init__(
+        self,
+        config: Dict,
+        writer: Optional[SummaryWriter],
+        custom_suffix: Optional[str],
+    ):
+        self.config = config
+        self.writer = writer
+        self.custom_suffix = custom_suffix
 
-        result: SynchronizedArray[Any] = Array(
-            "d", [-1.0, -1, -1.0], lock=False
-        )  # Initilize by a fake result to avoid error
-        main_logger.debug(
-            msg="Worker processes spawned successfully. Waiting for results..."
+        self.logger_dir = None
+        self.update_logger_dir()
+
+        self.start_time = None
+        self.main_logger = None
+
+        self.gpu = int(os.getenv("LOCAL_RANK", "0"))
+        self.rank = dist.get_rank()
+        self.world_size = dist.get_world_size()
+
+        # Initialize the result array with a length of 5, setting default values to -1.0
+        # The indices correspond to: best_epoch, best_train_acc, best_val_acc, lr_at_best, final_test_acc
+        self.result = Array("d", [-1.0] * 6, lock=False)
+
+    def update_logger_dir(self):
+        """Update the logger directory based on existing folders and check the date."""
+        base_logger_dir = self.config["logging"]["logger_dir"]
+        timestamp = base_logger_dir.split("/")[-2]  # Extract the date part
+
+        # Check if the date in the folder matches today's date
+        try:
+            folder_date = datetime.datetime.strptime(timestamp, "%y-%m-%d").date()
+            current_date = datetime.date.today()
+            expected_date = datetime.date(
+                current_date.year, current_date.month, current_date.day
+            )
+            if folder_date != expected_date:
+                print(
+                    f"Warning: The folder date {folder_date} does not match today's date {expected_date}."
+                )
+        except ValueError:
+            raise ValueError(f"The folder date format {timestamp} is incorrect.")
+
+        # Base directory for experiments
+        exp_base_dir = os.path.dirname(base_logger_dir)
+
+        # Count existing Exp folders
+        if not os.path.exists(exp_base_dir):
+            os.makedirs(exp_base_dir)
+
+        existing_folders = [
+            d
+            for d in os.listdir(exp_base_dir)
+            if os.path.isdir(os.path.join(exp_base_dir, d))
+        ]
+        exp_numbers = [
+            int(folder.replace("Exp", ""))
+            for folder in existing_folders
+            if folder.startswith("Exp") and folder.replace("Exp", "").isdigit()
+        ]
+
+        if exp_numbers:
+            next_exp_num = max(exp_numbers) + 1
+        else:
+            next_exp_num = 1
+            print("Starting new experiment folder. \n ")
+
+        new_logger_dir = os.path.join(exp_base_dir, f"Exp{next_exp_num}")
+        self.config["logging"]["logger_dir"] = new_logger_dir
+        self.logger_dir = new_logger_dir
+        if dist.get_rank() == 0:
+            print(f"Logger directory updated to '{new_logger_dir}'")
+
+    def setup_main_logger(self):
+        """Setup specific configurations for the manager based on the rank."""
+        from global_settings import DEFAULT_LOGGER_DIR
+
+        self.DEFAULT_LOGGER_DIR = DEFAULT_LOGGER_DIR
+
+        self.clean_logs(DEFAULT_LOGGER_DIR)
+
+        self._setup_logger()
+        self.main_logger.debug(f"Main logger is set up on node {self.rank}.")
+        self.main_logger.debug(
+            f"Distributed training initialized with backend: {self.config['distributed_training']['dist_backend']}, init_method: {self.config['distributed_training']['dist_url']}"
         )
 
-        mp.spawn(
-            main_worker,
-            args=(ngpus_per_node, config, result),
-            nprocs=ngpus_per_node,
-            join=True,
-        )
+    @staticmethod
+    def clean_logs(directory):
+        """Remove previous log files in the given directory."""
+        if os.path.exists(directory):
+            files = [file for file in os.listdir(directory) if file.endswith(".log")]
+            for log_file in files:
+                os.remove(os.path.join(directory, log_file))
+                # print(f"Removed {log_file} by MainManager.")
 
-        main_logger.debug(msg=f"Results received. {result}")
-        return result[0], int(result[1]), result[2]
+    def _setup_logger(self):
+        """Initialize the main logger. Should be called on the master node only."""
+        if dist.is_initialized():
+            self.main_logger = setup_logger(
+                name="MainProcess",
+                log_file_name="main_process.log",
+                level=logging.DEBUG,
+                console=True,
+            )
+        else:
+            raise RuntimeError(
+                "Distributed training is not initialized when setting up logger."
+            )
+
+        self.main_logger.debug("Main Logger initialized by MainManager.")
+        # self.start_time = time.time()
+
+    def setup_deterministic_mode(self):
+        """Set deterministic behavior based on the specified seed in the configuration."""
+        seed = self.config["training"].get("seed", None)
+        is_deteriminstic = self.config["training"].get("is_deteriminstic", False)
+        if seed is not None:
+            import random
+
+            import numpy as np
+            import torch.backends.cudnn as cudnn
+
+            np.random.seed(seed)
+            random.seed(seed)
+            torch.manual_seed(seed)
+
+            if torch.cuda.is_available():
+                torch.cuda.manual_seed_all(seed)
+
+            if is_deteriminstic:
+                cudnn.deterministic = True
+                cudnn.benchmark = False  # TODO: change this
+            else:
+                cudnn.deterministic = False
+                cudnn.benchmark = True
+
+            # Ensure only the main process logs the deterministic setting
+            if self.rank == 0:
+                print(f"Seed set to {seed}. Training will be deterministic.")
+                Warning("Deterministic mode can slow down training.")
+        else:
+            if self.rank == 0:
+                print("Seed is not set. Training will not be deterministic.")
+
+    def verify_and_download_data(self):
+        """Perform dataset verification and downloading on master node only."""
+        if self.rank == 0:
+            # dataset_path = self.config["data"]["path"]
+            dataset_name = self.config["data"]["dataset_name"]
+            if dataset_name == "cifar10":
+                dataset_path = (
+                    "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data"
+                )
+            elif dataset_name == "cifar100":
+                dataset_path = (
+                    "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/cifar100_data"
+                )
+            else:
+                raise ValueError(f"dataset_name: {dataset_name} is not supported.")
+
+            data_loader_manager = DataLoaderManager(
+                dataset_name=dataset_name,
+                dataset_path=dataset_path,
+                logger=self.main_logger,
+                use_fake_data=config["data"]["use_dummy"],
+            )
+            data_loader_manager.verify_and_download_dataset()
+            del data_loader_manager
+            self.main_logger.info("Dataset verified and downloaded successfully.")
+        else:
+            pass
+
+    def run_training(self):
+        """Execute the distributed training and final logging."""
+
+        if self.rank == 0:
+            pass
+            # self.main_logger.info("Attempting to synchronize all processes...")
+
+        # Synchronize all processes at the start
+        dist.barrier()
+
+        if self.rank == 0:
+            pass
+            # self.main_logger.info("All processes synchronized successfully.")
+
+        # Record start time
+        self.start_time = time.time()
+
+        self.start_worker_and_get_result()
+
+        (
+            best_epoch,
+            best_train_acc1,
+            best_val_acc1,
+            best_test_acc1,
+            lr_at_best,
+            test_acc1,
+        ) = self.result
+
+        # Synchronize all processes at the end
+        dist.barrier()
+
+        # Counting the total time taken for training
+        if self.rank == 0:
+            end_time = time.time()
+            elapsed_time_seconds = end_time - self.start_time
+            hours, remainder = divmod(elapsed_time_seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+
+            self.main_logger.info("\n \nTraining Finished! \n")
+            self.main_logger.info(
+                f"Total time cost: {int(hours)}h:{int(minutes)}mins:{int(seconds)}s"
+            )
+            self.main_logger.info(
+                f"Best training accuracy: {best_train_acc1:.4f}, Best validation accuracy: {best_val_acc1:.4f}, Best epoch: {best_epoch}, LR at best: {lr_at_best:.6f}, Final test accuracy: {test_acc1:.4f}"
+            )
+            self.main_logger.info(
+                f'lr: {self.config["training"]["lr"]}, batch_size: {self.config["training"]["batch_size"]}, optimizer: {self.config["optimizer"]["name"]}'
+            )
+
+    def start_worker_and_get_result(self):
+        """Start a Worker instance to handle the main training tasks."""
+
+        worker = Worker(
+            config=self.config,
+            result=self.result,
+            writer=self.writer,
+            custom_suffix=self.custom_suffix,
+        )
+        # print("here to worker!")
+        worker.execute_main_task()
+
+    def _copy_loggers(self, src=None, dest=None):
+        src = src or self.DEFAULT_LOGGER_DIR
+        dest = dest or self.logger_dir
+
+        # Ensure logger directories exist
+        if not os.path.exists(src):
+            raise FileNotFoundError(f"Source logger directory '{src}' not found.")
+
+        if not os.path.exists(dest):
+            os.makedirs(dest)
+
+        # Copy .log files from src to dest, excluding subdirectories
+        for filename in os.listdir(src):
+            if filename.endswith(".log"):
+                src_file = os.path.join(src, filename)
+                dest_file = os.path.join(dest, filename)
+                shutil.copy2(src_file, dest_file)
+                # print(f"Copied '{src_file}' to '{dest_file}'")
+
+        # Optionally, confirm that the files were copied
+        print(f"All .log files copied from '{src}' to '{dest}'.")
+
+
+def main(default_yaml_path: str, experiment_yaml_path: str):
+    # Since I initialize this outside the main
+    if not dist.is_initialized():
+        initialize_distributed_environment(
+            backend="hccl", init_method="env://"
+        )  #! here is a hardcore setting
+
+    if dist.is_initialized():
+        if dist.get_rank() == 0:
+            print("Distributed environment initialized.")
     else:
-        raise Exception("Single process training is not supported currently!")
+        raise RuntimeError("Distributed environment not initialized.")
 
-
-def main(config: Dict) -> None:
-    """Run the main application workflow."""
-
-    # global main_logger if not assigning new value to it, can be omitted
-
-    master_addr: str = config["distributed_training"]["master_addr"]
-    master_port: int = config["distributed_training"]["master_port"]
-    seed: int = config["training"].get("seed", None)
-    setup_environment(master_addr=master_addr, master_port=master_port, seed=seed)
-
-    dataset_path: str = config["data"]["path"]
-    dataset_name: str = config["data"]["dataset_name"]
-    verify_and_download_dataset(
-        dataset_name=dataset_name, dataset_path=dataset_path, logger=main_logger
+    exp_manager = ExperimentManager(
+        default_yaml_path=default_yaml_path,
+        experiment_yaml_path=experiment_yaml_path,
     )
 
-    result: None | Tuple[float, int, float] = start_worker(config=config)
-    best_acc1: float
-    best_epoch: int
-    top1: float
+    if dist.get_rank() == 0:
+        custom_suffix = exp_manager.config_suffix
+        writer = exp_manager.setup_tensorboard_writer(exp_manager.differences)
 
-    best_acc1, best_epoch, top1 = result
+        exp_manager.setup_logging_csv()
 
-    main_logger.info(
-        f"Finished! Best validation accuracy: {best_acc1} at epoch {best_epoch}. Test top1 accuracy: {top1}"
+        exp_manager.copy_experiment_yaml_to_main_folder()
+        print("Experiment YAML copied successfully.")
+    else:
+        custom_suffix = None
+        writer = None
+
+    main_manager = MainManager(
+        exp_manager.experiment_config, writer=writer, custom_suffix=custom_suffix
     )
+    main_manager.setup_deterministic_mode()  # Called on every process
+
+    if dist.get_rank() == 0:
+        main_manager.setup_main_logger()
+        main_manager.verify_and_download_data()
+
+    main_manager.run_training()
+
+    if dist.get_rank() == 0:
+        result = main_manager.result
+        updated_metrics = {
+            "best_epoch": int(result[0]),
+            "best_train_acc1": round(result[1], 4),
+            "best_val_acc1": round(result[2], 4),
+            "best_test_acc1": round(result[3], 4),
+            "lr_at_best": result[4],
+            "final_test_acc1": round(result[5], 4),
+        }
+        exp_manager.update_experiment_metrics(
+            timestamp=exp_manager.event_timestamp, metrics=updated_metrics
+        )
+
+        main_manager._copy_loggers()
+
+        print("main finished! \n")
+
+
+def cleanup():
+    if dist.is_initialized():
+        print("Cleaning up distributed process group...")
+        dist.destroy_process_group()
+        print("Distributed process group cleaned up!")
+
+    # # Kill all related Python processes to ensure clean termination
+    # current_pid = os.getpid()
+    # for proc in mp.active_children():
+    #     if proc.pid != current_pid:
+    #         print(f"Terminating process {proc.pid}")
+    #         proc.terminate()
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Run experiments with different YAML configurations."
+    )
+    parser.add_argument(
+        "--default_yaml_path",
+        type=str,
+        default="/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/1-src/config.yaml",
+        help="Path to the default YAML configuration file.",
+    )
+    parser.add_argument(
+        "--experiment_yaml_folder",
+        type=str,
+        required=True,
+        help="Path to the folder containing experiment YAML files.",
+    )
+    return parser.parse_args()
 
 
 if __name__ == "__main__":
-    logs_path = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-logger/"
-    clean_logs(logs_path)
-    start_time: float = time.time()
-    main(config=config)
-    end_time: float = time.time()
+    args = parse_args()
 
-    elapsed_time_seconds: float = end_time - start_time
-    hours: float
-    remainder: float
-    minutes: float
-    seconds: float
+    start_time = time.time()
+    try:
+        finished_files = set()
+        total_finished = 0
 
-    hours, remainder = divmod(elapsed_time_seconds, 3600)
-    minutes, seconds = divmod(remainder, 60)
+        while True:
+            # Get list of YAML files in the experiment YAML folder using os
+            yaml_files = [
+                f
+                for f in os.listdir(args.experiment_yaml_folder)
+                if f.endswith(".yaml")
+            ]
+            yaml_files.sort()
 
-    main_logger.info(
-        f"Total time cost: {int(hours):02d}h:{int(minutes):02d}mins:{int(seconds):02d}s"
-    )
-    main_logger.info(
-        f'lr: {config["training"]["lr"]} , batch_size: {config["training"]["batch_size"]}'
-    )
+            # Filter out files that have already been finished
+            to_be_finished_files = [f for f in yaml_files if f not in finished_files]
+
+            # If there are no more files to be processed, break the loop
+            if not to_be_finished_files:
+                print("All YAML files have been processed. Exiting.")
+                break
+
+            # Calculate total_experiments each iteration
+            total_experiments = len(finished_files) + len(to_be_finished_files)
+
+            for index, yaml_file in enumerate(to_be_finished_files):
+                experiment_yaml_path = os.path.join(
+                    args.experiment_yaml_folder, yaml_file
+                )
+                if dist.get_rank() == 0:
+                    print("\n")
+                    print("~" * 50)
+                    print(
+                        f"\nStart running experiment {total_finished + 1}/{total_experiments} \nwith config: {experiment_yaml_path} \n"
+                    )
+                    print("~" * 50)
+                    print("\n")
+
+                main(args.default_yaml_path, experiment_yaml_path)
+                if dist.get_rank() == 0:
+                    print("\n")
+                    print("*" * 50)
+                    print(
+                        f"Experiment {total_finished + 1}/{total_experiments} completed!"
+                    )
+                    print("*" * 50)
+                    print("\n")
+
+                # Mark the current file as finished and increment the finished counter
+                finished_files.add(yaml_file)
+                total_finished += 1
+
+    except KeyboardInterrupt:
+        print("Training interrupted by user.")
+    except Exception:
+        print("Error during main:")
+        traceback.print_exc()  # This will print the detailed traceback
+        # Forcefully terminate the program (mimicking Ctrl+C behavior)
+        print("Forcefully terminating the distributed training...")
+        cleanup()
+        sys.exit(1)  # Exit with error status
+    finally:
+        if dist.get_rank() == 0:
+            end_time = time.time()
+            elapsed_time_seconds = end_time - start_time
+            hours, remainder = divmod(elapsed_time_seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            print(
+                f"\n\nTotal runtime for all experiments: {int(hours)}h:{int(minutes)}m:{int(seconds)}s"
+            )
+            print(f"Total number of experiments completed: {total_finished}")
+
+        cleanup()

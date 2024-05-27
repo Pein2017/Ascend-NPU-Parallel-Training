@@ -1,0 +1,5 @@
+2024-05-24 21:13:04,190 - INFO - Worker:4 - Worker Logger initialized.
+2024-05-24 21:13:04,190 - INFO - Worker:4 - Initialized npu on npu:4.
+2024-05-24 21:13:20,658 - INFO - Worker:4 - Data loaders initialized successfully.
+2024-05-24 21:13:22,342 - INFO - Worker:4 - Trainer initialized successfully.
+2024-05-25 01:00:35,730 - INFO - Worker:4 - Final evaluation on the test set.

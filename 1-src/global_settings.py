@@ -1,6 +1,3 @@
-commit_message = "res34 training"
-commit_file_path = (
-    "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/3-tb_logs/commit_log.csv"
+DEFAULT_LOGGER_DIR = (
+    "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-loggers"  # Default path
 )
-
-logger_dir = "/data/Pein/Pytorch/Ascend-NPU-Parallel-Training/4-loggers/Exp2"
